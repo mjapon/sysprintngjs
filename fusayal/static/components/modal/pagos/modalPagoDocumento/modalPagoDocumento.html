@@ -1,0 +1,88 @@
+<div class="modal fade" id="{{elementid}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"> Datos del pago </h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <span>Documento:</span>
+                    </div>
+                    <div class="col-sm-8">
+                        <select class='form-control' ng-model="tipo_doc_sel"
+                                ng-options="tipdoc as tipdoc.td_descri for tipdoc in tiposdoc" ng-change="on_tipo_doc_change()"></select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <span>Banco:</span>
+                    </div>
+                    <div class="col-sm-8">
+                        <select class='form-control' ng-model="banco_sel"
+                                ng-options="banco as banco.ban_nombre for banco in bancos" ng-change="on_banco_change()"></select>
+                    </div>
+                </div>
+
+                <div class="row" ng-show="tipo_bancos==='bancos'">
+                    <div class="col-sm-4">
+                        <span># Cuenta:</span>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="form.tasidocum.doc_numcta"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <span># Documento:</span>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="form.tasidocum.doc_compro"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <span>Monto:</span>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="form.dt_valor" id="monto_pago"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <span>Fecha de emisión:</span>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="form.tasidocum.doc_fecemi" input-mask="{mask:'99/99/9999'}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <span>Referente:</span>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                            <input type="text" id="tasidocum_clp_cedruc"  class="form-control" ng-model="form.tasidocum.clp_cedruc" autocomplete="off" ng-enter="buscar_ref()"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="buscar_ref()"> <i class="fa fa-search"></i> </button>
+                                <!--<button type="button" class="btn btn-default" ng-click="go_lista_ref_tasidocum()"> Lista... </button>-->
+                            </span>
+                        </div>
+                        {{form.tasidocum.clp_apelli}}  {{form.tasidocum.clp_nombre}}
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="fnguardar()"> Aceptar </button>
+            </div>
+        </div>
+    </div>
+</div>

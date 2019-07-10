@@ -1,0 +1,116 @@
+<servi-page-header>
+    {{ form.cnt_id>0?'Editar contribuyente':'Crear contribuyente' }}
+</servi-page-header>
+<div class="row">
+    <div class="col-md-8">
+        <div>
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="gridRed"> * </span> RUC:
+                </div>
+                <div class="col-md-8">
+                    <input type="text" id="cnt_ruc" class="form-control" ng-model="form.cnt_ruc"
+                           ng-required="true"
+                           input-mask="{mask:'9999999999999'}"
+                           ng-enter="onEnterPress()"
+                           ng-disabled="form.cnt_id>0"
+                           ng-blur="onBlurRuc()" >
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="gridRed"> * </span> Razón Social:
+                </div>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" ng-model="form.cnt_razonsocial" capitalize
+                           ng-required="true" id="cnt_razonsocial">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    Nombre Comercial:
+                </div>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" ng-model="form.cnt_nombrecomercial" capitalize
+                           ng-required="true">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    Telf:
+                </div>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" ng-model="form.cnt_telf">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    Email:
+                </div>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" ng-model="form.cnt_email">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="gridRed"> * </span> Dirección Matriz:
+                </div>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" ng-model="form.cnt_dirmatriz" capitalize ng-required="true">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="gridRed"> * </span> Clase:
+                </div>
+                <div class="col-md-8">
+                    <select class="form-control"
+                            ng-model="form.cnt_clase"
+                            ng-options="clase.cls_id as clase.cls_nombre for clase in tiposcontrib">
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    Nro Contribuyente Especial:
+                </div>
+                <div class="col-md-8">
+                    <input type="number" class="form-control" ng-model="form.cnt_nrocntespecial">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    Obligado a llevar contabilidad:
+                </div>
+                <div class="col-md-8">
+                    <i class="{{form.cnt_oblcontab===1 ? 'fas fa-check-square':'far fa-square' }}" ng-click="form.cnt_oblcontab = form.cnt_oblcontab===1?0:1"></i>
+                    <!--
+                    <input type="checkbox"
+                           ng-model="form.cnt_oblcontab"
+                           ng-value-true="1"
+                           ng-value-false="0"
+                           ng-checked="form.cnt_oblcontab === 1"/>
+                           -->
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-primary" type="button" ng-click="guardar()" ng-disabled="existeContrib">Guardar</button>
+                    <button class="btn btn-default" ng-click="cancelar()"> Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>

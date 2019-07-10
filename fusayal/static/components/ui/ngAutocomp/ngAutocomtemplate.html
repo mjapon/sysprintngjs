@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="input-groupdd">
+            <input type="text" ng-model="filtro[propFiltro]" class="form-control" ng-keydown="onkeydown($event)" ng-keyup="onkeyup($event)" placeholder="{{placeholder}}" id="{{idprop}}" ng-style="csscolor"/>
+        </div>
+        <div class="list-group suggestbox">
+            <a href="#" class="list-group-item" ng-repeat="item in filtrados" ng-class="item == itemsel ? 'active' : ''">
+                <div class="row">
+                    <div class="col-xs-12" ng-click="sel_item(item)">{{evalExpress(item, labelExp)}}</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

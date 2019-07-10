@@ -1,0 +1,167 @@
+<div class="modal fade" id="{{cntrl.elementid}}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"> Datos de la retención </h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-sm-1">
+                        <span>Nro:</span>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <input type="text" class="form-control" id="estab_ptoemi_ret"
+                                       ng-model="cntrl.formDatos.estab_ptoemi"
+                                       ng-disabled="cntrl.ttransacc.tra_autsri==1 || cntrl.ttransacc.tra_edcom1==0 || cntrl.formDatos.editar_secuencia===0"
+                                       input-mask="{mask:'999-***'}" ng-enter="cntrl.setFocus('secuencia_ret')"/>
+                            </div>
+                            <div class="col-xs-8">
+                                <input type="text" class="form-control" id="secuencia_ret"
+                                       ng-model="cntrl.formDatos.secuencia"
+                                       ng-disabled="cntrl.ttransacc.tra_edcom1==0 || cntrl.formDatos.editar_secuencia===0"
+                                       maxlength="9"
+                                       ng-enter="cntrl.setFocus('art_trn_ret')"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <span>Fecha:</span>
+                    </div>
+                    <div class="col-sm-5">
+                        <servi-fecha elementid="trn_fecreg_ret" model="cntrl.formDatos.trn_fecreg"></servi-fecha>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-2">Tipo</div>
+                    <div class="col-md-2">Base Imponible</div>
+                    <div class="col-md-2">Impuesto</div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <buscar-ret-direct tipo='n'
+                                           data='cntrl.tiposRetencion'
+                                           model="cntrl.retencionSel.art"
+                                           disabled="cntrl.isEditando"
+                                           setup="{'propFiltro':'art_nomlar',
+                                   'idprop':'art_trn_ret',
+                                   'colornull':'#FF0000',
+                                   'fnOnSel':cntrl.onRetencionSel}">
+                        </buscar-ret-direct>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" ng-model="cntrl.formDetalles.ret_calc_desc"
+                               id="tipo_ret" placeholder="Tipo" ng-disabled="true"/>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" ng-model="cntrl.formDetalles.dt_precio"
+                               id="base_imponible_ret" placeholder="Base imponible"
+                               ng-enter="cntrl.agregarActualizarRet()"/>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control" ng-model="cntrl.formDetalles.dt_total" id="impuesto_ret"
+                               placeholder="impuesto" ng-disabled="true"/>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-default btn-primary pull-right" ng-click="cntrl.agregarActualizarRet()"> <i class="fa {{cntrl.isEditando?'fa-edit':'fa-plus'}}"></i> {{cntrl.isEditando?'Actualizar':'Agregar'}}</button>
+                    </div>
+                </div>
+
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <b>Retención</b>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <b>Código</b>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <b>Tipo</b>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <b>Base Imponible</b>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <b>Impuesto</b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item" ng-repeat="fila in cntrl.articulos" style="padding: 0px 15px;">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        {{fila.art_nomlar}}
+                                    </div>
+                                    <div class="col-md-1">
+                                        {{fila.ret_codaxo}}
+                                    </div>
+                                    <div class="col-md-2">
+                                        {{fila.ret_calc_desc}}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{fila.dt_precio | number:2 }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        {{fila.dt_total | number:2 }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="margin: 0px; padding: 0px;">
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-sm btn-default"
+                                            ng-click="cntrl.editarRetencion(fila)"> Editar
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-default"
+                                            ng-click="cntrl.quitarRetencion(fila)"> Quitar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <div class="well">
+                            <table cellpadding="0" cellspacing="0" width="100%">
+                                <tbody>
+                                <tr>
+                                    <td><b>TOTAL USD.</b></td>
+                                </tr>
+                                <tr>
+                                    <td><h1 class="text-info" style="margin: 0px; padding: 0px;" id="divtot_ret">
+                                        {{cntrl.formTotales.total | number:2 }} </h1></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="cntrl.closeModal()"> Aceptar</button>
+            </div>
+
+        </div>
+    </div>
+</div>

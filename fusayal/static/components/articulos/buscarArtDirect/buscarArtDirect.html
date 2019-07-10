@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="col-md-12"  >
+        <ul class="list-group" style="margin-bottom: 1px;">
+            <li class="list-group-item" style="padding: 0; border: none">
+                <div class="input-group">
+                    <div class="input-group-btn" tooltip="{title:'Configurar búsqueda'}">
+                        <button type="button"
+                                class="btn btn-default dropdown-toggle"
+                                data-toggle="dropdown"
+                                aria-expanded="false"
+                                ng-disabled="disabled">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </button>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header">Buscar por:</li>
+                            <li>
+                                  <a href="" ng-click="setModuBus('byid')">
+                                      <i class="fa fa-check-square" ng-show="uriparams.modo==='byid'"></i>
+                                      Código
+                                  </a>
+                            </li>
+                            <li>
+                                  <a href="" ng-click="setModuBus('bynom')">
+                                      <i class="fa fa-check-square" ng-show="uriparams.modo==='bynom'"></i>
+                                      Nombre
+                                  </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Categoría:</li>
+
+                            <li>
+                                <a href="" ng-click="changeTarCodigo(item)" ng-repeat="item in tiposartlist">
+                                    <i class="fa fa-check-square" ng-show="item===tipoArtSel"></i>
+                                    {{item['tar_descri']}}
+                                </a>
+                            </li>
+
+                            <li class="divider" ng-show="uriparams.is_sec_codigo===1"></li>
+                            <li class="dropdown-header" ng-show="uriparams.is_sec_codigo===1">Sección:</li>
+                            <li ng-show="uriparams.is_sec_codigo===1">
+                                <a href="" ng-click="changeSecCodigo(item)" ng-repeat="item in secciones">
+                                    <i class="fa fa-check-square" ng-show="item===seccionSel"></i>
+                                    {{item['sec_desci']}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <input type="text" ng-model="filtro[propFiltro]"  servi-focus-select class="form-control" ng-keydown="onkeydown($event)" ng-keyup="onkeyup($event)" placeholder="{{placeh}}" id="{{idprop}}" ng-style="csscolor" ng-blur="on_lost_focus()" ng-disabled="disabled"/>
+
+                    <span class="input-group-btn" ng-show="showClearBtn===1" tooltip="{title:'Limpiar'}">
+                        <button class="btn btn-default" type="button" ng-click="clearArtSel()" ng-disabled="disabled||filtro[propFiltro].trim().length===0">  <i class="fa fa-eraser"></i> </button>
+                    </span>
+                </div>
+            </li>
+            <li class="list-group-item" style="padding: 0; border: none">
+                <ul class="list-group" style="z-index: 100; position: absolute; width: 100%; border-top: 1px solid #ddd;" ng-show="filtrados.length > 0">
+                    <li class="list-group-item hand" ng-repeat="item in filtrados track by $index" ng-class="item == itemsel ? 'active' : ''" style="padding: 3px;  border-top: none;">
+                        <div class="row">
+                            <div class="col-xs-10" ng-click="sel_item(item)"> {{uriparams.modo=='byid'? (item[propFiltroId] + " ("+item[propFiltro]+")") : item[propFiltro] }} </div>
+                            <div class="col-xs-2" ng-click="setup['fn_detalles_art'](item)"> <span class="text-muted"> Detalles </span>  </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

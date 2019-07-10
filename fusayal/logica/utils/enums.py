@@ -1,0 +1,16 @@
+# coding: utf-8
+"""
+Fecha de creacion @date
+@autor: Manuel Japon
+"""
+
+INSERT_ACTION = 1
+UPDATE_ACTION = 2
+DELETE_ACTION = 3
+
+TBL_CONTRIBUYENTE = 1
+TBL_EMPRESA = 2
+TBL_AUTORIZACIONES = 3
+TBL_TRABAJOS_DE_IMPRESION = 4
+TBL_USUARIOS = 5
+TBL_USER_ROLES = 6

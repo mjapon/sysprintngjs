@@ -1,0 +1,104 @@
+<div class="modal fade" id="{{elementid}}">
+    <div class="modal-dialog {{modal_size}}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"> Datos del pago </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" ng-show="form.clc_id === 'CP' ||  form.clc_id === 'CC'">
+                    <div class="col-sm-4">
+                        <span>Cta Contable:</span>
+                    </div>
+                    <div class="col-sm-8">
+                        <select class='form-control' ng-model="cta_contable_sel"
+                                ng-options="cta_contable as cta_contable.art_nomlar for cta_contable in ctas_contables" ng-change="on_cta_contable_change()"></select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <span>Referente</span>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="input-group">
+                          <input type="text" class="form-control" aria-label="referente" ng-model="form.nomapel" ng-disabled="true">
+                          <div class="input-group-btn">
+                            <button type="button" class="btn btn-info" aria-label="Lista" ng-click="fnlistaref()"> Lista </button>
+                          </div>
+                        </div>
+                        <!--
+                        <span class="text-info">  {{form['clp_cedruc']}} </span>
+                        -->
+                    </div>
+                </div>
+
+                <div class="row" ng-show="form.clc_id !== 'CP' &&  form.clc_id !== 'CC'">
+                    <div class="col-sm-4">
+                        <span>Tarjeta:</span>
+                    </div>
+                    <div class="col-sm-8">
+                        <select class='form-control' ng-model="form.tasicredito.cre_codban"
+                                ng-options="banco.ban_codigo as banco.ban_nombre for banco in bancos" ng-change="on_banco_change()"></select>
+                    </div>
+                </div>
+
+                <div class="row" ng-show="form.clc_id !== 'CP' &&  form.clc_id !== 'CC'">
+                    <div class="col-sm-4">
+                        <span># Lote:</span>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="form.tasicredito.cre_compro"/>
+                    </div>
+                </div>
+
+                <div ng-show="show_crea_cred===1">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <span>Fecha de apertura:</span>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" ng-model="form.tasicredito.cre_fecini" input-mask="{mask:'99/99/9999'}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <span>Fecha de vencimiento:</span>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" ng-model="form.tasicredito.cre_fecven" input-mask="{mask:'99/99/9999'}"/>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="show_crea_cred===0">
+                    <ng-table titulo="Lista de créditos"
+                              lstdatos=creditos
+                              lstcols=cols_creditos
+                              rowopc="{func: onFilaCredClick}"
+                              scroll=true
+                              busq=false
+                              checks="{model: 'marcado', func: onChekClick}"
+                              orderby="">
+                    </ng-table>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <span>Monto:</span>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="form.dt_valor" id="monto_pago"/>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <!--
+                <button type="button" class="btn btn-primary" ng-click="fnguardar()"> Aceptar </button>
+                -->
+                <button type="button" class="btn btn-primary" ng-click="validarPago()"> Aceptar </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<servi-page-header>
+    Carga de archivo
+</servi-page-header>
+
+<form action="/uploadview" method="post" accept-charset="utf-8"
+      enctype="multipart/form-data">
+
+    <div class="row" ng-show="form.temp_id>0">
+        <div class="col-md-4">
+            <label for="nombreArchivo">Código:</label>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form form-control" id="temp_id" name="temp_id" ng-model="form.temp_id" readonly>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <label for="nombreArchivo">Nombre de la plantilla:</label>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form form-control" id="nombreArchivo" name="nombreArchivo" ng-model="form.temp_name">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <label for="">Seleccione el archivo (reporte jasper)</label>
+        </div>
+        <div class="col-md-6">
+            <input id="file" name="file" type="file" value=""/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <!--<input type="submit" value="Guardar" class="btn btn-primary"/>-->
+            <button class="btn btn-default" ng-click="cancelar()">Cancelar</button>
+            <input type="submit" value="Guardar" class="btn btn-primary"/>
+        </div>
+    </div>
+
+</form>

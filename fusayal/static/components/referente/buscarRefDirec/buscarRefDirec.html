@@ -1,0 +1,10 @@
+<div class="input-group">
+    <div class="form-group has-feedback" ng-class="referente.clp_cedruc.length>0?(valido?'has-success':'has-error'):''">
+        <input type="text" id="{{elementid}}"  placeholder="{{placeholder||''}}" class="form-control" ng-model="referente.clp_cedruc" autocomplete="off" ng-enter="buscar_ref()" ng-disabled="disabled"/>
+        <span class="glyphicon form-control-feedback" ng-class="referente.clp_cedruc.length>0?(valido?'':'glyphicon-remove'):''" aria-hidden="true"></span>
+    </div>
+    <span class="input-group-btn">
+        <button type="button" class="btn btn-info" ng-click="buscar_ref()" ng-disabled="disabled" title="Buscar referente"> <i class="fa fa-search"></i> </button>
+        <button type="button" class="btn btn-info" ng-click="onreflista()" ng-disabled="disabled" title="Ir a listado de referentes"> Lista... </button>
+    </span>
+</div>

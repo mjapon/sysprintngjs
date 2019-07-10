@@ -1,0 +1,12 @@
+<div class="panel {{classpanel? classpanel:'panel-default'}}"  style="padding: 0px; margin: 0px;"
+     ng-repeat="categoria in categorias" ng-if="fnvisible? fnvisible(categoria):true">
+    <div class="panel-heading">
+        {{categoria.gen_title}}
+    </div>
+    <div class="panel-body">
+        <div class="form-horizontal">
+
+            <propiedad-adc-dir ng-repeat="propiedad in categoria.propiedades" form="propiedad" fndisabled="fndisabled" fnchange="fnchange"></propiedad-adc-dir>
+        </div>
+    </div>
+</div>

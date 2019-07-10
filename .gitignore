@@ -1,0 +1,5 @@
+.idea/
+fusayal/static/bower_components/
+fusayal/static/node_modules/
+fusayal/static/js/grid-2.4.1/
+*.pyc

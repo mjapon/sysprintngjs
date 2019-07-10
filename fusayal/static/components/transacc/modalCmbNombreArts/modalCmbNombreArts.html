@@ -1,0 +1,56 @@
+<div class="modal fade" id="{{self.elementid}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Cambiar nombre de impresión</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-condensed table-bordered">
+                    <thead>
+                        <tr>
+                            <th width="47%">Nombre artículo</th>
+                            <th width="47%">Nombre impresión</th>
+                            <th width="6%">
+                                <button class="btn btn-default btn-sm" ng-click="self.toggleHeadMark()">
+                                    <i class="fa fa-square-o" aria-hidden="true" ng-class="self.isHeadMarked===1?'fa fa-check-square':'fa fa-square-o'"></i>
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="row in self.articulos" ng-class="row.mark===1?'info':''">
+                            <td width="47%">
+                                {{row.art_nomlar}}
+                            </td>
+                            <td width="47%">
+                                <input type="text" class="form-control input-sm" ng-model="row.art_nomimp">
+                            </td>
+                            <td width="6%">
+                                <button class="btn btn-default btn-sm" ng-click="self.toggleRowMark(row)">
+                                    <i class="fa fa-square-o" aria-hidden="true" ng-class="row.mark===1?'fa fa-check-square':'fa fa-square-o'"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row" ng-show="self.isRowMarked">
+                    <div class="col-sm-8">
+                        <span> Asignar nuevo nombre: </span>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="self.newPrintName" placeholder="Asignar nuevo nombre" id="newPrintName" ng-enter="self.changeName()">
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-primary" ng-click="self.changeName()"> Asignar </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="self.ok()">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<servi-page-header>
+    Administración de usuarios
+</servi-page-header>
+
+<div class="row">
+    <div class="col-md-12">
+        <button class="btn btn-default float-left" ng-click="listar()"><i class="fas fa-sync"></i> Listar</button>
+        <button class="btn btn-primary float-right" ng-click="crear()"> Crear</button>
+        <button class="btn btn-default float-right" ng-click="editar()" ng-show="selectedItem.us_id>0" ng-disabled="!selectedItem.us_id>0">Editar</button>
+        <button class="btn btn-default float-right" ng-click="resetearClave()" ng-show="selectedItem.us_id>0" ng-disabled="!selectedItem.us_id>0">Resetear clave</button>
+        <button class="btn btn-default float-right" ng-click="cambiarEstado()" ng-show="selectedItem.us_id>0" ng-disabled="!selectedItem.us_id>0">{{selectedItem.us_status===0?'Dar de baja':'Activar'}}</button>
+    </div>
+</div>
+
+<div>
+       <div ui-grid="gridOptions" ui-grid-selection ui-grid-resize-columns class="grid"></div>
+</div>

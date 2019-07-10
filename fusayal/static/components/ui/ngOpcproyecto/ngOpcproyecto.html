@@ -1,0 +1,50 @@
+<div class="row">
+    <div ng-show="params.acf_useproyecto ===1"  class="col-sm-4">
+        <div class="btn-group btn-group-justified">
+            <a class="btn btn-block  {{lstproyectosselecs.length>0 ? 'btn-primary':'btn-default'}}"
+               ng-click="show_modal_proyectos();">
+
+                <i class="{{lstproyectosselecs.length>0 ? 'fa fa-check-square-o':'fa fa-square-o'}} "></i>
+                {{tituloproyecto}}
+            </a>
+
+        </div>
+    </div>
+
+
+    <div ng-show="params.acf_useproyecto ===1" class="col-sm-8">
+        <h5><span ng-repeat="proyecto in setup.lstproyectosselecs">
+           {{proyecto.pry_nomcorto}}, </span>
+        </h5>
+    </div>
+
+    <div ng-show="params.acf_useproyecto === 2 && (params.nparcialview?params.nparcialview==0:true)" class="col-sm-8">
+        <div class="btn-group btn-group-justified">
+            <a class="btn btn-block {{params.opclocal === 1 ? 'btn-primary' : 'btn btn-default'}}"
+               ng-click="params.opclocal = 1;onChangeopclocal()">
+                <i ng-class="params.opclocal === 1 ? 'fa fa-check-square-o' :'fa fa-square-o' ">
+
+                </i>  Solo este {{tituloproyecto}}
+            </a>
+            <a class="btn btn-block {{params.opclocal === 0 ? 'btn-primary' : 'btn btn-default'}}"
+               ng-click="params.opclocal = 0;onChangeopclocal()">
+                <i ng-class=" params.opclocal=== 0 ? 'fa fa-check-square-o' :'fa fa-square-o' ">
+
+                </i> Todos
+            </a>
+
+        </div>
+
+
+    </div>
+    <div class="col-sm-4">
+        <span ng-show="params.opclocal  === 1">
+                {{alm_descri}}
+            </span>
+    </div>
+
+</div>
+
+<!--?--------- modal de proyectos ---------------->
+<modal-proyectos-dir elementid="modal_proys">
+</modal-proyectos-dir>

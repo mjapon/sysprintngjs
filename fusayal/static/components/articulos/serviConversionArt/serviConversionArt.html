@@ -1,0 +1,112 @@
+<div class="modal fade" id="{{cntrl.elementid}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Conversión de productos de inventario</h4>
+          </div>
+          <div class="modal-body">
+
+              <div class="row">
+                <div class="col-md-6">
+                    <servi-pane type="panel-default">
+                        <pane-title>
+                            <b> Obtener inventario desde: </b>
+                        </pane-title>
+                        <pane-body>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <select  class="form-control"
+                                             ng-model="cntrl.parentSel"
+                                             ng-options="item as item.art_nomlar for item in cntrl.parents"
+                                             ng-change="cntrl.loadInfoArtParent()" >
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span class="pull-right">Unidad:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" ng-model="cntrl.infoArtParent.uni_descri" readonly/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span class="pull-right">Stock Actual:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" ng-model="cntrl.infoArtParent.ars_exist" readonly/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span class="pull-right">Cantidad:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" ng-model="cntrl.form.cantidad" ng-change="cntrl.calcularNuevoStock()"/>
+                                </div>
+                            </div>
+                        </pane-body>
+                    </servi-pane>
+                </div>
+                <div class="col-md-6">
+                    <servi-pane type="panel-default">
+                        <pane-title>
+                            <b> Inventario enviado a: </b>
+                        </pane-title>
+                        <pane-body>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" ng-model="cntrl.infoArtEquiv.art_nomlar" readonly/>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span class="pull-right">Unidad:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" ng-model="cntrl.infoArtEquiv.uni_descri" readonly/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span class="pull-right">Stock Actual:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" ng-model="cntrl.infoArtEquiv.ars_exist" readonly/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span class="pull-right"> Equivalencia </span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" ng-model="cntrl.form.childCantEquiv" readonly/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span class="pull-right">Nuevo Stock:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" ng-model="cntrl.form.nuevoStock" readonly/>
+                                </div>
+                            </div>
+
+                        </pane-body>
+                    </servi-pane>
+                </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" ng-click="cntrl.grabar()">Guardar</button>
+          </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-md-12">
+        <ul class="list-group" style="margin-bottom: 1px;">
+            <li class="list-group-item" style="padding: 0; border: none">
+                <input type="text" ng-model="filtro[propFiltro]" class="form-control" ng-keydown="onkeydown($event)" ng-keyup="onkeyup($event)" placeholder="Digite el nombre de la retención" id="{{idprop}}" ng-style="csscolor" ng-blur="on_lost_focus()" ng-disabled="disabled"/>
+            </li>
+            <li class="list-group-item" style="padding: 0; border: none">
+                <ul class="list-group" style="z-index: 100; position: absolute; width: 100%; border-top: 1px solid #ddd;" ng-show="filtrados.length > 0">
+                    <li class="list-group-item hand" ng-repeat="item in filtrados track by $index" ng-class="item == itemsel ? 'active' : ''" style="padding: 3px;  border-top: none;">
+                        <div class="row">
+                            <div class="col-xs-12" ng-click="sel_item(item)"> {{item[propFiltro]}} </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="input-group">
+    <input type="text" class="form-control" ng-model="form['desde']" id="{{idpropdesde}}" input-mask="{mask:'99/99/9999'}"
+           ng-enter="fnondesdeenter()" ng-disabled="disabled['disabled']=='T'" ng-blur="fnondesdeblur()">
+    <span class="input-group-btn" style="width:0px;"></span>
+
+    <div class="input-group">
+        <input type="text" class="form-control" ng-model="form['hasta']" id="{{idprophasta}}" input-mask="{mask:'99/99/9999'}"
+               ng-enter="fnonhastaenter()" ng-disabled="disabled['disabled']=='T'" ng-blur="fnonhastablur()">
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" ng-disabled="disabled['disabled']=='T'">
+                Fechas <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu pull-right">
+                <li>
+                    <a href ng-click="cambiarFecha('hoy')">Hoy</a>
+                </li>
+                <li>
+                    <a href ng-click="cambiarFecha('ayer')">Ayer</a>
+                </li>
+                <li>
+                    <a href ng-click="cambiarFecha('semana')">La Semana</a>
+                </li>
+                <li>
+                    <a href ng-click="cambiarFecha('mes')">Este Mes</a>
+                </li>
+                <li>
+                    <a href ng-click="cambiarFecha('mesant')">Mes Anterior</a>
+                </li>
+                <li>
+                    <a href ng-click="cambiarFecha('anio')">Este A&ntilde;o</a>
+                </li>
+                <li>
+                    <a href ng-click="cambiarFecha('futuro')">A Futuro</a>
+                </li>
+                <li>
+                    <a href ng-click="cambiarFecha('sigsem')">Sig Semana</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

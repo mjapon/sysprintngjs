@@ -1,0 +1,96 @@
+<servi-page-header>
+    Lista de autorizaciones
+</servi-page-header>
+
+<div class="row">
+    <div class="col-md-12">
+        <button class="btn btn-default float-left" ng-click="listar()"><i class="fas fa-sync"></i> Listar</button>
+        <button class="btn btn-primary float-right" ng-click="crear()"> Crear</button>
+    </div>
+</div>
+<br>
+
+<ng-table titulo="Autorizaciones"
+          lstdatos=gridOptions.data
+          lstcols=gridOptions.columnDefs
+          rowopc="{func: onRowClick}"
+          scroll=false
+          striped=false
+          busq=true
+          paginacion="30"
+          checks="{model: 'marcado'}"
+          form=setupgrid
+          orderby="cnt_razonsocial">
+</ng-table>
+
+<!--
+<div>
+    <div ui-grid="gridOptions" ui-grid-selection ui-grid-resize-columns class="grid"></div>
+</div>
+-->
+
+
+<div class="modal fade" id="modalDetallesAuts" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel">Detalles</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-4"><b>Número:</b></div>
+                    <div class="col-md-8">{{selectedItem.aut_numero}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Contribuyente:</b></div>
+                    <div class="col-md-8">{{selectedItem.cnt_razonsocial}}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4"><b>Ruc:</b></div>
+                    <div class="col-md-8">{{selectedItem.cnt_ruc}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Fecha de autorización:</b></div>
+                    <div class="col-md-8">{{selectedItem.aut_fechaautorizacion}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Fecha de caducidad:</b></div>
+                    <div class="col-md-8">{{selectedItem.aut_fechacaducidad}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Documento:</b></div>
+                    <div class="col-md-8">{{selectedItem.td_nombre}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Serie:</b></div>
+                    <div class="col-md-8">{{selectedItem.serie}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Secuencia Inicial:</b></div>
+                    <div class="col-md-8">{{selectedItem.aut_secuencia_ini}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Secuencia Final:</b></div>
+                    <div class="col-md-8">{{selectedItem.aut_secuencia_fin}}</div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

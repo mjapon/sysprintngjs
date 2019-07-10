@@ -1,0 +1,68 @@
+<div class="modal fade" id="{{elementid}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <input type="text" ng-model="filtro_proy.$"  class="form-control" placeholder="Buscar {{acf_nameproyecto}}" id="centro_costo_filter"/>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="list-group" style="padding: 5px 15px" ng-show="!selecvarios">
+                        <a class="list-group-item" style="padding: 5px 15px" ng-repeat="proyecto in proyectos | filter:filtro_proy" ng-click="sel_proyecto(proyecto)">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <i class="fa fa-check-circle" ng-show="current_pry_codigo==proyecto['pry_codigo']"> </i> {{proyecto.pry_id}}
+                                </div>
+                                <div class="col-xs-6">
+                                    {{proyecto.pry_nomcorto}}
+                                    <i class="fa fa-angle-right pull-right"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div ng-show="selecvarios"  style="padding: 5px 15px" >
+
+                        <div class="row" style="padding: 5px">
+                            <label class="col-sm-6" >  Seleccione {{acf_nameproyecto}}: </label>
+                            <div class="col-sm-6" style="text-align: right" >
+                                <a class="btn {{pry_estado === 0 ? 'btn-primary' : 'btn btn-default'}}"
+                                   ng-click="cambiaEstado()">
+                                    <i ng-class="pry_estado === 0 ?'fa fa-check-square-o' : 'fa fa-square-o' "></i>
+                                    &nbsp; Solo activos &nbsp;&nbsp;
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="list-group">
+
+                            <a  class="list-group-item" style="padding: 5px 15px" ng-repeat="proyecto in proyectos | filter:filtro_proy"
+                                ng-click="sel_proyecto(proyecto)"
+                                tooltip="{title:'{{proyecto.pry_descrip}}',
+                                                    container:'body',
+                                                    placement:'right'}">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <i class="{{proyecto['sel']? 'fa fa-check-circle':'fa fa-circle-o'}}" > </i>&nbsp; {{proyecto.pry_id}}
+                                    </div>
+                                    <div class="col-xs-6">
+                                        {{proyecto.pry_nomcorto}}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn rigth-block btn-default"  data-dismiss="modal">
+                    <i class="fa fa-check"></i> ACEPTAR
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

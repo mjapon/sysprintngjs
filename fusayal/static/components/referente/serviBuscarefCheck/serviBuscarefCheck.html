@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-md-12">
+        <ul class="list-group" style="margin-bottom: 1px;">
+            <li class="list-group-item" style="padding: 0; border: none">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="onCheckClick()" id="{{idbtncheck}}">
+                            <i class="fa {{ischeck?'fa-check-square-o':'fa-square-o'}}"></i>
+                         {{setup.labelCheck}}:
+                        </button>
+                    </span>
+                    <input type="text" ng-model="filtro[propFiltro]"  servi-focus-select class="form-control" ng-keydown="onkeydown($event)" ng-keyup="onkeyup($event)" placeholder="{{placeh}}" id="{{idprop}}" ng-style="csscolor" ng-blur="on_lost_focus()" ng-disabled="!ischeck" autocomplete="off"/>
+
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="onlistaclick()" ng-disabled="!ischeck">  Lista... </button>
+                    </span>
+                </div>
+            </li>
+            <li class="list-group-item" style="padding: 0; border: none">
+                <ul class="list-group" style="z-index: 100; position: absolute; width: 100%; border-top: 1px solid #ddd;" ng-show="filtrados.length > 0">
+                    <li class="list-group-item hand" ng-repeat="item in filtrados track by $index" ng-class="item == itemsel ? 'active' : ''" style="padding: 3px;  border-top: none;">
+                        <div class="row">
+                            <div class="col-xs-12" ng-click="sel_item(item)"> {{item[propFiltro]}} </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="row" ng-init="gendescvisible = fnvisiblegendescri? fnvisiblegendescri(form):true ">
+    <div class="col-sm-3"  ng-if="gendescvisible">
+        {{form.gen_descri}}:
+    </div>
+    <div ng-class="gendescvisible ? 'col-sm-9':'col-sm-12'" >
+
+        <input type="text" class="form-control" ng-model="form.con_valor" ng-if="form.gen_tipo==1 || form.gen_tipo==5"
+               ng-disabled="fndisabled(form)"/>
+        <input type="text" class="form-control" ng-model="form.con_valor" ng-if="form.gen_tipo==2" ng-disabled="fndisabled(form)"/>
+        <input type="text" class="form-control" placeholder="DD/MM/AAAA"
+               ng-model="form.con_valor" input-mask="{mask: '99/99/9999'}" ng-if="form.gen_tipo==3" ng-disabled="fndisabled(form)">
+        <select class="form-control" ng-model="form.con_valor"
+                ng-options="op for op in form.items" ng-change="fnchange(form)"
+                ng-if="form.gen_tipo==4 " ng-disabled="fndisabled(form)"></select>
+
+        <select class="form-control" ng-model="form.con_valor" ng-change="fnchange(form)"
+                ng-options="op.codigo as op.descrip for op in form.items"
+                ng-if="form.gen_tipo==6" ng-disabled="fndisabled(form)"></select>
+        <textarea  cols="50" rows="3" class="form-control" type="text" ng-model="form.con_valor" ng-if="form.gen_tipo==7"
+                ng-disabled="fndisabled(form)">
+        </textarea>
+        <div ng-if="form.gen_tipo==8">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="thumbnail" style="margin-bottom: 10px; margin-top:10px;">
+                        <img ng-src="{{form.src}}" id="img" class="img-responsive" >
+                    </div>
+                    <span class="text-muted"> <small> {{form.name}} </small> </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="sube-archivo btn btn-primary btn-block" ng-disabled="fndisabled(form)"> <span>Subir Imagen </span>
+                        <carga-archivo-dir form="form" mxsize="form.mxsize"></carga-archivo-dir>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <button class="btn btn-danger btn-block" ng-click="quitar_imagen()" ng-disabled="form.src===''">Quitar Imagen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

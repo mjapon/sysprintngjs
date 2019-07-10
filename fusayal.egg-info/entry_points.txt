@@ -1,0 +1,6 @@
+[console_scripts]
+initialize_fusayal_db = fusayal.scripts.initializedb:main
+
+[paste.app_factory]
+main = fusayal:main
+

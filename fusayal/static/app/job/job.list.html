@@ -1,0 +1,184 @@
+<servi-page-header>
+    Lista de trabajos de impresión
+</servi-page-header>
+
+<div class="row">
+    <div class="col-md-12">
+        <button class="btn btn-default float-left" ng-click="listar()"><i class="fas fa-sync"></i> Listar</button>
+        <button class="btn btn-primary float-right" ng-click="crear()"> Crear</button>
+        <button class="btn btn-default float-right" ng-click="setPlantilla()" ng-show="selectedItem.job_id>0" ng-disabled="selectedItem.sjb_id!=1">Plantilla</button>
+        <button class="btn btn-default float-right" ng-click="showModalImprmir()" ng-show="selectedItem.job_id>0 && repgrid.selectedItem.temp_id>0" ng-disabled="selectedItem.sjb_id!=1">Imprimir</button>
+        <button class="btn btn-default float-right" ng-click="reportar()" ng-show="selectedItem.job_id>0 && repgrid.selectedItem.temp_id>0" ng-disabled="selectedItem.sjb_id!=6"> Reportar</button>
+        <button class="btn btn-default float-right" ng-click="reimprimir()" ng-show="selectedItem.job_id>0 && repgrid.selectedItem.temp_id>0" ng-disabled="selectedItem.sjb_id!=6">Reimprimir</button>
+    </div>
+</div>
+
+
+<ng-table titulo="Autorizaciones"
+          lstdatos=gridOptions.data
+          lstcols=gridOptions.columnDefs
+          rowopc="{func: onRowClick}"
+          scroll=false
+          striped=false
+          busq=true
+          paginacion="30"
+          checks="{model: 'marcado'}"
+          form=setupgrid
+          orderby="cnt_razonsocial">
+</ng-table>
+
+
+<!--?<div>
+    <div ui-grid="gridOptions" ui-grid-selection ui-grid-resize-columns class="grid"></div>
+</div>-->
+
+<div class="modal fade" id="modalDetallesJob" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel">Detalles</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-4"><b>Número Autorización:</b></div>
+                    <div class="col-md-8">{{selectedItem.aut_numero}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Contribuyente:</b></div>
+                    <div class="col-md-8">{{selectedItem.cnt_razonsocial}}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4"><b>Ruc:</b></div>
+                    <div class="col-md-8">{{selectedItem.cnt_ruc}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Fecha de autorización:</b></div>
+                    <div class="col-md-8">{{selectedItem.aut_fechaautorizacion}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Documento:</b></div>
+                    <div class="col-md-8">{{selectedItem.td_nombre}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Serie:</b></div>
+                    <div class="col-md-8">{{selectedItem.serie}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Secuencia Inicial:</b></div>
+                    <div class="col-md-8">{{selectedItem.aut_secuencia_ini}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><b>Secuencia Final:</b></div>
+                    <div class="col-md-8">{{selectedItem.aut_secuencia_fin}}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4"><b>Nro Copias:</b></div>
+                    <div class="col-md-8">{{selectedItem.job_nrocopias}}</div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4"><b>Estado:</b></div>
+                    <div class="col-md-8">{{selectedItem.sjb_nombre}}</div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <button type="button" class="btn btn-default" ng-click="cambiarEstado(3)">Incompleto
+                        </button>
+
+                        <button type="button" class="btn btn-default" ng-click="cambiarEstado(4)">No realizado
+                        </button>
+
+                        <button type="button" class="btn btn-default" ng-click="cambiarEstado(2)">Realizado
+                        </button>
+
+                        <button type="button" class="btn btn-default" ng-click="cambiarEstado(5)">Reimpresión
+                        </button>
+
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cerrar
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSelPlant" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Elija la plantilla a usar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    <li class="list-group-item {{item==repgrid.selectedItem?'active':''}}" style="cursor: pointer" ng-repeat="item in repgrid.data" ng-click="selectPlantilla(item)">{{item.temp_name}} </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="aceptarModal()"> Aceptar </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalSelPlant" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Elija la plantilla a usar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    <li class="list-group-item {{item==repgrid.selectedItem?'active':''}}" style="cursor: pointer" ng-repeat="item in repgrid.data" ng-click="selectPlantilla(item)">{{item.temp_name}} </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="aceptarModal()"> Aceptar </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSelTipoPrint" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Documento a imprimir</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    <li class="list-group-item {{selectedReport==1?'active':''}}" style="cursor: pointer" ng-click="selectDocToPrint(1,'Copia de archivo')">Copia de archivo</li>
+                    <li class="list-group-item {{selectedReport==2?'active':''}}" style="cursor: pointer" ng-click="selectDocToPrint(2,'Copia: emisor')">Copia: emisor</li>
+                    <li class="list-group-item {{selectedReport==3?'active':''}}" style="cursor: pointer" ng-click="selectDocToPrint(3,'Original: adquirente')">Original: adquirente</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,208 @@
+
+<style type="text/css" xmlns="http://www.w3.org/1999/html">
+
+    .column-headerstra {
+        overflow: hidden;
+        height: 20px;
+    }
+
+    .table-contenttra {
+        overflow: auto;
+        max-height: {{form.maxheight}}px;
+
+    }
+
+
+</style>
+<div class="panel {{form.clspnl}}" id="{{form.id}}">
+    <div class="panel-heading" style="padding: 0px">
+        <!--?<div class="row" style="padding: 4px">-->
+            <div class="row" id="cabecera"  style="padding: 4px"> <!--el id sirve para el gotoUp-->
+
+                <div class="col-md-8">
+
+                    <h5> {{form.titulo}} ({{form.numdatos}})</h5>
+
+                </div>
+
+
+
+
+                <div class="col-md-4" style="" ng-show="form.busq === true">
+
+                        <input type="text" class="form-control input-sm" placeholder="Buscar ..." ng-model="busqueda[form.filterby]"
+                               ng-show="form.lstdatos.length > 0 && !form.filtros && form.botongeneral?!form.botongeneral.show():false
+                               "
+                               ng-change="onChgBusqueda(busqueda[form.filterby])">
+                        <div class="input-group" ng-show="form.filtros">
+                            <input type="text" class="form-control" placeholder="Buscar ..." ng-model="busqueda[form.filterby]" ng-change="onChgBusqueda(busqueda[form.filterby])">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    Filtro <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu" >
+                                    <li ng-repeat="it in form.filtros.items" ng-class="{'active': form.selec===$index}">
+                                        <a href ng-click="form.filtros.func($index); setSelec($index);" >{{it}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="input-group" ng-if="form.btndropdown"  ng-show="form.btndropdown.show? form.btndropdown.show():true" >
+
+                            <input type="text" class="form-control input-sm" placeholder="Buscar ..." ng-model="busqueda[form.filterby]"
+                                   ng-change="onChgBusqueda(busqueda[form.filterby])" ng-show="form.lstdatos.length > 0">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    {{form.btndropdown.label}} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu" >
+                                    <li ng-repeat="it in form.btndropdown.items" >
+                                        <a href ng-click="form.btndropdown.func(it); " >{{it[form.btndropdown.descripcion]}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="input-group" style="text-align: right" ng-if="form.botongeneral"  ng-show="form.botongeneral.show? form.botongeneral.show():true" >
+                            <input type="text" class="form-control input-sm" placeholder="Buscar ..." ng-model="busqueda[form.filterby]"
+                                     ng-change="onChgBusqueda(busqueda[form.filterby])" ng-show="form.lstdatos.length > 0">
+                            <div class="input-group-btn" >
+                                <button type="button" class="btn btn-default btn-sm " ng-click="form.botongeneral.click()">
+                                   <i class="{{form.botongeneral.icon}}"></i>&nbsp; {{form.botongeneral.label}}
+                                </button>
+
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+
+        <!--?</div>-->
+
+
+    </div>
+     <!--Cuerpo del grid-->
+    <div class="row" ng-if="form.txthead.texto && form.lstdatos.length > 0">
+        <div class="col-md-12">
+            <p style="padding:5px; margin: 5px;" ng-style="{{form.txthead.style}}" class="{{form.txthead.class}}">{{form.txthead.texto}}</p>
+        </div>
+    </div>
+    <div class="row" ng-if="form.lstdatos.length === 0">
+        <div class="col-md-12">
+            <br>
+            <p class="text-center text-muted"><i>No existen datos!!</i></p>
+            <br>
+        </div>
+    </div>
+
+
+    <div class="panel-body" style="padding: 0px" >
+
+        <div class="column-headerstra" id="clscroll-column-headers-tra" ng-show="form.lstdatos.length>0">
+            <table class="table table-bordered" style="width:100%;  height: 60px">
+                <tr style="border-width: 1px; " >
+                     <th ng-repeat="c in form.lstcols" ng-click="setOrder(c.prop )"
+                         style="{{c.style ?c.style:''}}; padding: 2px; overflow: hidden;">
+                       {{c.label}}
+                        <span ng-class="form.predicate != c.prop ? 'fa fa-sort':(form.reverse?'fa fa-sort-desc':'fa fa-sort-asc')"></span>
+                    </th >
+                    <th ng-if="checks" ng-if="form.checks.hideColumncheck? form.checks.hideColumncheck==false:true"
+                        style="width:3%;  padding: 2px">
+
+                        <input type="checkbox" style="margin: 0px; padding: 0px;"
+                               ng-click="form.checks.funcall()" ng-disabled="{{form.checks.hideHead}}" ng-checked="form.checks.chkAll">
+
+                        <div ng-if="lstopcchecks" class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu" >
+                                <li ng-repeat="o in lstopcchecks"  >
+                                    <a href ng-click="onchecklista(lstopcchecks,o);form.checks.funcall(o);" style="color: #333">
+                                        <i ng-class=" o.sel===true?'fa fa-check-square-o':'fa fa-square-o '"></i> &nbsp;{{o.opcion}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="table-contenttra" id="clscroll-content-tra" >
+            <table style="width: 100%; overflow: hidden; margin-bottom: 0px" class="table table-bordered">
+                <tr ng-repeat="i in form.lstdatos| filter: busqueda|orderBy:form.predicate:form.reverse"
+                    ng-click="form.rowopc.func(i, i.$index_row);" ng-style=" {{form.rowopc.style}}"
+                    class="{{checks&&i[form.checks.model]===true?'info hand':form.rowopc.func?'hand':''}}"
+                   >
+                    <td  ng-repeat="c in form.lstcols" style=" {{c.style ?c.style:''}}; padding: 2px; overflow: hidden; "
+                            ng-click="form.colopc.func(c.prop, i);" ng-class="{{form.colopc.class}}" >
+                        <div ng-if="!c.editable " >
+                            <p  class="{{c.link?'btn-link':''}}" style="margin:0; color:#333;" >
+                                {{c.filter? (i[c.prop]|currency): i[c.prop]}}
+                            </p>
+                        </div>
+                        <div ng-if="c.editable " style="padding: 0; margin: 0;" class="{{i.$editado === true?'itemedit':i.$error === true?'itemerror':'itemnorm'}}">
+
+                             <input id="{{setIdCol(i.$index_row, $index)}}" style="border: hidden; height: 25px; width: 100%; color: #333; background-color: transparent;"
+
+                                   type="text" ng-model="i[c.prop]"  ng-keydown="onKeyDownColEdit($event, i.$index_row, $index, i[c.prop])"
+
+                                   ng-keyup="form.colopc.onkeymove(i.$index_row, $index)" ng-change="form.colopc.funchgval(c.prop, i, i.$index_row, $index)"
+
+                                   input-mask="{mask:'{{c.mask}}'}"  placeholder="{{c.placeholder}}" ng-disabled="{{c.disabled}}" ng-style="{{c.iptstyle}}">
+
+                        </div>
+
+
+                    </td>
+                    <td ng-if="checks"  style="line-height: 14px; vertical-align: middle; width: 3%; padding:2px"
+                        ng-show="form.checks.hideColumncheck? form.checks.hideColumncheck==false:true"
+                        ng-style="{{form.colopc.style}}" ng-class="{{form.colopc.class}}"
+
+                        ng-click="(i[form.checks.model]===false || i[form.checks.model]===undefined) && !$parent.$eval(form.checks.hide) && !$parent.$eval(form.checks.disabled)?
+                                i[form.checks.model]=true:i[form.checks.model]=false;form.checks.func(i, i.$index_row); $event.stopPropagation();">
+
+
+                        <input type="checkbox" style="margin: 0; padding: 0;" ng-model="i[form.checks.model]" ng-disabled="{{form.checks.disabled}}"
+                               ng-click="form.checks.func(i, i.$index_row); $event.stopPropagation();" ng-hide="{{form.checks.hide}}">
+
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+         <!-- Sección de totales -->
+
+            <div class="row" ng-if="form.lstdatos.length > 0 && form.totales.length > 0">
+
+                <div class="col-md-12">
+
+                    <table class="table" style="margin: 0">
+
+                        <tbody>
+
+                            <tr>
+
+                                <td ng-repeat="t in form.totales" style="text-align: center; line-height: 12px;">
+
+                                    <label> {{t.label}} </label> :
+
+                                    <p ng-style="{{t.style}}" style="margin-bottom: 0">{{t.filter?filtrar(t.filter, t.value):t.value}}</p>
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+    </div>
+</div>

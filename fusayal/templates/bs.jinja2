@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" ng-app="isyplus">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+    <title>Sys Imprentas</title>
+    <link rel="stylesheet" href="static/dist/css/vendor.min.css?v0.1.1"/>
+    <link rel="stylesheet" href="static/dist/css/app.min.css?v0.23"/>
+    <link rel="stylesheet" href="static/bower_components/font-awesome/css/all.css?v=4.4.0"/>
+</head>
+
+<body onload="if(history.length>0)history.go(+1)" ng-cloak>
+
+<div id="ajax_anim" class='ajax_anim_modal text-center'>
+    <br/>
+    <img src='static/img/loading13.gif' alt=''/>
+    <br/>
+    <span class='text-info' id="divajax_anim_msg">
+            Espere...
+    </span>
+</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ request.route_url('initApp') }}">SYS Imprentas</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                {% if request.session['userlogged'] == 1 %}
+                    <span>{{ request.session['us_nomapel'] }}</span>
+                    &nbsp;&nbsp;
+                    <a href="{{ request.route_url('logoutApp') }}">Salir</a>
+                {% else %}
+                    &nbsp;&nbsp;
+                    <a href="{{ request.route_url('loginApp') }}">Ingresar</a>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</nav>
+<main role="main" class="container-fluid">
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+
+<script src="static/dist/js/vendor.js?v=0.1"></script>
+<script src="static/js/utils.js?v=0.1"></script>
+
+</head>
+
+<script type="text/javascript" charset="utf-8">
+    var globalgsvapp = '{{vapp}}';
+    var globalEmpEsquema = '{{emp_esquema}}';
+    var globalUserLogged = '{{user_logged}}';
+    $(function () {
+        setupJQuery();
+        {% if request.session.peek_flash()|length>0 %}
+            {% set msg = request.session.pop_flash()[0].split(':') %}
+            {% set msg_sty = msg[0] %}
+            {% set msg_desc = msg[1] %}
+            var flashMsg = '{{msg_desc}}';
+            var flashMsgType = '{{msg_sty}}';
+            if ('danger' === flashMsgType) {
+                toastr.error(flashMsg);
+            }
+            else if ('success' === flashMsgType) {
+                toastr.success(flashMsg);
+            } else {
+                toastr.info(flashMsg);
+            }
+        {% endif %}
+    });
+</script>
+<script src="static/dist/js/app.js?v={{ vapp }}"></script>
+{#<script src="//localhost:1337/livereload.js"></script>#}
+</body>
+</html>

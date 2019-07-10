@@ -1,0 +1,96 @@
+<servi-page-header>
+    Contribuyentes
+</servi-page-header>
+
+<div class="row">
+    <div class="col-md-12">
+        <button class="btn btn-default float-left" ng-click="listar()"><i class="fas fa-sync"></i> Listar</button>
+        <button class="btn btn-primary float-right" ng-click="crear()">Crear</button>
+        <button class="btn btn-default float-right" ng-click="editar()" ng-show="selectedItem.cnt_id>0">Editar</button>
+    </div>
+</div>
+<br/>
+
+<!--?<div>
+    <div ui-grid="gridOptions" ui-grid-selection ui-grid-resize-columns class="grid"></div>
+</div>-->
+
+<ng-table titulo="Contribuyentes"
+          lstdatos=gridOptions.data
+          lstcols=gridOptions.columnDefs
+          rowopc="{func: onRowClick}"
+          scroll=false
+          striped=false
+          busq=true
+          paginacion="30"
+          checks="{model: 'marcado'}"
+          form=setupgrid
+          orderby="cnt_razonsocial">
+</ng-table>
+
+
+<div class="modal fade" id="modalDetallesContrib" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+        <div class="modal-header">
+        <h4 class="modal-title" id="myLargeModalLabel">Detalles</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+          <div class="row">
+                <div class="col-md-3"><b>Ruc:</b></div>
+                <div class="col-md-9">{{selectedItem.cnt_ruc}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"><b>Razón Social:</b></div>
+                <div class="col-md-9">{{selectedItem.cnt_razonsocial}}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3"><b>Nombre Comercial:</b></div>
+                <div class="col-md-9">{{selectedItem.cnt_nombrecomercial}}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3"><b>Telf:</b></div>
+                <div class="col-md-9">{{selectedItem.cnt_telf}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"><b>Email:</b></div>
+                <div class="col-md-9">{{selectedItem.cnt_email}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"><b>Dirección Matriz:</b></div>
+                <div class="col-md-9">{{selectedItem.cnt_dirmatriz}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"><b>Tipo:</b></div>
+                <div class="col-md-9">{{selectedItem.cls_nombre}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3"><b>Nro:</b></div>
+                <div class="col-md-9">{{selectedItem.cnt_nrocntespecial}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><b>Obligado a llevar contabilidad:</b></div>
+                <div class="col-md-8">{{selectedItem.ocontab}}</div>
+            </div>
+
+      </div>
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Cerrar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+

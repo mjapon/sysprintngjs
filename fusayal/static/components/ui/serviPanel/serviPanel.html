@@ -1,0 +1,15 @@
+<div class="panel " ng-class="cntrl.type||'panel-default'">
+  <div class="panel-heading" ng-show="cntrl.showHeader==='true'">
+      <div ng-transclude="titleSlot">
+          set pane-title
+      </div>
+  </div>
+  <div class="panel-body" ng-show="cntrl.showBody==='true'">
+      <div ng-transclude="bodySlot">
+          set pane-body
+      </div>
+  </div>
+  <div ng-transclude>
+
+  </div>
+</div>

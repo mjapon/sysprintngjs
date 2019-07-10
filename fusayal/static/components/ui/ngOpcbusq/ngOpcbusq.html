@@ -1,0 +1,199 @@
+<div class="panel panel-primary">
+    <div class="panel-heading" style="padding: 5px 15px;">{{titbusq}}</div>
+    <div class="panel-body">
+        <div class="row" style="margin-bottom: 10px;">
+            <div ng-class="listatdocs.length >1 ?'col-md-5 col-sm-5':'col-md-9 col-sm-9'">
+                <ng-rangofechas form="parametros"
+                    setup="{'fnondesdeenter':fncbusq,
+                            'fnonhastaenter':fncbusq,
+                            'fnonchange':fnonchangefecha}"
+                            disabled="disabled">
+                </ng-rangofechas>
+            </div>
+            <div class="col-md-4 col-sm-4" ng-if="listatdocs.length >1" style="display:{{listatdocs ? '':'none'}} " >
+                <div>
+
+
+                    <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown"
+                           ng-click="opendocs = false;foco('busqdoc')">
+                        {{titdoc}}&nbsp;&nbsp;<span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-left" role="menu"
+                             style="overflow-y: {{listatdocs.length >10?'scroll':''}};
+                                overflow-x:scroll;
+                                width:350px;
+                                height: {{listatdocs.length >10?'300px':''}};
+                                display: {{listatdocs.length >10? opendocs==true ? 'block' : '':'' }} " >
+                        <div class="dropdown-header" ng-show="listatdocs.length >10 ">
+                            <input type="text" id="busqdoc" class="form-control" style="width: 100%;" ng-click="opendocs=true;"
+                                  ng-model="buscardocs" placeholder="Buscar..." />
+                        </div>
+                        <li ng-if="listatdocs.length >10 " ng-repeat="it in listatdocs | filter: buscardocs " ng-class="{'active': it.sel===true}">
+                            <a href ng-click="funasignardoc(it.tra_codigo,it.tra_titulo);inicializar(listatdocs);it.sel=true" >
+                                {{it.tra_titulo}} </a>
+                        </li>
+                        <li ng-if="listatdocs.length <=10 "ng-repeat="it in listatdocs" ng-class="{'active': it.sel===true}">
+                            <a href ng-click="funasignardoc(it.tra_codigo,it.tra_titulo);inicializar(listatdocs);it.sel=true" >
+                                {{it.tra_titulo}} </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group-btn">
+                    <a href class="btn btn-default  btn-block  dropdown-toggle" role="button" data-toggle="dropdown">
+                        Filtro <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu" >
+
+                        <li ng-repeat="it in filtros" ng-class="{'active': listaopc[$index]===1}">
+
+                            <a href ng-click="funcfil($index);limpiartitbusq(it.tipo,$index)" >{{it.label}} </a>
+                        </li>
+                    </ul>
+                    </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 5px;">
+            <!--?caso que sea texto-->
+            <div class="col-md-6 col-sm-6" ng-if="opf.tipo==='text' && listaopc[$index]===1 " ng-repeat="opf in filtros" >
+                <div class="row">
+                    <label class="col-md-4 col-sm-4">{{opf.label}}</label>
+                        <div class="col-md-8 col-sm-8" ng-if="opf.expreg">
+                        <input type="text" focus-me="focus" class="form-control" size="11" ng-model="parametros[opf.opcmodel]" ng-bind="opf.funasignar()"
+                               pattern="{{opf.expreg}}"  title="{{opf.titulo?opf.titulo:''}}"
+                               placeholder="{{opf.labelph}}"   required />
+
+                        </div>
+                        <div class="col-md-8 col-sm-8" ng-if="!opf.expreg">
+                        <input type="text" focus-me="focus" class="form-control" size="11" ng-model="parametros[opf.opcmodel]" ng-bind="opf.funasignar()"
+                               placeholder="{{opf.labelph}}"   required />
+
+                        </div>
+                </div>
+            </div>
+            <!--?caso que sea monto-->
+            <div class="col-md-6 col-sm-6" ng-if="opf.tipo==='monto' && listaopc[$index]===1 " ng-repeat="opf in filtros">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4">
+                        <label style="text-align: left">
+                           {{opf.label}}
+                        </label>
+                    </div>
+                    <div class="col-md-8 col-sm-8">
+                        <div class="input-group">
+                          <span class="input-group-btn">
+                            <select class="form-control" style="min-width: 85px" ng-model="parametros[opf.opcmodelope]" ng-change="opf.funasignar();">
+                                <option value=">"   selected> >   </option>
+                                <option value=">="  > > = </option>
+                                <option value="="   > =   </option>
+                                <option value="<="   > < = </option>
+                                <option value="<"   > <   </option>
+                            </select>
+                          </span>
+                          <input class="form-control" ng-model="parametros[opf.opcmodelmon]" ng-enter="opf.funasignar()" pattern="^[0-9]*(.)[0-9]*"  title="Solo números"
+                                 type="text" style="text-align: center" required >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row " ng-if="opf.tipo==='find' && listaopc[$index]===1 " ng-repeat="opf in filtros" style="margin-bottom: 5px;margin-right: 2px;">
+            <label class="col-md-2 col-sm-2" >{{opf.label}}</label>
+            <div clas="col-md-10 col-sm-10">
+                <div class="input-group">
+                    <input type="text" focus-me="focus" class="form-control" size="11" ng-model="opf.objeto[opf.claobjeto]"
+                       placeholder="{{opf.labelph}}" autocomplete="off" ng-enter="opf.fcbuscar()" required />
+                    <span class="input-group-btn">
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-info" ng-click="opf.fcbuscar()">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <button type="button" class="btn btn-info" ng-click="opf.fclistar()">
+                            Lista...
+                        </button>
+                            </span>
+                    </span>
+                    <input type="text" class="form-control"
+                          value="{{opf.nomobjeto2? opf.objeto[opf.nomobjeto]+' '+opf.objeto[opf.nomobjeto2] :opf.objeto[opf.nomobjeto]}}" readonly="readonly">
+                </div>
+            </div>
+
+        </div>
+        <div class="row " style="margin-bottom: 5px;">
+        <!--?caso que sea listcheck-->
+            <div ng-if="opf.tipo && opf.tipo==='listcheck' && listaopc[$index]===1 " ng-repeat="opf in filtros" >
+                <div class="col-md-2 col-sm-2">
+                    <label style="text-align: left">
+                       {{opf.label}}
+                    </label>
+                </div>
+                <div class="col-md-10 col-sm-10">
+                    <div class="btn-group btn-group-justified">
+                        <a class="btn btn-block {{it.sel===true ? 'btn-primary' : 'btn btn-default'}}"
+                           ng-click="opf.funasignar(it[opf.opcvalue],it[opf.opciondescr]);inicializar(opf.lstselect);it.sel=true"
+                                ng-repeat="it in opf.lstselect">
+                            <i ng-class="it.sel===true ? 'fa fa-check-square-o':'fa fa-square-o' "></i> {{it[opf.opciondescr]}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row " style="margin-bottom: 5px;">
+            <!--?caso que sea check-->
+            <div class="col-md-3 col-sm-3" ng-if="opf.tipo && opf.tipo==='check' && listaopc[$index]===1 " ng-repeat="opf in filtros" >
+
+
+                <button type="button" class="btn btn-default btn-block"  ng-if="opf.opcmodel === '1'" ng-click="opf.funasignar('2'); fncbusq()">
+                    <i class="fa fa-square-o"></i> {{opf.labelcheck}}
+                </button>
+                <button type="button" class="btn btn-block btn-primary "  ng-if="opf.opcmodel === '2'" ng-click="opf.funasignar('1'); fncbusq()">
+                    <i class="fa fa-check-square-o"></i> {{opf.labelcheck}}
+                </button><!--valores.... 2 check.. 1 no check-->
+            </div>
+
+            <!--?caso que sea select-->
+            <div class="col-md-3 col-sm-3" ng-if="opf.tipo && opf.tipo==='select' && listaopc[$index]===1 " ng-repeat="opf in filtros"  >
+
+                <div class="input-group-btn">
+                    <a  href class="btn btn-default btn-block dropdown-toggle" role="button" data-toggle="dropdown"
+                        ng-click="ind=$index; opf.funasignaropen(false);foco('busq')">
+                        {{opf.label}}&nbsp;&nbsp;<span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-left" role="menu"
+                        style="overflow-y: {{opf.lstselect.length >10?'scroll':''}};height: {{opf.lstselect.length >10?'300px':''}};
+                                display: {{opf.open?'block' : '' }} ">
+                            <div class="dropdown-header" ng-show="opf.lstselect.length >10 && opf.open!= undefined">
+                            <input type="text" id="busq" class="form-control" style="width: 100%;" ng-click="opf.funasignaropen(true)"
+                                   ng-model="searchFilter" placeholder="Buscar..."  />
+
+                        </div>
+                        <li ng-repeat="it in opf.lstselect | filter: searchFilter" ng-class="{'active': it.sel===true}">
+                            <a href ng-click="opf.funasignar(it[opf.opcvalue],it[opf.opciondescr]);
+                                            inicializar(opf.lstselect);it.sel=true; opf.funasignaropen(false);" >{{it[opf.opciondescr]}} </a>
+
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row " style="margin-bottom: 5px;">
+            <div class="col-sm-12" ng-if="opf.tipo === 'opcproyecto' && listaopc[$index]===1"   ng-repeat="opf in filtros">
+                <ng-OpcProyecto params=parametros
+                                setup=opf
+                                lstproyectosselecs = opf.lstproyectosselecs
+                        >
+                </ng-OpcProyecto>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

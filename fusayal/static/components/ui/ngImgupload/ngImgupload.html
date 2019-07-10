@@ -1,0 +1,35 @@
+<style type="text/css" media="screen">
+    .subeArchivo {
+        position: relative;
+        overflow: hidden;        
+        margin: auto;
+    }
+    .subeArchivo input.subir {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="thumbnail" style="margin-bottom: 10px; margin-top:10px;">
+            <img ng-src="{{form.imgsrc}}" id="img" class="img-responsive" >
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="subeArchivo btn btn-primary btn-block"> <span>Subir Imagen</span>
+            <input type="file" class="subir" accept="image/*" id='inputimg'  onchange="angular.element(this).scope().setFile()" style="width:100%"/>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <button class="btn btn-danger btn-block" ng-click="quitaImagen()" ng-disabled="model===''">Quitar Imagen</button>
+    </div>
+</div>

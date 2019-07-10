@@ -1,0 +1,38 @@
+<div class="modal fade" id="{{elementid}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"> Datos del artículo </h4>
+            </div>
+            <div class="modal-body" style="padding: 0px 10px">
+                <div class="row">
+                    <div class="col-xs-12"> <b> {{datos.art_nomlar}} </b></div>
+                </div>
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-4"> <span class="text-muted"> Código: </span> </div>
+                            <div class="col-xs-8"> {{datos.art_id}} </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4"> <span class="text-muted"> Precio Normal + IMP:</span> </div>
+                            <div class="col-xs-8"> $ {{datos.art_prenor_imp | number:2}}  </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4"> <span class="text-muted"> Modelo Contable: </span> </div>
+                            <div class="col-xs-8"> {{datos.mdc_descri}}  </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4"> <span class="text-muted"> Graba iva: </span> </div>
+                            <div class="col-xs-8"> {{datos.art_impg==1?'SI':'NO'}}  </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

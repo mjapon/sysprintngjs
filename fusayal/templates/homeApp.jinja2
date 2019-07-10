@@ -1,0 +1,75 @@
+{% extends "bs.jinja2" %}
+{% block content %}
+    <div class="row" id="appRow" ng-controller="InitCntrl">
+        <div class="col-md-2" style="padding-right: 0px !important; padding-left: 5px !important;">
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                                    aria-expanded="true" aria-controls="collapseOne">
+                                Principal
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                         data-parent="#accordionExample">
+                        <div class="list-group">
+                            <button type="button" class="list-group-item list-group-item-action hand" ng-click="goContribs()">Contribuyentes</button>
+                            <button type="button" class="list-group-item list-group-item-action hand" ng-click="goAuts()">Autorizaciones</button>
+                            <button type="button" class="list-group-item list-group-item-action hand" ng-click="goJobs()">Documento</button>
+                            <button type="button" class="list-group-item list-group-item-action hand" ng-click="goJobWizard()">Wizard</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Plantillas
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="list-group">
+                            <button type="button" class="list-group-item list-group-item-action" ng-click="goReportes()">Listado</button>
+                            {#<button type="button" class="list-group-item list-group-item-action" ng-click="goReportes()">Reportes</button>#}
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Administración
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                         data-parent="#accordionExample">
+                        <div class="list-group">
+                            <button type="button" class="list-group-item list-group-item-action hand" ng-click="goEmpresa()">Datos empresa</button>
+                            <button type="button" class="list-group-item list-group-item-action hand" ng-click="goUsuarios()">Usuarios</button>
+                            <a  class="list-group-item list-group-item-action hand" href="{{request.route_url('logoutApp')}}">Salir</a>
+                            <!--
+                            <button type="button" class="list-group-item list-group-item-action hand">Salir</button>
+                            -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-10" style="padding-left: 0px !important;">
+            {#<br>#}
+            <div class="container-fluid" ui-view autoscroll="false">
+                <div class="jumbotron">
+                    <h1 class="display-4">BIENVENIDO!</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,68 @@
+<servi-page-header>
+    Parametrización del Establecimiento Gráfico
+</servi-page-header>
+<form action="">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-3">
+                    RUC:
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="nomApelUser" ng-model="form.emp_ruc" capitalize ng-required="true" maxlength="13"/>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-3">
+                    Razon Social:
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="nomApelUser" ng-model="form.emp_razonsocial" capitalize ng-required="true"/>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-3">
+                    Nombre Comercial:
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="nomApelUser" ng-model="form.emp_nombrecomercial" capitalize ng-required="true"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    Fecha autorización:
+                </div>
+                <div class="col-md-9">
+                    <servi-fecha elementid="emp_fechaautorizacion" model="form.emp_fechaautorizacion" required="true"></servi-fecha>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    Nro Autorización:
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" id="nomApelUser" ng-model="form.emp_nroautorizacion"
+                           capitalize ng-required="true" input-mask="{mask:'99999'}"/>
+                </div>
+            </div>
+
+            <br/>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-primary" type="submit" ng-click="guardar()"> {{form.emp_id ===
+                        0?'Guardar':'Actualizar'}}
+                    </button>
+                    <!--
+                    <button class="btn btn-default" ng-click="cancelar()"> Cancelar </button>
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

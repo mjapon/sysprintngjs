@@ -1,0 +1,100 @@
+<div class="modal fade" id="{{elementid}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <br/>
+                <form name="formdatcel">
+                    <div class="input-group">
+
+                        <input type="text" ng-model="celb_nvo.celb_nombre"  class="form-control" placeholder="Buscar celebrante.."
+                               id="celebrante_filter" required/>
+                        <span class="input-group-btn">
+
+                            <button type="button" class="btn btn-info" ng-click="limpiar()" title="Limpiar">
+                               <i class="fa fa-eraser"></i>
+                            </button>
+                            <button type="submit" class="btn btn-info" ng-click="guardarCelebrante(celb_nvo,formdatcel)" title="Crear nuevo celebrante">
+                               <i class="fa fa-floppy-o"></i> Crear
+                            </button>
+                        </span>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-body">
+                <div class="row" style="padding: 5px">
+                    <label class="col-sm-6" >  Lista Celebrantes ({{celebrantes.length}}): </label>
+                    <div class="col-sm-6" style="text-align: right" >
+                        <a class="btn {{celb_estado === 0 ? 'btn-primary' : 'btn btn-default'}}"
+                           ng-click="cambiaEstado()">
+                            <i ng-class="celb_estado === 0 ?'fa fa-check-square-o' : 'fa fa-square-o' "></i>
+                            &nbsp; Solo disponibles &nbsp;&nbsp;
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="list-group" style="padding: 5px 15px" >
+                            <a href="" class="list-group-item" style="padding: 5px 15px" ng-style="{{estilorow}}" ng-repeat="celebrante in celebrantes | filter:celb_nvo.celb_nombre"
+                                >
+                                <div class="row" >
+                                    <div ng-if="celb_edit.celb_codigo===celebrante.celb_codigo">
+                                        <form name="formdatcel_edit">
+                                            <div class="col-xs-12">
+
+                                                <div class="input-group">
+                                                    <input type="text" id="nomcelebrante" ng-model="celb_edit.celb_nombre"
+                                                       class="form-control"  required>
+                                                    <span class="input-group-btn">
+                                                        <button type="submit" class="btn btn-info "
+                                                                ng-click="guardarCelebrante(celb_edit,formdatcel_edit)"
+                                                                title="Guardar Edición">
+                                                           <i class="fa fa-refresh"></i> Actualizar
+                                                        </button>
+                                                        <button type="button" class="btn btn-info "
+                                                                ng-click="cancelar()"
+                                                                title="Cancelar Edición">
+                                                           <i class="fa fa-sign-out"></i> Cancelar
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div ng-if="celb_edit.celb_codigo!=celebrante.celb_codigo">
+                                        <div class="col-xs-9" ng-click="sel_celebrante(celebrante)" title="Asignar">
+                                            <i
+                                               class="{{celebrante['sel']? 'fa fa-check-circle':'fa fa-circle-o'}}" >
+                                            </i>&nbsp; {{celebrante.celb_nombre}}
+
+                                        </div>
+                                        <div class="col-xs-3" style="text-align: center;">
+                                            <button class="btn btn-default btn-sm"
+                                                    title="{{celebrante.celb_estado===1? 'Habilitar Celebrante':'Deshabilitar Celebrante'}}"
+                                                ng-click="cambiarestadoCelebrante(celebrante, celebrante.celb_estado===1? 0:1)">
+                                            <i ng-class="celebrante.celb_estado===1? 'fa fa-check':'fa fa-remove'"></i></button>
+                                            <button class="btn btn-default btn-sm"
+                                                    title="Editar celebrante"
+                                                ng-click="asignar_celb_edit(celebrante)">
+                                            <i class="fa fa-edit"></i></button>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </a>
+                        <!--?</div>-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button ng-if="selecvarios" type="button" class="btn rigth-block btn-default"  data-dismiss="modal">
+                    <i class="fa fa-check"></i> ACEPTAR
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

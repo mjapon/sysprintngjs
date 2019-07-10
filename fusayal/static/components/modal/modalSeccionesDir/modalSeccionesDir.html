@@ -1,0 +1,57 @@
+<div class="modal fade" id="{{elementid}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <input type="text" ng-model="filtro_secc.$"  class="form-control" placeholder="Buscar {{acf_nameproyecto}}" id="seccion_filter"/>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="list-group" style="padding: 5px 15px" ng-show="!selecvarios">
+                        <a class="list-group-item" style="padding: 5px 15px" ng-repeat="seccion in secciones | filter:filtro_secc"
+                           ng-click="sel_seccion(seccion)"
+                                tooltip="{title:'{{seccion.pry_descrip}}',
+                                                    container:'body',
+                                                    placement:'right'}">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <i class="fa fa-check-circle" ng-show="session_sec_codigo==seccion['sec_codigo']"> </i> {{seccion.alm_seccio}}
+                                </div>
+                                <div class="col-xs-6">
+                                    {{seccion.sec_desci}}
+                                    <i class="fa fa-angle-right pull-right"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div ng-show="selecvarios"  style="padding: 5px 15px" >
+                        <div class="list-group">
+
+                            <a  class="list-group-item" style="padding: 5px 15px" ng-repeat="seccion in secciones | filter:filtro_secc"
+                                ng-click="sel_seccion(seccion)">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <i class="{{seccion['sel']? 'fa fa-check-circle':'fa fa-circle-o'}}" > </i>&nbsp; {{seccion.alm_seccio}}
+                                    </div>
+                                    <div class="col-xs-6">
+                                        {{seccion.sec_desci}}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn rigth-block btn-default"  data-dismiss="modal">
+                    <i class="fa fa-check"></i> ACEPTAR
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+<servi-page-header>
+    {{titulo}}
+</servi-page-header>
+<br/>
+<form name="form">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Nombres y apellidos:</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" id="nomApelUser" ng-model="form.us_nomapel" capitalize
+                           ng-required="true" ng-disabled="accion ==='r'"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <label>Nombre de la cuenta:</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control" ng-model="form.us_name" ng-required="true"
+                           ng-disabled="accion ==='r'"/>
+                </div>
+            </div>
+
+            <div ng-show="form.us_id === 0 || accion ==='r'">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Clave Temporal:</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="password" class="form-control" id="claveTempInput" ng-model="form.claveTemp"
+                               ng-required="true"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Confirmación Clave:</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="password" class="form-control" ng-model="form.confClaveTemp" ng-required="true"/>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-primary" type="submit" ng-click="guardar()"> {{form.us_id ===
+                        0?'Guardar':'Actualizar'}}
+                    </button>
+                    <button class="btn btn-default" ng-click="cancelar()"> Cancelar</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+
+            <div class="card" style="width: 18rem;" ng-show="accion === 'c' || accion ==='e'">
+                <div class="card-header">
+                    Roles
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item grab" ng-repeat="row in matrizRoles"
+                        ng-click="row.marcado = row.marcado===1?0:1">
+                        <i class="{{row.marcado===1 ? 'fas fa-check-square':'far fa-square' }}"></i> {{row.rl_name}}
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+</form>
