@@ -2,94 +2,96 @@
     Trabajo de Impresión
 </servi-page-header>
 <br>
-<form action="">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col-md-4">
-                    Contribuyente:
-                </div>
-                <div class="col-md-8">
-                    <ng-complete lstdatos="listas.contributentes"
-                                 model="contribsel"
-                                 filtro="cnt_razonsocial"
-                                 func="onContribSel"
-                                 elementid="ruccontrib"
-                                 placeholder="Digite la razon social..">
-                    </ng-complete>
-                </div>
-            </div>
 
-             <div class="row">
-                <div class="col-md-4">
-                    Autorización:
-                </div>
-                <div class="col-md-8">
-                    <select class="form-control"
-                            ng-model="form.aut_id"
-                            name="aut_id"
-                            id="aut_id"
-                            ng-options="aut.aut_id as aut.aut_numero+' '+aut.td_nombre for aut in listas.auts"
-                            ng-change="onAutChange()">
-                    </select>
-                </div>
-            </div>
+<div class="row">
+    <div class="col-md-6">
 
-            <div class="row">
-                <div class="col-md-4">
-                    Nro copias:
-                </div>
-                <div class="col-md-8">
-                    <input type="number" class="form-control" ng-model="form.job_nrocopias">
-                </div>
-            </div>
 
-            <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-primary" type="button" ng-click="guardar()">Guardar</button>
-                    <button class="btn btn-default" type="button" ng-click="cancelar()"> Cancelar</button>
-                </div>
+        <div class="row">
+            <div class="col-md-4">
+                Contribuyente:
             </div>
-
+            <div class="col-md-8">
+                <ng-complete lstdatos="listas.contributentes"
+                             model="contribsel"
+                             filtro="cnt_razonsocial"
+                             func="onContribSel"
+                             elementid="ruccontrib"
+                             placeholder="Digite la razon social..">
+                </ng-complete>
+            </div>
         </div>
-        <div class="col-md-6" ng-show="autsel.aut_id>0">
-            <div class="row">
-                <div class="col-md-5">
-                    <b>Fecha de autorización:</b>
-                </div>
-                <div class="col-md-7">
-                    {{autsel.aut_fechaautorizacion}}
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-5">
-                    <b>Fecha de caducidad:</b>
-                </div>
-                <div class="col-md-7">
-                    {{autsel.aut_fechacaducidad}}
-                </div>
+        <div class="row">
+            <div class="col-md-4">
+                Autorización:
             </div>
-
-            <div class="row">
-                <div class="col-md-5">
-                    <b>Serie:</b>
-                </div>
-                <div class="col-md-7">
-                    {{autsel.serie}}
-                </div>
+            <div class="col-md-8">
+                <select class="form-control"
+                        ng-model="form.aut_id"
+                        name="aut_id"
+                        id="aut_id"
+                        ng-options="aut.aut_id as aut.aut_numero+' '+aut.td_nombre for aut in listas.auts"
+                        ng-change="onAutChange()">
+                </select>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-5">
-                    <b>Documento:</b>
-                </div>
-                <div class="col-md-7">
-                    {{autsel.td_nombre}}
-                </div>
+        <div class="row">
+            <div class="col-md-4">
+                Nro copias:
+            </div>
+            <div class="col-md-8">
+                <input type="number" class="form-control" ng-model="form.job_nrocopias">
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-outline-primary" type="button" ng-click="guardar()">Guardar</button>
+                <button class="btn btn-outline-secondary" type="button" ng-click="cancelar()"> Cancelar</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6" ng-show="autsel.aut_id>0">
+        <div class="row">
+            <div class="col-md-5">
+                <b>Fecha de autorización:</b>
+            </div>
+            <div class="col-md-7">
+                {{autsel.aut_fechaautorizacion}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <b>Fecha de caducidad:</b>
+            </div>
+            <div class="col-md-7">
+                {{autsel.aut_fechacaducidad}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <b>Serie:</b>
+            </div>
+            <div class="col-md-7">
+                {{autsel.serie}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">
+                <b>Documento:</b>
+            </div>
+            <div class="col-md-7">
+                {{autsel.td_nombre}}
             </div>
         </div>
     </div>
+</div>
 
-</form>
+

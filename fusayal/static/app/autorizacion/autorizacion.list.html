@@ -4,11 +4,10 @@
 
 <div class="row">
     <div class="col-md-12">
-        <button class="btn btn-default float-left" ng-click="listar()"><i class="fas fa-sync"></i> Listar</button>
-        <button class="btn btn-primary float-right" ng-click="crear()"> Crear</button>
+        <button class="btn btn-outline-secondary float-left" ng-click="listar()"><i class="fas fa-sync"></i> Listar</button>
+        <button class="btn btn-outline-primary float-right" ng-click="crear()"> Crear</button>
     </div>
 </div>
-<br>
 
 <ng-table titulo="Autorizaciones"
           lstdatos=gridOptions.data
@@ -70,7 +69,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4"><b>Serie:</b></div>
-                    <div class="col-md-8">{{selectedItem.serie}}</div>
+                    <div class="col-md-8">{{selectedItem.aut_serie}}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-4"><b>Secuencia Inicial:</b></div>

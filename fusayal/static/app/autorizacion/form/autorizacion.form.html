@@ -1,119 +1,133 @@
 <servi-page-header>
     Nueva autorización
 </servi-page-header>
-<br>
-<form action="">
-    <div class="row">
-        <div class="col-md-7">
-            <div class="row">
-                <div class="col-md-4">
-                    Contribuyente:
+
+<div class="row">
+    <div class="col-md-8">
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        Contribuyente:
+                    </div>
+                    <div class="col-md-8">
+                        <ng-complete lstdatos="listas.contributentes"
+                                     model="contribsel"
+                                     filtro="cnt_razonsocial"
+                                     func="onContribSel"
+                                     elementid="contrib"
+                                     placeholder="Digite la razon social..">
+                        </ng-complete>
+                    </div>
                 </div>
-                <div class="col-md-8">
-                    <ng-complete lstdatos="listas.contributentes"
-                                 model="contribsel"
-                                 filtro="cnt_razonsocial"
-                                 func="onContribSel"
-                                 elementid="contrib"
-                                 placeholder="Digite la razon social..">
-                    </ng-complete>
+
+                <!--
+                <div class="row">
+                    <div class="col-md-4">
+                        Establecimiento:
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" id="aut_estab" class="form-control" ng-model="form.aut_estab" input-mask="{mask:'999'}"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        Punto de emisión:
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" ng-model="form.aut_ptoemi" input-mask="{mask:'999'}"/>
+                    </div>
+                </div>
+                -->
+
+                <div class="row">
+                    <div class="col-md-4">
+                        Serie:
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" id="aut_serie" class="form-control" ng-model="form.aut_serie"
+                               input-mask="{mask:'999-999'}"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        Numero de autorización:
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" ng-model="form.aut_numero"
+                               input-mask="{mask:'9999999999'}"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        Fecha de autorización:
+                    </div>
+                    <div class="col-md-8">
+                        <servi-fecha elementid="e_fechaaut" model="form.aut_fechaautorizacion"
+                                     required="true" onenter="onenterfecha()"></servi-fecha>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        Fecha de caducidad:
+                    </div>
+                    <div class="col-md-8">
+                        <servi-fecha elementid="e_fechaaut" model="form.aut_fechacaducidad"
+                                     required="true"></servi-fecha>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        Tipo Documento:
+                    </div>
+                    <div class="col-md-8">
+                        <select class="form-control"
+                                ng-model="form.aut_tipodoc"
+                                ng-options="tipodoc.td_id as tipodoc.td_nombre for tipodoc in listas.tiposdoc">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="">Secuencia Inicial:</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="number" class="form-control" ng-model="form.aut_secuencia_ini"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="">Secuencia Final:</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="number" class="form-control" ng-model="form.aut_secuencia_fin"/>
+                    </div>
+                </div>
+                <br>
+
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-outline-primary" type="button" ng-click="guardar()">Guardar</button>
+                        <button class="btn btn-outline-secondary" type="button" ng-click="cancelar()"> Cancelar</button>
+                    </div>
                 </div>
             </div>
 
-            <!--
-            <div class="row">
-                <div class="col-md-4">
-                    Establecimiento:
-                </div>
-                <div class="col-md-8">
-                    <input type="text" id="aut_estab" class="form-control" ng-model="form.aut_estab" input-mask="{mask:'999'}"/>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    Punto de emisión:
-                </div>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" ng-model="form.aut_ptoemi" input-mask="{mask:'999'}"/>
-                </div>
-            </div>
-            -->
-
-            <div class="row">
-                <div class="col-md-4">
-                    Serie:
-                </div>
-                <div class="col-md-8">
-                    <input type="text" id="aut_serie" class="form-control" ng-model="form.aut_serie" input-mask="{mask:'999-999'}"/>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    Numero de autorización:
-                </div>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" ng-model="form.aut_numero" input-mask="{mask:'9999999999'}"/>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    Fecha de autorización:
-                </div>
-                <div class="col-md-8">
-                    <servi-fecha elementid="e_fechaaut" model="form.aut_fechaautorizacion"
-                                 required="true" onenter="onenterfecha()"></servi-fecha>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    Fecha de caducidad:
-                </div>
-                <div class="col-md-8">
-                    <servi-fecha elementid="e_fechaaut" model="form.aut_fechacaducidad" required="true"></servi-fecha>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    Tipo Documento:
-                </div>
-                <div class="col-md-8">
-                    <select class="form-control"
-                            ng-model="form.aut_tipodoc"
-                            ng-options="tipodoc.td_id as tipodoc.td_nombre for tipodoc in listas.tiposdoc">
-                    </select>
-                </div>
-            </div>
-
-            <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-primary" type="button" ng-click="guardar()">Guardar</button>
-                    <button class="btn btn-default" type="button" ng-click="cancelar()"> Cancelar</button>
-                </div>
-            </div>
         </div>
-        <div class="col-md-5">
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="">Secuencia Inicial:</label>
-                </div>
-                <div class="col-md-8">
-                    <input type="number" class="form-control" ng-model="form.aut_secuencia_ini"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <label for="">Secuencia Final:</label>
-                </div>
-                <div class="col-md-8">
-                    <input type="number" class="form-control" ng-model="form.aut_secuencia_fin"/>
-                </div>
-            </div>
-        </div>
+
     </div>
-</form>
+
+
+</div>
+
+

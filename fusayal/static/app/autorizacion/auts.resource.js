@@ -28,6 +28,12 @@
                     params: {
                         accion: 'contribauts'
                     }
+                },
+                getByNumAndRuc :{
+                    method: 'GET',
+                    params: {
+                        accion: 'findbyrucnum'
+                    }
                 }
             });
     }
