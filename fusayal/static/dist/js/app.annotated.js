@@ -15,7 +15,8 @@ var IsyplusApp = angular.
         'ui.grid.pinning',
         'ui.grid.resizeColumns',
         'ngResource',
-        'ngDraggable']);
+        'ngDraggable',
+        'ngFileUpload']);
 //Editado
 
 
@@ -222,7 +223,7 @@ var IsyplusApp = angular.
 
         vm.form = {};
         vm.contribsel = {};
-        vm.listas ={contributentes:[], tiposdoc:[]};
+        vm.listas = {contributentes: [], tiposdoc: []};
 
         vm.guardar = guardar;
         vm.cancelar = cancelar;
@@ -230,29 +231,29 @@ var IsyplusApp = angular.
         vm.onenterfecha = onEnterFecha;
 
         init();
-        
+
         function init() {
-            var res = AutorizacionServ.get({aut_id:0}, function(){
-                if (res.estado == 200){
+            var res = AutorizacionServ.get({aut_id: 0}, function () {
+                if (res.estado == 200) {
                     vm.form = res.form;
                     vm.listas.contributentes = res.contribs;
                     vm.listas.tiposdoc = res.tiposdoc;
                 }
             });
-            focusService.setFocus("contrib",500);
+            focusService.setFocus("contrib", 500);
         }
 
         function guardar() {
-            var res = AutorizacionServ.save(vm.form, function(){
-                if (res.estado === 200){
+            var res = AutorizacionServ.save(vm.form, function () {
+                if (res.estado === 200) {
                     NotifServ.success(res.msg);
                     $state.go("auts_list");
                 }
             });
         }
 
-        function onContribSel(contribsel){
-            if (contribsel){
+        function onContribSel(contribsel) {
+            if (contribsel) {
                 vm.form.cnt_id = contribsel.cnt_id;
                 focusService.setFocus("aut_estab", 100);
             }
@@ -262,13 +263,8 @@ var IsyplusApp = angular.
             $state.go("auts_list");
         }
 
-        function  onEnterFecha( ) {
-            console.log("on enter fecha");
-            console.log(vm.form.aut_fechaautorizacion);
-
-            var res =  FechasServ.sumar_anios(vm.form.aut_fechaautorizacion,1);
-            console.log("new fecha:");
-            console.log(res);
+        function onEnterFecha() {
+            var res = FechasServ.sumar_anios(vm.form.aut_fechaautorizacion, 1);
             vm.form.aut_fechacaducidad = res;
         }
     }
@@ -885,6 +881,7 @@ var IsyplusApp = angular.
         vm.reportar = reportar;
         vm.reimprimir = reimprimir;
         vm.onRowClick = onRowClick;
+        vm.testUpload = testUpload;
 
 
         vm.repgrid = {};
@@ -926,6 +923,10 @@ var IsyplusApp = angular.
                     vm.gridOptions.data = res.items;
                 }
             });
+        }
+
+        function testUpload() {
+            $state.go('job_upload');
         }
 
         function rowTemplate() {    //custom rowtemplate to enable double click and right click menu options
@@ -1091,6 +1092,12 @@ var IsyplusApp = angular.
                         accion: 'justform'
                     }
                 },
+                getAllInfo: {//Retorna el 3 formularios, del job, del contribuyente y de la autorizacion
+                    method: 'GET',
+                    params: {
+                        accion: 'getall'
+                    }
+                },
 
 
                 cambiarEstado: {
@@ -1109,6 +1116,22 @@ var IsyplusApp = angular.
             });
     }
     JobService.$inject = ['$resource'];
+
+})();
+(function () {
+    'use strict';
+    angular.module("isyplus")
+        .factory("JobRPService", JobRPService);
+
+    function JobRPService($resource) {
+        return $resource("/rest/jobrp/:jobrp_id",
+            {jobrp_id: '@jobrp_id'}, {
+            
+            }
+        );
+    }
+    JobRPService.$inject = ['$resource'];
+
 
 })();
 (function () {
@@ -1285,8 +1308,9 @@ var IsyplusApp = angular.
 
             var res = JobService.save(vm.formJob, function () {
                 if (res.estado === 200) {
+                    var job_id_gen = res.job_id;
                     NotifServ.success(res.msg);
-                    goToJobList();
+                    goToJobView(job_id_gen);
                 }
             });
         }
@@ -1302,6 +1326,10 @@ var IsyplusApp = angular.
 
         function setInputFocus(inputid) {
             focusService.setFocus(inputid);
+        }
+
+        function goToJobView(job_id) {
+            $state.go('job_view', {job_id: job_id});
         }
 
         init();
@@ -1322,6 +1350,159 @@ var IsyplusApp = angular.
         });
     }
     jobConfig.$inject = ['$stateProvider'];
+
+
+})();
+(function () {
+    'use strict';
+    angular.module("isyplus")
+        .controller('JobUpCntrl', JobUpCntrl);
+
+    function JobUpCntrl($scope, $window, Upload, swalService) {
+
+        var vm = $scope;
+
+        vm.submit = submit;
+        vm.upload = upload;
+
+        function init(){
+            console.log('init up cntrl--->');
+        }
+
+        init();
+
+        function submit(){ //function to call on form submit
+            console.log('Se ejecuta submit');
+            console.log('vm.upload_form');
+            console.log(vm.upload_form);
+            console.log(vm.upload_form.file.$valid && vm.file);
+            if (vm.upload_form.file.$valid && vm.file) { //check if from is valid
+                upload(vm.file); //call upload function
+            }
+        }
+
+        function upload (file) {
+            Upload.upload({
+                url: 'http://localhost:6543/uploadjobview', //webAPI exposed to upload the filefilename
+                data:{file:file, job_id:0, 'nombreArchivo':'pruebaNombreArchivo', 'filename':'pruebafilename'} //pass file as data, should be user ng-model
+            }).then(function (resp) { //upload function returns a promise
+                console.log('Respuesta del servidor');
+                console.log(resp);
+                if(resp.data.estado === 200){ //validate success
+                    swalService.success(resp.data.msg);
+                    //$window.alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.msg);
+                } else if (resp.data.estado === -1) {
+                    swalService.warning(resp.data.msg);
+                    //$window.alert('an error occured');
+                }
+            }, function (resp) { //catch error
+                console.log('Error status: ' + resp.status);
+                $window.alert('Error status: ' + resp.status);
+                swalService.error(resp.status);
+            }, function (evt) {
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+                vm.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
+            });
+        };
+
+    }
+    JobUpCntrl.$inject = ['$scope', '$window', 'Upload', 'swalService'];
+
+
+})();
+(function () {
+    'use strict';
+    angular.module("isyplus")
+    .config(jobUpConfig);
+    function jobUpConfig($stateProvider) {
+        $stateProvider.state('job_upload',{
+            url : '/jobupload',
+            templateUrl: 'static/app/job/jobuploaddoc/jobjup.html?v=' + globalgsvapp,
+            controller: 'JobUpCntrl'
+        });
+    }
+    jobUpConfig.$inject = ['$stateProvider'];
+
+
+})();
+(function () {
+    'use strict';
+    angular.module("isyplus")
+        .controller("JobViewCntrl", JobViewCntrl);
+
+    function JobViewCntrl($scope, $stateParams, JobService) {
+        var vm = $scope;
+
+        vm.formContrib = {};
+        vm.formAut = {};
+        vm.formJob = {};
+
+        vm.anular = anular;
+        vm.plantilla = plantilla;
+        vm.cargaManual = cargaManual;
+        vm.reimprimir = reimprimir;
+        vm.reportar = reportar;
+
+        init();
+        
+        function init() {
+            console.log('init JobViewCntrl');
+            getDatosJob();
+        }
+
+        function getDatosJob(){
+            var job_id = $stateParams.job_id;
+            var res = JobService.getAllInfo({job_id:job_id}, function () {
+                console.log('respuesta del servidor es');
+                console.log(res);
+                if (res.estado === 200) {
+                    vm.formJob = res.form_job;
+                    vm.formAut = res.form_aut;
+                    vm.formContrib = res.form_contrib;
+                }
+            });
+        }
+
+        function anular() {
+
+        }
+        
+        function plantilla() {
+            
+        }
+        
+        function cargaManual() {
+            
+        }
+        
+        function reimprimir(){
+            
+        }
+        
+        function reportar() {
+            
+        }
+        
+
+
+
+    }
+    JobViewCntrl.$inject = ['$scope', '$stateParams', 'JobService'];
+
+})();
+(function () {
+    'use strict';
+    angular.module("isyplus")
+    .config(jobViewConfig);
+    function jobViewConfig($stateProvider) {
+        $stateProvider.state('job_view',{
+            url : '/jobview/:job_id',
+            templateUrl: 'static/app/job/jobview/job.view.html?v=' + globalgsvapp,
+            controller: 'JobViewCntrl'
+        });
+    }
+    jobViewConfig.$inject = ['$stateProvider'];
 
 
 })();

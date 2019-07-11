@@ -172,8 +172,9 @@
 
             var res = JobService.save(vm.formJob, function () {
                 if (res.estado === 200) {
+                    var job_id_gen = res.job_id;
                     NotifServ.success(res.msg);
-                    goToJobList();
+                    goToJobView(job_id_gen);
                 }
             });
         }
@@ -189,6 +190,10 @@
 
         function setInputFocus(inputid) {
             focusService.setFocus(inputid);
+        }
+
+        function goToJobView(job_id) {
+            $state.go('job_view', {job_id: job_id});
         }
 
         init();

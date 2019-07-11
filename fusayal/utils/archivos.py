@@ -33,6 +33,13 @@ class CargaArchivosUtil(object):
         destino.write(data)
         destino.close()
 
+    def save_bytarray(self, path_file, data):
+        binary_format = bytearray(b'{0}'.format(data))
+        destino = open(path_file, 'wb')
+        destino.write(binary_format)
+        destino.close()
+
+
 
 
 class ArchivosTransaccUtil(CargaArchivosUtil, BaseDao):

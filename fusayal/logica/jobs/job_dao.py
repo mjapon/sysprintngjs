@@ -9,6 +9,7 @@ from datetime import datetime
 from fusayal.logica.dao.base import BaseDao
 from fusayal.logica.excepciones.validacion import ErrorValidacionExc
 from fusayal.logica.jobs.job_model import TJob
+from fusayal.utils import cadenas
 
 log = logging.getLogger(__name__)
 
@@ -21,7 +22,11 @@ class TJobDao(BaseDao):
             'aut_id': 0,
             'job_nrocopias': 1,
             'cnt_id': 0,
-            'job_estado': 1
+            'job_estado': 1,
+            'job_tipodoc': 1,
+            'job_ptoemi': '',
+            'job_secuencia_ini': '',
+            'job_secuencia_fin': '',
         }
         return form
 
@@ -33,17 +38,17 @@ class TJobDao(BaseDao):
               cnt.cnt_ruc,
               cnt.cnt_razonsocial,
               tau.aut_fechaautorizacion,
-              tau.aut_estab||'-'||tau.aut_ptoemi serie,
+              tau.aut_estab||'-'||tjob.job_ptoemi serie,
               td.td_nombre,
-              tau.aut_secuencia_ini,
-              tau.aut_secuencia_fin,
+              tjob.job_secuencia_ini,
+              tjob.job_secuencia_fin,
               tjob.job_nrocopias,
               sjob.sjb_nombre,
               sjob.sjb_id
               from tjob tjob
             join tautorizacion tau ON tau.aut_id = tjob.aut_id
             join tcontribuyente cnt ON tau.cnt_id = cnt.cnt_id
-            join ttiposdoc td on tau.aut_tipodoc = td.td_id
+            join ttiposdoc td on tjob.job_tipodoc = td.td_id
             join tstatusjob sjob on tjob.job_estado = sjob.sjb_id
             order by cnt.cnt_razonsocial        
         """
@@ -56,8 +61,8 @@ class TJobDao(BaseDao):
             'aut_fechaautorizacion',
             'serie',
             'td_nombre',
-            'aut_secuencia_ini',
-            'aut_secuencia_fin',
+            'job_secuencia_ini',
+            'job_secuencia_fin',
             'job_nrocopias',
             'sjb_nombre',
             'sjb_id')
@@ -67,11 +72,23 @@ class TJobDao(BaseDao):
     def crear(self, form, user_crea):
         tjob = TJob()
 
-        if (form['cnt_id'] == 0):
-            raise ErrorValidacionExc('Debe especificar el contribuyente')
+        if form['cnt_id'] == 0:
+            raise ErrorValidacionExc(u'Debe especificar el contribuyente')
+        if form['aut_id'] == 0:
+            raise ErrorValidacionExc(u'Debe seleccionar  la autorización')
 
-        if (form['aut_id'] == 0):
-            raise ErrorValidacionExc('Debe seleccionar  la autorización')
+        if not cadenas.es_nonulo_novacio(form['job_ptoemi']):
+            raise ErrorValidacionExc(u"Ingrese el punto de emisión")
+        if not cadenas.es_nonulo_novacio(form['job_secuencia_ini']):
+            raise ErrorValidacionExc(u"Ingrese la secuencia inicial")
+        if not cadenas.es_nonulo_novacio(form['job_secuencia_fin']):
+            raise ErrorValidacionExc(u"Ingrese la secuencia final")
+
+        secuencia_ini = int(form['job_secuencia_ini'])
+        secuencia_fin = int(form['job_secuencia_fin'])
+
+        if secuencia_fin <= secuencia_ini:
+            raise ErrorValidacionExc(u"Valor para secuencia final incorrecto, favor verifique")
 
         tjob.cnt_id = form['cnt_id']
         tjob.aut_id = form['aut_id']
@@ -79,8 +96,16 @@ class TJobDao(BaseDao):
         tjob.job_fechacreacion = datetime.now()
         tjob.user_crea = user_crea
         tjob.job_estado = 1  # Estado Nuevo
+        tjob.job_ptoemi = form['job_ptoemi']
+        tjob.job_tipodoc = form['job_tipodoc']
+        tjob.job_secuencia_ini = secuencia_ini
+        tjob.job_secuencia_fin = secuencia_fin
 
         self.dbsession.add(tjob)
+
+        self.dbsession.flush()
+
+        return tjob.job_id
 
     def actualizar_estado(self, job_id, estado, user_actualiza):
         tjob = self.dbsession.query(TJob).filter(TJob.job_id == job_id).first()
@@ -93,3 +118,48 @@ class TJobDao(BaseDao):
         tjob = self.dbsession.query(TJob).filter(TJob.job_id == job_id).first()
         if tjob is not None:
             tjob.temp_id = temp_id
+
+    def find_bydcod(self, job_id):
+
+        sql = """
+                select
+                       tjob.job_id,
+                        tau.aut_id,
+                        cnt.cnt_id,
+                      tau.aut_numero,
+                      cnt.cnt_ruc,
+                      cnt.cnt_razonsocial,
+                      tau.aut_fechaautorizacion,
+                      tau.aut_estab||'-'||tjob.job_ptoemi serie,
+                      td.td_nombre,
+                      tjob.job_secuencia_ini,
+                      tjob.job_secuencia_fin,
+                      tjob.job_nrocopias,
+                      sjob.sjb_nombre,
+                      sjob.sjb_id
+                      from tjob tjob
+                    join tautorizacion tau ON tau.aut_id = tjob.aut_id
+                    join tcontribuyente cnt ON tau.cnt_id = cnt.cnt_id
+                    join ttiposdoc td on tjob.job_tipodoc = td.td_id
+                    join tstatusjob sjob on tjob.job_estado = sjob.sjb_id
+                    where tjob.job_id = {0}
+                    order by cnt.cnt_razonsocial        
+                """.format(job_id)
+
+        tupla_desc = (
+            'job_id',
+            'aut_id',
+            'cnt_id',
+            'aut_numero',
+            'cnt_ruc',
+            'cnt_razonsocial',
+            'aut_fechaautorizacion',
+            'serie',
+            'td_nombre',
+            'job_secuencia_ini',
+            'job_secuencia_fin',
+            'job_nrocopias',
+            'sjb_nombre',
+            'sjb_id')
+
+        return self.first(sql,tupla_desc)

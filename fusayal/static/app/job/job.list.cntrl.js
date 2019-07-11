@@ -22,6 +22,7 @@
         vm.reportar = reportar;
         vm.reimprimir = reimprimir;
         vm.onRowClick = onRowClick;
+        vm.testUpload = testUpload;
 
 
         vm.repgrid = {};
@@ -63,6 +64,10 @@
                     vm.gridOptions.data = res.items;
                 }
             });
+        }
+
+        function testUpload() {
+            $state.go('job_upload');
         }
 
         function rowTemplate() {    //custom rowtemplate to enable double click and right click menu options

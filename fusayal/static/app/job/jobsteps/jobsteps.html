@@ -184,11 +184,11 @@
 
                             <div class="row">
                                 <div class="col-md-4">
-                                    Serie:
+                                    Establecimiento:
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" id="aut_serie" class="form-control" ng-model="formAut.aut_serie"
-                                           input-mask="{mask:'999-999'}" ng-enter="setInputFocus('e_fechaaut2')"/>
+                                    <input type="text" id="aut_serie" class="form-control" ng-model="formAut.aut_estab"
+                                           input-mask="{mask:'999'}" ng-enter="setInputFocus('e_fechaaut2')"/>
                                 </div>
                             </div>
 
@@ -212,6 +212,7 @@
                                 </div>
                             </div>
 
+                            <!--
                             <div class="row">
                                 <div class="col-md-4">
                                     Tipo Documento:
@@ -243,6 +244,7 @@
                                            ng-model="formAut.aut_secuencia_fin"/>
                                 </div>
                             </div>
+                            -->
 
                             <br>
                             <div class="row">
@@ -268,7 +270,9 @@
                                 </div>
                                 -->
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item" ng-repeat="item in autsContribList"> {{item.aut_numero}} - {{item.td_nombre}} </li>
+                                    <li class="list-group-item" ng-repeat="item in autsContribList"> {{item.aut_numero}}
+                                        - {{item.td_nombre}}
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -386,13 +390,14 @@
 
                                             <div class="row">
                                                 <div class="col-md-5">
-                                                    <b>Serie:</b>
+                                                    <b>Establecimiento:</b>
                                                 </div>
                                                 <div class="col-md-7">
-                                                    {{formAutSaved.aut_serie}}
+                                                    {{formAutSaved.aut_estab}}
                                                 </div>
                                             </div>
 
+                                            <!--
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <b>Documento:</b>
@@ -419,11 +424,10 @@
                                                     {{formAutSaved.aut_secuencia_fin}}
                                                 </div>
                                             </div>
+                                            -->
 
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
 
@@ -439,31 +443,84 @@
                             </div>
                             -->
 
-                            <br>
                             <div class="row">
-                                <div class="col-md-12">
-                                    <button class="btn btn-outline-primary" type="button" ng-click="guardarJob()">
-                                        Guardar
-                                    </button>
-                                    <button class="btn btn-outline-secondary" type="button" ng-click="anterior()">
-                                        Cancelar
-                                    </button>
+                                <div class="col-md-6">
+
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Datos del contribuyente
+                                        </div>
+                                        <div class="card-body">
+
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    Punto de emision:
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" id="aut_serie" class="form-control"
+                                                           ng-model="formJob.job_ptoemi"
+                                                           input-mask="{mask:'999'}"
+                                                           ng-enter="setInputFocus('e_fechaaut2')"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                Tipo Documento:
+                                            </div>
+                                            <div class="col-md-8">
+                                                <select class="form-control"
+                                                        ng-model="formJob.job_tipodoc"
+                                                        ng-options="tipodoc.td_id as tipodoc.td_nombre for tipodoc in listas.tiposdoc">
+                                                </select>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="">Secuencia Inicial:</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="number" class="form-control" id="aut_secuencia_ini"
+                                                           ng-model="formJob.job_secuencia_ini"
+                                                           ng-enter="setInputFocus('aut_secuencia_fin')"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label for="">Secuencia Final:</label>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <input type="number" class="form-control" id="aut_secuencia_fin"
+                                                           ng-model="formJob.job_secuencia_fin"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button class="btn btn-outline-primary" type="button" ng-click="guardarJob()">
+                                            Guardar
+                                        </button>
+                                        <button class="btn btn-outline-secondary" type="button" ng-click="anterior()">
+                                            Cancelar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+                <!--
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+                -->
             </div>
-
-
-            <!--
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-            -->
         </div>
+
+
     </div>
-
-
-</div>
 </div>

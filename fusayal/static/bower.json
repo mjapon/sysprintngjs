@@ -16,7 +16,8 @@
     "jquery.inputmask": "latest",
     "angular-ui-grid": "latest",
     "eonasdan-bootstrap-datetimepicker": "~4.17.37",
-    "ngDraggable": "latest"
+    "ngDraggable": "latest",
+    "ng-file-upload": "latest"
   },
   "description": "Proyecto de la corporacion japon",
   "main": "",

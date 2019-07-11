@@ -38,7 +38,9 @@ module.exports = function (grunt) {
                     '<%= rutas.path_bc %>/bootstrap-calendar/js/language/es-ES.js',
                     '<%= rutas.path_bc %>/bootstrap-calendar/js/calendar.min.js',
                     '<%= rutas.path_bc %>/underscore/underscore-min.js',
-                    '<%= rutas.path_bc %>/ngDraggable/ngDraggable.js'
+                    '<%= rutas.path_bc %>/ngDraggable/ngDraggable.js',
+                    '<%= rutas.path_bc %>/ng-file-upload/ng-file-upload.js',
+                    '<%= rutas.path_bc %>/ng-file-upload/ng-file-upload-shim.js'
                 ],
                 dest: '<%= rutas.path_dist %>/js/vendor.js'
             },

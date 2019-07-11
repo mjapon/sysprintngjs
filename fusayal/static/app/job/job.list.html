@@ -6,6 +6,7 @@
     <div class="col-md-12">
         <button class="btn btn-outline-secondary float-left" ng-click="listar()"><i class="fas fa-sync"></i> Listar</button>
         <button class="btn btn-outline-primary float-right" ng-click="crear()"> Crear</button>
+        <button class="btn btn-outline-secondary float-right" ng-click="testUpload()"> TestUpload</button>
         <button class="btn btn-outline-secondary float-right" ng-click="setPlantilla()" ng-show="selectedItem.job_id>0" ng-disabled="selectedItem.sjb_id!=1">Plantilla</button>
         <button class="btn btn-outline-secondary float-right" ng-click="showModalImprmir()" ng-show="selectedItem.job_id>0 && repgrid.selectedItem.temp_id>0" ng-disabled="selectedItem.sjb_id!=1">Imprimir</button>
         <button class="btn btn-outline-secondary float-right" ng-click="reportar()" ng-show="selectedItem.job_id>0 && repgrid.selectedItem.temp_id>0" ng-disabled="selectedItem.sjb_id!=6"> Reportar</button>
@@ -91,7 +92,7 @@
 
             </div>
             <div class="modal-footer">
-                <div class="row">
+                <div class="row">d
                     <div class="col-md-12">
 
                         <button type="button" class="btn btn-default" ng-click="cambiarEstado(3)">Incompleto

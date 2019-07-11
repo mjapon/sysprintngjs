@@ -15,6 +15,7 @@ var IsyplusApp = angular.
         'ui.grid.pinning',
         'ui.grid.resizeColumns',
         'ngResource',
-        'ngDraggable']);
+        'ngDraggable',
+        'ngFileUpload']);
 //Editado
 

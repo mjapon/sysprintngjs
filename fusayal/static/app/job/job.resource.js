@@ -19,6 +19,12 @@
                         accion: 'justform'
                     }
                 },
+                getAllInfo: {//Retorna el 3 formularios, del job, del contribuyente y de la autorizacion
+                    method: 'GET',
+                    params: {
+                        accion: 'getall'
+                    }
+                },
 
 
                 cambiarEstado: {

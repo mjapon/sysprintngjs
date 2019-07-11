@@ -1,0 +1,187 @@
+<servi-page-header>
+    Orden de impresión
+</servi-page-header>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Datos del contribuyente
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>RUC:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formContrib.cnt_ruc}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Razon Social:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formContrib.cnt_razonsocial}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Nombre comercial:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formContrib.cnt_nombrecomercial}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Telf:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formContrib.cnt_telf}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Dirección Matriz:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formContrib.cnt_dirmatriz}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Email:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formContrib.cnt_email}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Nro Contribuyente especial:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formContrib.cnt_nrocntespecial}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Datos de la autorización
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Nro de autorización:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formAut.aut_numero}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Fecha de autorización:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formAut.aut_fechaautorizacion}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Fecha de caducidad:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formAut.aut_fechacaducidad}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Establecimiento:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formAut.aut_estab}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Datos de la autorización
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <b>Tipo de documento:</b>
+                        </div>
+                        <div class="col-md-7">
+                            {{formJob.td_nombre}}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <b>Punto de Emision:</b>
+                        </div>
+                        <div class="col-md-7">
+                            {{formJob.job_ptoemi}}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <b>Secuencia Inicial:</b>
+                        </div>
+                        <div class="col-md-7">
+                            {{formJob.job_secuencia_ini}}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <b>Secuencia Final:</b>
+                        </div>
+                        <div class="col-md-7">
+                            {{formJob.job_secuencia_fin}}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <b>Estado:</b>
+                        </div>
+                        <div class="col-md-7">
+                            {{formJob.sjb_nombre}}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-outline-primary" type="button" ng-click="anular()">Anular</button>
+                            <button class="btn btn-outline-primary" type="button" ng-click="plantilla()">Plantilla</button>
+                            <button class="btn btn-outline-primary" type="button" ng-click="cargaManual()">Carga Manual</button>
+                            <button class="btn btn-outline-primary" type="button" ng-click="reimprimir()">Reimprimir</button>
+                            <button class="btn btn-outline-primary" type="button" ng-click="reportar()">Reportar</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

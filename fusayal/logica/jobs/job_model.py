@@ -26,6 +26,11 @@ class TJob(Declarative, JsonAlchemy):
       cnt_id                 INTEGER           NOT NULL
       user_crea              INTEGER           NOT NULL,
       user_actualiza         INTEGER
+            
+      job_ptoemi             varchar(3) default '001'::character varying not null,
+      job_secuencia_ini      numeric(9) default 0                        not null,
+      job_secuencia_fin      numeric(9) default 0                        not null,
+      job_tipodoc            integer    default 1                        not null
     """
 
     job_id = Column(Integer, nullable=False, primary_key=True)
@@ -38,3 +43,7 @@ class TJob(Declarative, JsonAlchemy):
     cnt_id = Column(Integer, nullable=False)
     user_crea = Column(Integer, nullable=False)
     user_actualiza = Column(Integer)
+    job_ptoemi = Column(String(3), nullable=False)
+    job_secuencia_ini = Column(Numeric(9), nullable=False)
+    job_secuencia_fin = Column(Numeric(9), nullable=False)
+    job_tipodoc = Column(Integer, nullable=False)

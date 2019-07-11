@@ -7,6 +7,7 @@ import logging
 
 from cornice.resource import resource
 
+from fusayal.logica.autorizacion.autorizacion_dao import TAutorizacionDao
 from fusayal.logica.contribuyente.contribuyente_dao import TContribuyenteDao
 from fusayal.logica.jobs.job_dao import TJobDao
 from fusayal.utils.pyramidutil import DbComunView
@@ -46,8 +47,8 @@ class TJobRest(DbComunView):
 
         tjobdao = TJobDao(self.dbsession)
         if job_id == 0:
-            tjobdao.crear(form=self.get_json_body(), user_crea=self.get_userid())
-            return {'estado': 200, 'msg': u'Registro exitoso'}
+            job_id = tjobdao.crear(form=self.get_json_body(), user_crea=self.get_userid())
+            return {'estado': 200, 'msg': u'Registro exitoso', 'job_id': job_id}
 
         if accion == 'cambiar_estado':
             form = self.get_json_body()
@@ -70,3 +71,14 @@ class TJobRest(DbComunView):
             return {'estado': 200, 'form': tjobdao.get_form(), 'contribs': contribuyentes}
         elif accion == 'justform':
             return {'estado': 200, 'form': tjobdao.get_form()}
+        elif accion == 'getall':
+            job_id = self.get_request_matchdict('job_id')
+            form_job = tjobdao.find_bydcod(job_id=job_id)
+
+            tautoriza_dao = TAutorizacionDao(self.dbsession)
+            form_aut = tautoriza_dao.find_bycod(aut_id=form_job['aut_id'])
+
+            tcontrib_dao = TContribuyenteDao(self.dbsession)
+            form_contrib = tcontrib_dao.get_form_edit(cnt_id=form_job['cnt_id'])
+
+            return {'estado': 200, 'form_job': form_job, 'form_aut': form_aut, 'form_contrib': form_contrib}

@@ -1,3 +1,4 @@
+# coding: utf-8
 import logging
 
 from pyramid.httpexceptions import HTTPFound
@@ -5,15 +6,12 @@ from pyramid.security import forget
 from pyramid.view import view_config
 
 from fusayal.logica.excepciones.validacion import ErrorValidacionExc
+from fusayal.logica.jobs.jobdoc.jobdoc_dao import TJobDocDao
 from fusayal.logica.plantillas.plantilla_dao import TPlantillasDao
 from fusayal.logica.users.users_dao import TUsersDao
+from fusayal.utils.archivos import CargaArchivosUtil
 
 log = logging.getLogger(__name__)
-
-
-@view_config(route_name='reporte', renderer='../templates/reporte.jinja2')
-def reporte_view(request):
-    return {}
 
 
 @view_config(route_name='initApp', renderer='../templates/initApp.jinja2')
@@ -34,7 +32,7 @@ def logout_view(request):
 
 @view_config(route_name='loginApp', renderer='../templates/loginApp.jinja2')
 def login_view(request):
-    print "request login view processing"
+    log.info("request login view processing")
 
     if 'usuario' in request.POST:
         usuario = request.POST['usuario']
@@ -107,44 +105,43 @@ def upload_file(request):
     return HTTPFound(location=url)
 
 
-@view_config(route_name='home', renderer='../templates/logout.jinja2')
-def my_view(request):
-    print 'se ejecuta my view'
-    return {'uno': 'uno', 'project': 'fusayal'}
+@view_config(route_name="upload_job_view", renderer='json')
+def upload_job_file(request):
+    estado = 0
+    msg = ''
+
+    if 'filename' not in dir(request.POST['file']) or \
+            len(request.POST['nombreArchivo'].strip()) == 0:
+        estado = -1
+        msg = 'Debe cargar el archivo del trabajo de impresion generado y especificar el nombre'
+    else:
+        job_id = None
+        if 'job_id' in request.POST:
+            job_id = request.POST['job_id']
+
+        filename = request.POST['file'].filename
+
+        if not filename.endswith('.pdf'):
+            estado = -1
+            msg = 'Archivo incorrecto, debe cargar un archivo con extension .pdf'
+        else:
+            thefile = request.POST['file'].file
+            nombreArchivo = request.POST['nombreArchivo']
+            filecontent = thefile.read()
+            tjobdocdao = TJobDocDao(request.dbsession)
+            try:
+                resp = tjobdocdao.crear(job_id=job_id, nombre_archivo=filename, user_crea=request.session['us_id'])
+                uploadFileUtil = CargaArchivosUtil()
+                uploadFileUtil.save_bytarray(resp['ruta'], filecontent)
+                estado = 200
+                msg = 'success:{0}'.format(resp['msg'])
+            except ErrorValidacionExc as ex:
+                estado = -1
+                msg = 'danger:' + format(ex.message)
+                log.error(u'Error al tratar de guardar el trabajo de impresión: {0}'.format(ex))
 
     """
-    try:
-        #query = request.dbsession.query(MyModel)
-        #one = query.filter(MyModel.name == 'one').first()
-    except DBAPIError:
-        return Response(db_err_msg, content_type='text/plain', status=500)
-    return {'one': one, 'project': 'fusayal'}
+    response = Response(json.dumps(res, cls=SEJsonEncoder))
+    return add_status_to_response(response, res)
     """
-
-
-"""
-@view_config(route_name='home', renderer='../templates/mytemplate.jinja2')
-def my_view(request):
-    try:
-        query = request.dbsession.query(MyModel)
-        one = query.filter(MyModel.name == 'one').first()
-    except DBAPIError:
-        return Response(db_err_msg, content_type='text/plain', status=500)
-    return {'one': one, 'project': 'fusayal'}
-"""
-
-db_err_msg = """\
-Pyramid is having a problem using your SQL database.  The problem
-might be caused by one of the following things:
-
-1.  You may need to run the "initialize_fusayal_db" script
-    to initialize your database tables.  Check your virtual
-    environment's "bin" directory for this script and try to run it.
-
-2.  Your database server may not be running.  Check that the
-    database server referred to by the "sqlalchemy.url" setting in
-    your "development.ini" file is running.
-
-After you fix the problem, please restart the Pyramid application to
-try it again.
-"""
+    return {'estado': estado, 'msg': msg}
