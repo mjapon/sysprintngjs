@@ -1,0 +1,1 @@
+INSERT INTO public.tparams (tprm_id, tprm_abrev, tprm_nombre, tprm_val, tprm_fechacrea) VALUES (1, 'pathSaveJobs', 'Ruta de registro de los trabajos de impresion', '/opt/jobsgenerados', '2019-07-11 14:49:32.131264');
