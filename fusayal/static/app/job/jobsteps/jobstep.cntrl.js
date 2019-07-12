@@ -184,8 +184,9 @@
             });
         }
 
-        function anterior() {
-            NotifServ.info("back action->");
+        function anterior(step) {
+            //NotifServ.info("back action->");
+            vm.currentStep = step;
         }
 
         function onenterfecha() {
