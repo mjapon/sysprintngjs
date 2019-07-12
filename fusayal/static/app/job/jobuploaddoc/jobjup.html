@@ -22,26 +22,6 @@
         </div>
         <div class="col-md-8">
             {{file.name}}
-
-            <!--
-             <div class="custom-file">
-                <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-                <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-                <div class="invalid-feedback">Example invalid custom file feedback</div>
-              </div>
-              -->
-
-            <!--
-            <input type="file"
-                   class="form-control"
-                   ngf-select
-                   ng-model="file"
-                   name="file"
-                   ngf-pattern="*"
-                   accept="*"
-                   ngf-max-size="80MB"/>
-           -->
-
             <i ng-show="upload_form.file.$error.required">*Requerido</i><br>
             <i ng-show="upload_form.file.$error.maxSize">Archivo muy grandra
                 {{file.size / 1000000|number:1}}MB: max 80M</i>

@@ -2,7 +2,7 @@
     Orden de impresión
 </servi-page-header>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-10">
         <div class="card">
             <div class="card-header">
                 Datos del contribuyente
@@ -69,7 +69,12 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-2">
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10">
         <div class="card">
             <div class="card-header">
                 Datos de la autorización
@@ -110,78 +115,265 @@
                         {{formAut.aut_estab}}
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    Datos de la autorización
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <b>Tipo de documento:</b>
-                        </div>
-                        <div class="col-md-7">
-                            {{formJob.td_nombre}}
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-5">
-                            <b>Punto de Emision:</b>
-                        </div>
-                        <div class="col-md-7">
-                            {{formJob.job_ptoemi}}
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-5">
-                            <b>Secuencia Inicial:</b>
-                        </div>
-                        <div class="col-md-7">
-                            {{formJob.job_secuencia_ini}}
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-5">
-                            <b>Secuencia Final:</b>
-                        </div>
-                        <div class="col-md-7">
-                            {{formJob.job_secuencia_fin}}
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-5">
-                            <b>Estado:</b>
-                        </div>
-                        <div class="col-md-7">
-                            {{formJob.sjb_nombre}}
-                        </div>
-                    </div>
-
-                </div>
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <button class="btn btn-outline-primary" type="button" ng-click="anular()">Anular</button>
-                            <button class="btn btn-outline-primary" type="button" ng-click="plantilla()">Plantilla</button>
-                            <button class="btn btn-outline-primary" type="button" ng-click="cargaManual()">Carga Manual</button>
-                            <button class="btn btn-outline-primary" type="button" ng-click="reimprimir()">Reimprimir</button>
-                            <button class="btn btn-outline-primary" type="button" ng-click="reportar()">Reportar</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
+    <div class="col-md-12">
 
     </div>
 </div>
+<div class="row">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header">
+                Datos del documento
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Código:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formJob.job_id}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Tipo de documento:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formJob.td_nombre}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Punto de Emision:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formJob.job_ptoemi}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Secuencia Inicial:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formJob.job_secuencia_ini}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Secuencia Final:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formJob.job_secuencia_fin}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Estado:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formJob.sjb_nombre}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <b>Fecha de creación:</b>
+                    </div>
+                    <div class="col-md-7">
+                        {{formJob.job_fechacreacion}}
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-outline-primary" type="button" ng-show="formJob.job_estado===1"
+                                ng-click="anular()">Anular
+                        </button>
+                        <button class="btn btn-outline-primary" type="button" ng-show="formJob.job_estado===1"
+                                ng-click="plantilla()">Plantilla
+                        </button>
+                        <button class="btn btn-outline-primary" type="button" ng-show="formJob.job_estado===1"
+                                ng-click="cargaManual()">Carga Manual
+                        </button>
+                        <button class="btn btn-outline-primary" type="button" ng-show="formJob.job_estado===6"
+                                ng-click="reimprimir()">Reimprimir
+                        </button>
+                        <button class="btn btn-outline-primary" type="button" ng-show="formJob.job_estado===6"
+                                ng-click="marcarIncompleto()">Incompleto
+                        </button>
+
+                        <button class="btn btn-outline-primary" type="button" ng-show="formJob.job_estado===7"
+                                ng-click="vistaPrevia()">Vista previa
+                        </button>
+
+                        <button class="btn btn-outline-primary" type="button"
+                                ng-show="formJob.job_estado===7 && isVistaPrevia"
+                                ng-click="imprimir()">Imprimir
+                        </button>
+
+                        <button class="btn btn-outline-primary" type="button"
+                                ng-show="formJob.job_estado===6 || formJob.job_estado===5" ng-click="reportar()">
+                            Reportar
+                        </button>
+
+                        <button class="btn btn-outline-secondary float-right" type="button" ng-click="goLista()">
+                            Regresar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+<div class="modal fade" id="modalSelPlant" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Elija la plantilla a usar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    <li class="list-group-item {{item==repgrid.selectedItem?'active':''}}" style="cursor: pointer"
+                        ng-repeat="item in repgrid.data" ng-click="selectPlantilla(item)">{{item.temp_name}}
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="okModalSelPlantilla()"> Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalReprint" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reimprimir documento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        Motivo:
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" ng-model="formReprint.jobrp_obs"
+                               capitalize
+                               id="jobrp_obs"
+                               ng-enter="setInputFocus('jobrp_secini')">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        Numero Inicial:
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" ng-model="formReprint.jobrp_secini"
+                               capitalize
+                               ng-required="true" id="jobrp_secini"
+                               ng-enter="setInputFocus('jobrp_secfin')">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        Numero Final:
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" ng-model="formReprint.jobrp_secfin"
+                               capitalize
+                               ng-required="true" id="jobrp_secfin">
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="okModalReimprimir()"> Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalCargaManual" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Carga manual del documento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form name="upload_form">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="custom-file">
+                                <input type="file"
+                                       id="validatedCustomFile"
+                                       class="custom-file-input"
+                                       lang="es"
+                                       ngf-select
+                                       ng-model="file"
+                                       name="file"
+                                       ngf-pattern="*"
+                                       accept="*"
+                                       ngf-max-size="80MB"/>
+
+                                <label class="custom-file-label" for="validatedCustomFile">Elejir archivo...</label>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            {{file.name}}
+                            <i ng-show="upload_form.file.$error.required">*Requerido</i><br>
+                            <i ng-show="upload_form.file.$error.maxSize">Archivo muy grandra
+                                {{file.size / 1000000|number:1}}MB: max 80M</i>
+                            <p>{{progress}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="submit" ng-click="submit()" class="btn btn-outline-primary">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+

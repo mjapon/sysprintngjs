@@ -72,6 +72,7 @@
         }
 
         function buscarAutorizacion() {
+            console.log('buscar autorizacion--->');
             if (vm.formAut.aut_numero.length > 5) {
                 var res = AutorizacionServ.getByNumAndRuc({
                     cnt_ruc: vm.formContrib.cnt_ruc,
@@ -92,6 +93,7 @@
             var res = JobService.getJustForm({job_id: jobid}, function () {
                 if (res.estado === 200) {
                     vm.formJob = res.form;
+                    focusService.setFocus('job_ptoemi');
                 }
             });
         }
@@ -102,6 +104,9 @@
 
         function onFocusContribRazonSocial() {
             console.log("on onFocusContribRazonSocial-->")
+            if (!vm.contribFinded) {
+                findContrib();
+            }
         }
 
         function findContrib() {

@@ -6,11 +6,16 @@
     <div class="col-md-12">
         <button class="btn btn-outline-secondary float-left" ng-click="listar()"><i class="fas fa-sync"></i> Listar</button>
         <button class="btn btn-outline-primary float-right" ng-click="crear()"> Crear</button>
+        <!--
         <button class="btn btn-outline-secondary float-right" ng-click="testUpload()"> TestUpload</button>
+        -->
+        <button class="btn btn-outline-secondary float-right" ng-show="selectedItem.job_id>0" ng-click="verDetalles()"> Detalles</button>
+        <!--
         <button class="btn btn-outline-secondary float-right" ng-click="setPlantilla()" ng-show="selectedItem.job_id>0" ng-disabled="selectedItem.sjb_id!=1">Plantilla</button>
         <button class="btn btn-outline-secondary float-right" ng-click="showModalImprmir()" ng-show="selectedItem.job_id>0 && repgrid.selectedItem.temp_id>0" ng-disabled="selectedItem.sjb_id!=1">Imprimir</button>
         <button class="btn btn-outline-secondary float-right" ng-click="reportar()" ng-show="selectedItem.job_id>0 && repgrid.selectedItem.temp_id>0" ng-disabled="selectedItem.sjb_id!=6"> Reportar</button>
         <button class="btn btn-outline-secondary float-right" ng-click="reimprimir()" ng-show="selectedItem.job_id>0 && repgrid.selectedItem.temp_id>0" ng-disabled="selectedItem.sjb_id!=6">Reimprimir</button>
+        -->
     </div>
 </div>
 

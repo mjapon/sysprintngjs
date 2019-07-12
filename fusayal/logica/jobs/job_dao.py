@@ -131,12 +131,16 @@ class TJobDao(BaseDao):
                       cnt.cnt_razonsocial,
                       tau.aut_fechaautorizacion,
                       tau.aut_estab||'-'||tjob.job_ptoemi serie,
+                      tjob.job_ptoemi,
                       td.td_nombre,
                       tjob.job_secuencia_ini,
                       tjob.job_secuencia_fin,
                       tjob.job_nrocopias,
+                      tjob.job_fechacreacion,
+                      tjob.job_estado,
                       sjob.sjb_nombre,
-                      sjob.sjb_id
+                      sjob.sjb_id,
+                      tjob.temp_id
                       from tjob tjob
                     join tautorizacion tau ON tau.aut_id = tjob.aut_id
                     join tcontribuyente cnt ON tau.cnt_id = cnt.cnt_id
@@ -155,11 +159,15 @@ class TJobDao(BaseDao):
             'cnt_razonsocial',
             'aut_fechaautorizacion',
             'serie',
+            'job_ptoemi',
             'td_nombre',
             'job_secuencia_ini',
             'job_secuencia_fin',
             'job_nrocopias',
+            'job_fechacreacion',
+            'job_estado',
             'sjb_nombre',
-            'sjb_id')
+            'sjb_id',
+            'temp_id')
 
-        return self.first(sql,tupla_desc)
+        return self.first(sql, tupla_desc)

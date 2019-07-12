@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 class TJobReprintRest(DbComunView):
 
     def post(self):
-        jobrp_id = self.get_request_matchdict('jobrp_id')
+        jobrp_id = int(self.get_request_matchdict('jobrp_id'))
         tjobreprintdao = TJobReprintDao(self.dbsession)
         if jobrp_id == 0:
             tjobreprintdao.crear(form=self.get_json_body(), user_crea=self.get_userid())

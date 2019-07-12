@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-md-12">
 
-        <div class="card">
+        <div class="card border-primary">
             <div class="card-header">
                 <ul class="nav nav-pills card-header-tabs">
                     <li class="nav-item">
@@ -19,15 +19,13 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{currentStep===3?'active':''}}"> <span
-                                class="badge {{currentStep===3?'badge-light':'badge-secondary'}}">3</span> Orden de
-                            trabajo</a>
+                                class="badge {{currentStep===3?'badge-light':'badge-secondary'}}">3</span> Documento</a>
                     </li>
                 </ul>
 
             </div>
             <div class="card-body">
                 <br>
-                <!--Datos del contribuyente-->
                 <div ng-show="currentStep===1">
                     <div class="row">
                         <div class="col-md-10">
@@ -154,8 +152,6 @@
                                                 ng-click="guardarContrib()">Siguiente
                                             <span class="fa fa-angle-right"></span>
                                         </button>
-
-                                        <!--?<button class="btn btn-default" ng-click="cancelar()"> Cancelar</button>-->
                                     </div>
                                 </div>
                             </div>
@@ -211,41 +207,6 @@
                                                  required="true"></servi-fecha>
                                 </div>
                             </div>
-
-                            <!--
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Tipo Documento:
-                                </div>
-                                <div class="col-md-8">
-                                    <select class="form-control"
-                                            ng-model="formAut.aut_tipodoc"
-                                            ng-options="tipodoc.td_id as tipodoc.td_nombre for tipodoc in listas.tiposdoc">
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="">Secuencia Inicial:</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="number" class="form-control" id="aut_secuencia_ini"
-                                           ng-model="formAut.aut_secuencia_ini"
-                                           ng-enter="setInputFocus('aut_secuencia_fin')"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="">Secuencia Final:</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="number" class="form-control" id="aut_secuencia_fin"
-                                           ng-model="formAut.aut_secuencia_fin"/>
-                                </div>
-                            </div>
-                            -->
-
                             <br>
                             <div class="row">
                                 <div class="col-md-12">
@@ -264,11 +225,6 @@
                                 <div class="card-header">
                                     Autorizaciones registradas
                                 </div>
-                                <!--
-                                <div class="card-body">
-
-                                </div>
-                                -->
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item" ng-repeat="item in autsContribList"> {{item.aut_numero}}
                                         - {{item.td_nombre}}
@@ -281,238 +237,196 @@
                 </div>
 
                 <div ng-show="currentStep===3">
+
+                    <div class="row">
+                        <div class="col-md-7">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    Datos del contribuyente
+                                </div>
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <b>RUC:</b>
+                                        </div>
+                                        <div class="col-md-7">
+                                            {{formContrib.cnt_ruc}}
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <b>Razon Social:</b>
+                                        </div>
+                                        <div class="col-md-7">
+                                            {{formContrib.cnt_razonsocial}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <b>Nombre comercial:</b>
+                                        </div>
+                                        <div class="col-md-7">
+                                            {{formContrib.cnt_nombrecomercial}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <b>Telf:</b>
+                                        </div>
+                                        <div class="col-md-7">
+                                            {{formContrib.cnt_telf}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <b>Dirección Matriz:</b>
+                                        </div>
+                                        <div class="col-md-7">
+                                            {{formContrib.cnt_dirmatriz}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <b>Email:</b>
+                                        </div>
+                                        <div class="col-md-7">
+                                            {{formContrib.cnt_email}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <b>Nro Contribuyente especial:</b>
+                                        </div>
+                                        <div class="col-md-7">
+                                            {{formContrib.cnt_nrocntespecial}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-5">
+                            <div class="card">
+                                <div class="card-header">
+                                    Datos de la autorización
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <b>Nro de autorización:</b>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {{formAut.aut_numero}}
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <b>Fecha de autorización:</b>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {{formAut.aut_fechaautorizacion}}
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <b>Fecha de caducidad:</b>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {{formAut.aut_fechacaducidad}}
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <b>Establecimiento:</b>
+                                        </div>
+                                        <div class="col-md-6">
+                                            {{formAutSaved.aut_estab}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
 
-                            <div class="row">
-                                <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    Datos del documento
+                                </div>
+                                <div class="card-body">
 
-                                    <div class="card">
-                                        <div class="card-header">
-                                            Datos del contribuyente
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            Punto de emision <span class="gridRed"> * </span>:
                                         </div>
-                                        <div class="card-body">
-
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <b>RUC:</b>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{formContrib.cnt_ruc}}
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <b>Razon Social:</b>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{formContrib.cnt_razonsocial}}
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <b>Nombre comercial:</b>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{formContrib.cnt_nombrecomercial}}
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <b>Telf:</b>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{formContrib.cnt_telf}}
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <b>Dirección Matriz:</b>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{formContrib.cnt_dirmatriz}}
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <b>Email:</b>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{formContrib.cnt_email}}
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <b>Nro Contribuyente especial:</b>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{formContrib.cnt_nrocntespecial}}
-                                                </div>
-                                            </div>
+                                        <div class="col-md-8">
+                                            <input type="text" id="job_ptoemi" class="form-control"
+                                                   ng-model="formJob.job_ptoemi"
+                                                   input-mask="{mask:'999'}"
+                                                   ng-enter="setInputFocus('aut_secuencia_ini')"/>
                                         </div>
                                     </div>
 
-
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            Datos de la autorización
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            Tipo Documento <span class="gridRed"> * </span>:
                                         </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <b>Nro de autorización:</b>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{formAut.aut_numero}}
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <b>Fecha de autorización:</b>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{formAut.aut_fechaautorizacion}}
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <b>Fecha de caducidad:</b>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{formAut.aut_fechacaducidad}}
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <b>Establecimiento:</b>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{formAutSaved.aut_estab}}
-                                                </div>
-                                            </div>
-
-                                            <!--
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <b>Documento:</b>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{formAutSaved.td_nombre}}
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <b>Secuencia Inicial:</b>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{formAutSaved.aut_secuencia_ini}}
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <b>Secuencia Final:</b>
-                                                </div>
-                                                <div class="col-md-7">
-                                                    {{formAutSaved.aut_secuencia_fin}}
-                                                </div>
-                                            </div>
-                                            -->
-
+                                        <div class="col-md-8">
+                                            <select class="form-control"
+                                                    ng-model="formJob.job_tipodoc"
+                                                    ng-options="tipodoc.td_id as tipodoc.td_nombre for tipodoc in listas.tiposdoc">
+                                            </select>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
 
-
-                            <!--
-                            <div class="row">
-                                <div class="col-md-4">
-                                    Nro copias:
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="number" class="form-control" ng-model="formJob.job_nrocopias">
-                                </div>
-                            </div>
-                            -->
-
-                            <div class="row">
-                                <div class="col-md-6">
-
-                                    <div class="card">
-                                        <div class="card-header">
-                                            Datos del contribuyente
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="">Secuencia Inicial <span class="gridRed"> * </span>:</label>
                                         </div>
-                                        <div class="card-body">
-
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    Punto de emision:
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input type="text" id="aut_serie" class="form-control"
-                                                           ng-model="formJob.job_ptoemi"
-                                                           input-mask="{mask:'999'}"
-                                                           ng-enter="setInputFocus('e_fechaaut2')"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                Tipo Documento:
-                                            </div>
-                                            <div class="col-md-8">
-                                                <select class="form-control"
-                                                        ng-model="formJob.job_tipodoc"
-                                                        ng-options="tipodoc.td_id as tipodoc.td_nombre for tipodoc in listas.tiposdoc">
-                                                </select>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label for="">Secuencia Inicial:</label>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input type="number" class="form-control" id="aut_secuencia_ini"
-                                                           ng-model="formJob.job_secuencia_ini"
-                                                           ng-enter="setInputFocus('aut_secuencia_fin')"/>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label for="">Secuencia Final:</label>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <input type="number" class="form-control" id="aut_secuencia_fin"
-                                                           ng-model="formJob.job_secuencia_fin"/>
-                                                </div>
-                                            </div>
+                                        <div class="col-md-8">
+                                            <input type="number" class="form-control" id="aut_secuencia_ini"
+                                                   ng-model="formJob.job_secuencia_ini"
+                                                   ng-enter="setInputFocus('aut_secuencia_fin')"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label for="">Secuencia Final <span class="gridRed"> * </span>:</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="number" class="form-control" id="aut_secuencia_fin"
+                                                   ng-model="formJob.job_secuencia_fin"/>
                                         </div>
                                     </div>
                                 </div>
 
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <button class="btn btn-outline-primary" type="button" ng-click="guardarJob()">
-                                            Guardar
-                                        </button>
-                                        <button class="btn btn-outline-secondary" type="button" ng-click="anterior()">
-                                            Cancelar
-                                        </button>
+                                <div class="card-footer">
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-outline-primary" type="button"
+                                                    ng-click="guardarJob()">
+                                                Guardar
+                                            </button>
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                    ng-click="anterior()">
+                                                Cancelar
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
                 <!--
                 <h5 class="card-title">Special title treatment</h5>
                 <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -520,7 +434,5 @@
                 -->
             </div>
         </div>
-
-
     </div>
 </div>

@@ -44,7 +44,7 @@ module.exports = function (grunt) {
         },
         watch: {
             js: {
-                files: javascriptSourceFiles,
+                files: javascriptSourceFiles,// ...
                 tasks: ['concat', 'ngAnnotate']
             },
             htmljs:{

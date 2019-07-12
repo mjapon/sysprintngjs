@@ -178,14 +178,10 @@ class TAutorizacionDao(BaseDao):
                         tau.aut_secuencia_fin,
                         tau.cnt_id,
                         cnt.cnt_ruc,
-                        cnt.cnt_razonsocial,
-                        td.td_nombre,
-                        tau.aut_estab||'-'||tau.aut_ptoemi aut_serie,
-                        coalesce(job.job_estado, -1) as job_estado 
+                        cnt.cnt_razonsocial,                        
+                        tau.aut_estab                         
                     from tautorizacion tau
                         join tcontribuyente cnt ON tau.cnt_id = cnt.cnt_id and cnt.cnt_ruc = '{0}'
-                        join ttiposdoc td on tau.aut_tipodoc = td.td_id
-                        left join tjob job on tau.aut_id = job.aut_id 
                     where tau.aut_numero = {1}
             """.format(cnt_ruc, aut_numero)
 
@@ -200,9 +196,7 @@ class TAutorizacionDao(BaseDao):
                       'cnt_id',
                       'cnt_ruc',
                       'cnt_razonsocial',
-                      'td_nombre',
-                      'aut_serie',
-                      'job_estado')
+                      'aut_estab')
 
         return self.first(sql, tupla_desc)
 
@@ -249,17 +243,19 @@ class TAutorizacionDao(BaseDao):
                 raise ErrorValidacionExc(
                     u"La fecha de caducidad no puede ser mayor a un año a partir de la fecha de autorización")
 
+            """
             secuencia_ini = int(form['aut_secuencia_ini'])
             secuencia_fin = int(form['aut_secuencia_fin'])
 
             if secuencia_fin <= secuencia_ini:
                 raise ErrorValidacionExc(u"Valor para secuencia final incorrecto, favor verifique")
+            """
 
             tautorizacion.aut_numero = form.get('aut_numero')
             tautorizacion.aut_fechaautorizacion = fecha_autorizacion
             tautorizacion.aut_fechacaducidad = fecha_caducidad
-            # tautorizacion.aut_tipodoc = form.get('aut_tipodoc')
-            tautorizacion.aut_tipodoc = 0
+            #tautorizacion.aut_tipodoc = form.get('aut_tipodoc')
+            #tautorizacion.aut_tipodoc = 0
             tautorizacion.aut_estab = form.get('aut_estab')
             # tautorizacion.aut_ptoemi = form.get('aut_ptoemi')
             tautorizacion.aut_ptoemi = ''

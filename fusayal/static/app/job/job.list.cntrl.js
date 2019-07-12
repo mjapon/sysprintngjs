@@ -23,6 +23,7 @@
         vm.reimprimir = reimprimir;
         vm.onRowClick = onRowClick;
         vm.testUpload = testUpload;
+        vm.verDetalles = verDetalles;
 
 
         vm.repgrid = {};
@@ -37,7 +38,9 @@
         }
 
         function crear() {
-            $state.go('job_form', {job_id: 0});
+            //$state.go('job_form', {job_id: 0});
+            $state.go('job_step');
+
         }
 
         var columnDefs = [
@@ -163,6 +166,10 @@
             alert('reimprimir');
         }
 
+        function goToJobView(job_id) {
+            $state.go('job_view', {job_id: job_id});
+        }
+
         function onRowClick(row, rowIndex) {
             ListasServ.limpiaMarca(vm.gridOptions.data);
             if (row.marcado) {
@@ -181,6 +188,10 @@
 
         function showModalImprmir() {
             ModalServ.show('modalSelTipoPrint');
+        }
+        
+        function verDetalles() {
+            goToJobView(vm.selectedItem.job_id);
         }
 
         function imprimir(tipocopia) {
