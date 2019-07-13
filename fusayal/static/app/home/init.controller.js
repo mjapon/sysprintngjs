@@ -18,6 +18,7 @@
         vm.goJobs = goJobs;
         vm.goReportes = goReportes;
         vm.goJobWizard = goJobWizard;
+        vm.goReportesSys = goReportesSys;
 
         init();
 
@@ -69,6 +70,9 @@
             $state.go("job_step");
         }
 
+        function goReportesSys() {
+            $state.go("reportes_sys");
+        }
     }
 
 })();

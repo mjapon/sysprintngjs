@@ -1,0 +1,35 @@
+<servi-page-header>
+    Generacion de reportes
+</servi-page-header>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+
+            <div class="list-group">
+                <button type="button" ng-repeat="rep in reportesList"
+                        class="list-group-item list-group-item-action hand" ng-click="selReporte(rep)">
+                    {{rep.temp_name}}
+                </button>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-head">
+                Parametros
+            </div>
+            <div class="card-body">
+
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-outline-primary" type="button" ng-click="imprimir()">Generar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

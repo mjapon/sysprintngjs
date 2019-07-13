@@ -18,7 +18,11 @@ class PlantillasRest(DbComunView):
     def collection_get(self):
         plantillas_dao = TPlantillasDao(self.dbsession)
 
-        items = plantillas_dao.listar()
+        tipo = 1
+        if 'tipo' in self.request.params:
+            tipo = self.request.params['tipo']
+
+        items = plantillas_dao.listar(tipo)
         cols = [
             {'name': 'temp_id', 'displayName': 'Codigo'},
             {'name': 'temp_name', 'displayName': 'Nombre'}

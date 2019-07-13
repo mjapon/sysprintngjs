@@ -712,6 +712,7 @@ var IsyplusApp = angular.
         vm.goJobs = goJobs;
         vm.goReportes = goReportes;
         vm.goJobWizard = goJobWizard;
+        vm.goReportesSys = goReportesSys;
 
         init();
 
@@ -763,6 +764,9 @@ var IsyplusApp = angular.
             $state.go("job_step");
         }
 
+        function goReportesSys() {
+            $state.go("reportes_sys");
+        }
     }
     InitCntrl.$inject = ['$scope', '$state', 'LoginServ', 'NotifServ', 'AuthFactory'];
 
@@ -1331,8 +1335,9 @@ var IsyplusApp = angular.
             });
         }
 
-        function anterior() {
-            NotifServ.info("back action->");
+        function anterior(step) {
+            //NotifServ.info("back action->");
+            vm.currentStep = step;
         }
 
         function onenterfecha() {
@@ -1937,6 +1942,89 @@ var IsyplusApp = angular.
         });
     }
     ReportesServ.$inject = ['$resource'];
+
+})();
+(function () {
+    'use strict';
+    angular.module("isyplus")
+        .controller("ReportesSysCntrl", ReportesSysCntrl);
+
+    function ReportesSysCntrl($scope, ReportesServ, gridService, $state) {
+
+        var vm = $scope;
+
+        vm.listar = listar;
+        vm.selReporte = selReporte;
+        vm.selectedItem = {};
+        vm.reportesList = [];
+
+        vm.imprimir = imprimir;
+
+        init();
+
+        function init() {
+            console.log("Reportes Sys Cntrl Init executed-->");
+            listar();
+        }
+
+        function listar(){
+            console.log('Se ejecuta accion listar');
+
+            var res = ReportesServ.get({tipo:2}, function(){
+                if (res.status === 200){
+                    vm.reportesList = res.items;
+                    console.log("reportes list es:");
+                    console.log(vm.reportesList);
+                }
+            });
+
+            /*var res = ReportesServ.get(function () {
+                console.log("Respuesta del servidor es");
+                console.log(res);
+                if (res.status == 200) {
+                    vm.lista = res.lista;
+                }
+            });*/
+        }
+
+        function selReporte(rep) {
+            console.log('reporte sel');
+            console.log(rep);
+
+            vm.selectedItem = rep;
+        }
+        
+        function imprimir() {
+
+            var generadopor = "generadorpor";
+            var paramdesc = "paramdesc";
+            var codigorep = vm.selectedItem.temp_id;
+
+            var url = "http://localhost:8080/imprentas_war/ReportePathServlet?generadopor=" + generadopor + "&paramdesc=" + paramdesc + "&codigorep=" + codigorep;
+            console.log('url-->');
+            console.log(url);
+            window.open(url, "mywindow", "status=1,toolbar=1");
+
+        }
+    }
+    ReportesSysCntrl.$inject = ['$scope', 'ReportesServ', 'gridService', '$state'];
+
+})();
+(function () {
+    'use strict';
+
+    angular.module("isyplus")
+        .config(jobConfig);
+    function jobConfig($stateProvider) {
+        $stateProvider.state('reportes_sys',{
+            url : '/reportessys',
+            templateUrl: 'static/app/reportessys/reportessys.html?v=' + globalgsvapp,
+            controller: 'ReportesSysCntrl'
+        });
+    }
+    jobConfig.$inject = ['$stateProvider'];
+
+
 
 })();
 (function () {
@@ -9431,7 +9519,7 @@ ngImgupload.$inject = ['$timeout'];
 (function (module) {
     'use strict';
     module.directive("serviRender", rerender);
-    function rerender(){
+    function rerender(){
             controller.$inject = ['$scope'];
         return {
             restrict: 'EA',
@@ -9498,7 +9586,7 @@ ngImgupload.$inject = ['$timeout'];
         .module("isyplus")
         .directive("serviFecha", serviFecha);
 
-    function serviFecha(){
+    function serviFecha(){
         controller.$inject = ['$element', '$timeout', '$scope', '$attrs', 'FechasServ'];
         return {
             restrict: 'EA',
