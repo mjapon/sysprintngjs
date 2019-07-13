@@ -54,7 +54,7 @@
             var paramdesc = "paramdesc";
             var codigorep = vm.selectedItem.temp_id;
 
-            var url = "http://localhost:8080/imprentas_war/ReportePathServlet?generadopor=" + generadopor + "&paramdesc=" + paramdesc + "&codigorep=" + codigorep;
+            var url = "http://157.230.129.131:8080/imprentas_war/ReportePathServlet?generadopor=" + generadopor + "&paramdesc=" + paramdesc + "&codigorep=" + codigorep;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
