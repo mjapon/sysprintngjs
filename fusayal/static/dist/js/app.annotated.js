@@ -1062,7 +1062,7 @@ var IsyplusApp = angular.
             var desde = vm.selectedItem.aut_secuencia_ini;
             var hasta = vm.selectedItem.aut_secuencia_fin;
             var jobid = vm.selectedItem.job_id;
-            var url = "http://localhost:8080/imprentas_war/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
+            var url = "http://157.230.129.131:8080/imprentas_war/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
@@ -1620,7 +1620,7 @@ var IsyplusApp = angular.
             var desde = vm.formJob.job_secuencia_ini;
             var hasta = vm.formJob.job_secuencia_fin;
             var jobid = vm.formJob.job_id;
-            var url = "http://localhost:8080/imprentas_war/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
+            var url = "http://157.230.129.131:8080/imprentas_war/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
@@ -1656,7 +1656,7 @@ var IsyplusApp = angular.
 
         function upload (file) {
             Upload.upload({
-                url: 'http://localhost:6543/uploadjobview', //webAPI exposed to upload the filefilename
+                url: 'http://157.230.129.131:6543/uploadjobview', //webAPI exposed to upload the filefilename
                 data:{file:file, job_id: vm.formJob.job_id, 'nombreArchivo':'pruebaNombreArchivo', 'filename':'pruebafilename'} //pass file as data, should be user ng-model
             }).then(function (resp) { //upload function returns a promise
                 console.log('Respuesta del servidor');
@@ -2000,7 +2000,7 @@ var IsyplusApp = angular.
             var paramdesc = "paramdesc";
             var codigorep = vm.selectedItem.temp_id;
 
-            var url = "http://localhost:8080/imprentas_war/ReportePathServlet?generadopor=" + generadopor + "&paramdesc=" + paramdesc + "&codigorep=" + codigorep;
+            var url = "http://157.230.129.131:8080/imprentas_war/ReportePathServlet?generadopor=" + generadopor + "&paramdesc=" + paramdesc + "&codigorep=" + codigorep;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
