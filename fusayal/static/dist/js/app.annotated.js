@@ -1062,7 +1062,7 @@ var IsyplusApp = angular.
             var desde = vm.selectedItem.aut_secuencia_ini;
             var hasta = vm.selectedItem.aut_secuencia_fin;
             var jobid = vm.selectedItem.job_id;
-            var url = "http://157.230.129.131:8080/imprentas_war/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
+            var url = "http://157.230.129.131:8080/imprentas/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
@@ -1620,7 +1620,7 @@ var IsyplusApp = angular.
             var desde = vm.formJob.job_secuencia_ini;
             var hasta = vm.formJob.job_secuencia_fin;
             var jobid = vm.formJob.job_id;
-            var url = "http://157.230.129.131:8080/imprentas_war/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
+            var url = "http://157.230.129.131:8080/imprentas/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
@@ -2000,7 +2000,7 @@ var IsyplusApp = angular.
             var paramdesc = "paramdesc";
             var codigorep = vm.selectedItem.temp_id;
 
-            var url = "http://157.230.129.131:8080/imprentas_war/ReportePathServlet?generadopor=" + generadopor + "&paramdesc=" + paramdesc + "&codigorep=" + codigorep;
+            var url = "http://157.230.129.131:8080/imprentas/ReportePathServlet?generadopor=" + generadopor + "&paramdesc=" + paramdesc + "&codigorep=" + codigorep;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
