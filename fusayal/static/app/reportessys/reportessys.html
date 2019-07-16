@@ -1,5 +1,5 @@
 <servi-page-header>
-    Generacion de reportes
+    Generación de reportes
 </servi-page-header>
 <div class="row">
     <div class="col-md-4">
@@ -7,7 +7,8 @@
 
             <div class="list-group">
                 <button type="button" ng-repeat="rep in reportesList"
-                        class="list-group-item list-group-item-action hand" ng-click="selReporte(rep)">
+                        class="list-group-item list-group-item-action hand" ng-click="selReporte(rep)"
+                ng-class="rep==selectedItem?'active':''">
                     {{rep.temp_name}}
                 </button>
 
@@ -18,7 +19,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-head">
-                Parametros
+                Params
             </div>
             <div class="card-body">
 

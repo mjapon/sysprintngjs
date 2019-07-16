@@ -27,8 +27,8 @@ class AutorizacionRest(DbComunView):
                     {'prop': 'cnt_ruc', 'label': 'RUC', 'width': '150'},
                     {'prop': 'td_nombre', 'label': 'Documento'},
                     {'prop': 'aut_serie', 'label': 'Serie'},
-                    {'prop': 'aut_secuencia_ini', 'label': 'Desde', 'width': '70'},
-                    {'prop': 'aut_secuencia_fin', 'label': 'Hasta', 'width': '70'},
+                    {'prop': 'job_secuencia_ini', 'label': 'Desde', 'width': '70'},
+                    {'prop': 'job_secuencia_fin', 'label': 'Hasta', 'width': '70'},
                     {'prop': 'aut_fechaautorizacion', 'label': 'Fecha autorización', 'width': '100'},
                     {'prop': 'aut_fechacaducidad', 'label': 'Fecha caducidad', 'width': '100'}]
             return {'estado': 200, 'items': items, 'cols': cols}

@@ -59,11 +59,10 @@ class TAutorizacionDao(BaseDao):
                     tau.cnt_id,
                     cnt.cnt_ruc,
                     cnt.cnt_razonsocial,
-                    td.td_nombre,
+                    '' as td_nombre,
 				    tau.aut_estab||'-'||tau.aut_ptoemi aut_serie 
                 from tautorizacion tau
-                    join tcontribuyente cnt ON tau.cnt_id = cnt.cnt_id
-                    join ttiposdoc td on tau.aut_tipodoc = td.td_id
+                    join tcontribuyente cnt ON tau.cnt_id = cnt.cnt_id                    
                  order by  aut_tipodoc, aut_numero
         """
         tupla_desc = ('aut_id',
@@ -123,12 +122,11 @@ class TAutorizacionDao(BaseDao):
                         tau.cnt_id,
                         cnt.cnt_ruc,
                         cnt.cnt_razonsocial,
-                        td.td_nombre,
+                        '' as td_nombre,
                         tau.aut_estab||'-'||tau.aut_ptoemi aut_serie,
                         coalesce(job.job_estado, -1) as job_estado
                     from tautorizacion tau
-                        join tcontribuyente cnt ON tau.cnt_id = cnt.cnt_id
-                        join ttiposdoc td on tau.aut_tipodoc = td.td_id
+                        join tcontribuyente cnt ON tau.cnt_id = cnt.cnt_id                        
                         left join tjob job on tau.aut_id = job.aut_id
                     where tau.cnt_id = {0}
                      order by  aut_tipodoc, aut_numero

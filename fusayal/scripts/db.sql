@@ -97,23 +97,3 @@ alter sequence tjobdoc_tjd_id_seq owned by tjobdoc.tjd_id;
 
 
 --Se cambia en la parte de registro de los trabajos de impesion
-
-alter table tjob
-	add job_ptoemi varchar(3) default '001' not null;
-
-comment on column tjob.job_ptoemi is 'Numero del punto de emision';
-
-alter table tjob
-	add job_secuencia_ini numeric(9) default 0 not null;
-
-comment on column tjob.job_secuencia_ini is 'Secuacia inicial del documento';
-
-alter table tjob
-	add job_secuencia_fin numeric(9) default 0 not null;
-
-alter table tjob
-	add job_tipodoc int default 1 not null;
-
-comment on column tjob.job_tipodoc is 'Tipo de documento a imprimir';
-
-
