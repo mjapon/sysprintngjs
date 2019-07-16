@@ -42,7 +42,8 @@
             setFocus: setFocus,
             setFocusWithTimeout: setFocusWithTimeout,
             setRutaRegresa: setRutaRegresa,
-            setSSValue: setSSValue
+            setSSValue: setSSValue,
+            getIPServer: getIpServer
         };
 
         function getNumUser() {
@@ -387,6 +388,11 @@
 
         function getUrlRestGen(opcion){
             return "/rest/general/0?opc="+opcion;
+        }
+
+        function getIpServer() {
+            //return "157.230.129.131";
+            return "localhost";
         }
 
     }

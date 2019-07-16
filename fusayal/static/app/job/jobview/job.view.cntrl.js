@@ -4,10 +4,8 @@
         .controller("JobViewCntrl", JobViewCntrl);
 
     function JobViewCntrl($scope, $stateParams, $state, JobService, focusService,
-                          NotifServ, ReportesServ, swalService, ModalServ, JobRPService, Upload) {
+                          NotifServ, ReportesServ, swalService, ModalServ, JobRPService, Upload,GeneralSrv) {
         var vm = $scope;
-
-        var ipServerTomcat = "157.230.129.131";
 
         vm.formContrib = {};
         vm.formAut = {};
@@ -34,7 +32,10 @@
         vm.imprimir = imprimir;
         vm.setInputFocus = setInputFocus;
         vm.okModalReimprimir = okModalReimprimir;
-        vm.marcarIncompleto = marcarIncompleto; 
+        vm.marcarIncompleto = marcarIncompleto;
+        vm.verReporteGen = verReporteGen;
+
+        vm.ipServer = GeneralSrv.getIPServer();
 
         init();
         
@@ -173,7 +174,7 @@
             var desde = vm.formJob.job_secuencia_ini;
             var hasta = vm.formJob.job_secuencia_fin;
             var jobid = vm.formJob.job_id;
-            var url = "http://157.230.129.131:8080/imprentas/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
+            var url = "http://"+vm.ipServer+":8080/imprentas/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
@@ -207,9 +208,16 @@
             }
         }
 
+        function verReporteGen(){
+            var url = "http://"+vm.ipServer+":8080/imprentas/DescargaReportServlet?codjob=" + vm.formJob.job_id;
+            console.log('url-->');
+            console.log(url);
+            window.open(url, "mywindow", "status=1,toolbar=1");
+        }
+
         function upload (file) {
             Upload.upload({
-                url: 'http://157.230.129.131:6543/uploadjobview', //webAPI exposed to upload the filefilename
+                url: 'http://'+vm.ipServer+':6543/uploadjobview', //webAPI exposed to upload the filefilename
                 data:{file:file, job_id: vm.formJob.job_id, 'nombreArchivo':'pruebaNombreArchivo', 'filename':'pruebafilename'} //pass file as data, should be user ng-model
             }).then(function (resp) { //upload function returns a promise
                 console.log('Respuesta del servidor');

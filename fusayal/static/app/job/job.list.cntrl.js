@@ -3,7 +3,8 @@
     angular.module("isyplus")
         .controller("JobCntrl", JobCntrl);
 
-    function JobCntrl($scope, JobService, gridService, $state, ModalServ, NotifServ, swalService, ReportesServ, ListasServ) {
+    function JobCntrl($scope, JobService, gridService, $state, ModalServ, NotifServ, swalService, ReportesServ, ListasServ,
+                      GeneralSrv) {
 
         var vm = $scope;
 
@@ -25,6 +26,7 @@
         vm.testUpload = testUpload;
         vm.verDetalles = verDetalles;
 
+        vm.ipServer = GeneralSrv.getIPServer();
 
         vm.repgrid = {};
         vm.repgrid.selectedItem = {};
@@ -199,7 +201,7 @@
             var desde = vm.selectedItem.aut_secuencia_ini;
             var hasta = vm.selectedItem.aut_secuencia_fin;
             var jobid = vm.selectedItem.job_id;
-            var url = "http://157.230.129.131:8080/imprentas/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
+            var url = "http://"+vm.ipServer+":8080/imprentas/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");

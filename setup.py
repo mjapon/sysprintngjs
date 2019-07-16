@@ -16,7 +16,7 @@ requires = [
     'pyramid_jinja2',
     'pyramid_retry',
     'pyramid_tm',
-    'SQLAlchemy',
+    'SQLAlchemy==0.9.8',
     'transaction',
     'zope.sqlalchemy',
     'waitress',

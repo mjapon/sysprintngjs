@@ -226,6 +226,11 @@
                             Reportar
                         </button>
 
+                        <button class="btn btn-outline-primary" type="button"
+                                ng-show="formJob.job_estado===6 || formJob.job_estado===2" ng-click="verReporteGen()">
+                            Ver documento
+                        </button>
+
                         <button class="btn btn-outline-secondary float-right" type="button" ng-click="goLista()">
                             Regresar
                         </button>

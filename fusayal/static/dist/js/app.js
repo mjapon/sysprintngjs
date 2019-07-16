@@ -846,7 +846,8 @@ var IsyplusApp = angular.
     angular.module("isyplus")
         .controller("JobCntrl", JobCntrl);
 
-    function JobCntrl($scope, JobService, gridService, $state, ModalServ, NotifServ, swalService, ReportesServ, ListasServ) {
+    function JobCntrl($scope, JobService, gridService, $state, ModalServ, NotifServ, swalService, ReportesServ, ListasServ,
+                      GeneralSrv) {
 
         var vm = $scope;
 
@@ -868,6 +869,7 @@ var IsyplusApp = angular.
         vm.testUpload = testUpload;
         vm.verDetalles = verDetalles;
 
+        vm.ipServer = GeneralSrv.getIPServer();
 
         vm.repgrid = {};
         vm.repgrid.selectedItem = {};
@@ -1042,7 +1044,7 @@ var IsyplusApp = angular.
             var desde = vm.selectedItem.aut_secuencia_ini;
             var hasta = vm.selectedItem.aut_secuencia_fin;
             var jobid = vm.selectedItem.job_id;
-            var url = "http://157.230.129.131:8080/imprentas/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
+            var url = "http://"+vm.ipServer+":8080/imprentas/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
@@ -1425,7 +1427,7 @@ var IsyplusApp = angular.
         .controller("JobViewCntrl", JobViewCntrl);
 
     function JobViewCntrl($scope, $stateParams, $state, JobService, focusService,
-                          NotifServ, ReportesServ, swalService, ModalServ, JobRPService, Upload) {
+                          NotifServ, ReportesServ, swalService, ModalServ, JobRPService, Upload,GeneralSrv) {
         var vm = $scope;
 
         vm.formContrib = {};
@@ -1453,7 +1455,10 @@ var IsyplusApp = angular.
         vm.imprimir = imprimir;
         vm.setInputFocus = setInputFocus;
         vm.okModalReimprimir = okModalReimprimir;
-        vm.marcarIncompleto = marcarIncompleto; 
+        vm.marcarIncompleto = marcarIncompleto;
+        vm.verReporteGen = verReporteGen;
+
+        vm.ipServer = GeneralSrv.getIPServer();
 
         init();
         
@@ -1592,7 +1597,7 @@ var IsyplusApp = angular.
             var desde = vm.formJob.job_secuencia_ini;
             var hasta = vm.formJob.job_secuencia_fin;
             var jobid = vm.formJob.job_id;
-            var url = "http://157.230.129.131:8080/imprentas/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
+            var url = "http://"+vm.ipServer+":8080/imprentas/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
@@ -1626,9 +1631,16 @@ var IsyplusApp = angular.
             }
         }
 
+        function verReporteGen(){
+            var url = "http://"+vm.ipServer+":8080/imprentas/DescargaReportServlet?codjob=" + vm.formJob.job_id;
+            console.log('url-->');
+            console.log(url);
+            window.open(url, "mywindow", "status=1,toolbar=1");
+        }
+
         function upload (file) {
             Upload.upload({
-                url: 'http://157.230.129.131:6543/uploadjobview', //webAPI exposed to upload the filefilename
+                url: 'http://'+vm.ipServer+':6543/uploadjobview', //webAPI exposed to upload the filefilename
                 data:{file:file, job_id: vm.formJob.job_id, 'nombreArchivo':'pruebaNombreArchivo', 'filename':'pruebafilename'} //pass file as data, should be user ng-model
             }).then(function (resp) { //upload function returns a promise
                 console.log('Respuesta del servidor');
@@ -1921,6 +1933,10 @@ var IsyplusApp = angular.
         vm.selectedItem = {};
         vm.reportesList = [];
 
+        //var ipServer = "157.230.129.131";
+        var ipServer = "localhost";
+
+
         vm.imprimir = imprimir;
 
         init();
@@ -1958,13 +1974,16 @@ var IsyplusApp = angular.
         }
         
         function imprimir() {
+
             var generadopor = "generadorpor";
             var paramdesc = "paramdesc";
             var codigorep = vm.selectedItem.temp_id;
-            var url = "http://157.230.129.131:8080/imprentas/ReportePathServlet?generadopor=" + generadopor + "&paramdesc=" + paramdesc + "&codigorep=" + codigorep;
+
+            var url = "http://"+ipServer+":8080/imprentas/ReportePathServlet?generadopor=" + generadopor + "&paramdesc=" + paramdesc + "&codigorep=" + codigorep;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
+
         }
     }
 
@@ -5867,7 +5886,8 @@ var IsyplusApp = angular.
             setFocus: setFocus,
             setFocusWithTimeout: setFocusWithTimeout,
             setRutaRegresa: setRutaRegresa,
-            setSSValue: setSSValue
+            setSSValue: setSSValue,
+            getIPServer: getIpServer
         };
 
         function getNumUser() {
@@ -6212,6 +6232,11 @@ var IsyplusApp = angular.
 
         function getUrlRestGen(opcion){
             return "/rest/general/0?opc="+opcion;
+        }
+
+        function getIpServer() {
+            //return "157.230.129.131";
+            return "localhost";
         }
 
     }
