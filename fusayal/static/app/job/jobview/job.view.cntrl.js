@@ -7,6 +7,8 @@
                           NotifServ, ReportesServ, swalService, ModalServ, JobRPService, Upload) {
         var vm = $scope;
 
+        var ipServerTomcat = "157.230.129.131";
+
         vm.formContrib = {};
         vm.formAut = {};
         vm.formJob = {};

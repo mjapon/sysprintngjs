@@ -12,6 +12,10 @@
         vm.selectedItem = {};
         vm.reportesList = [];
 
+        //var ipServer = "157.230.129.131";
+        var ipServer = "localhost";
+
+
         vm.imprimir = imprimir;
 
         init();
@@ -49,13 +53,16 @@
         }
         
         function imprimir() {
+
             var generadopor = "generadorpor";
             var paramdesc = "paramdesc";
             var codigorep = vm.selectedItem.temp_id;
-            var url = "http://157.230.129.131:8080/imprentas/ReportePathServlet?generadopor=" + generadopor + "&paramdesc=" + paramdesc + "&codigorep=" + codigorep;
+
+            var url = "http://"+ipServer+":8080/imprentas/ReportePathServlet?generadopor=" + generadopor + "&paramdesc=" + paramdesc + "&codigorep=" + codigorep;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
+
         }
     }
 
