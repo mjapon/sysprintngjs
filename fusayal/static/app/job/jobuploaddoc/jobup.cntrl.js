@@ -3,12 +3,15 @@
     angular.module("isyplus")
         .controller('JobUpCntrl', JobUpCntrl);
 
-    function JobUpCntrl($scope, $window, Upload, swalService) {
+    function JobUpCntrl($scope, $window, Upload, swalService, GeneralSrv) {
 
         var vm = $scope;
 
         vm.submit = submit;
         vm.upload = upload;
+
+        vm.ipServer = GeneralSrv.getIPServer();
+
 
         function init(){
             console.log('init up cntrl--->');
@@ -28,7 +31,7 @@
 
         function upload (file) {
             Upload.upload({
-                url: 'http://localhost:6543/uploadjobview', //webAPI exposed to upload the filefilename
+                url: 'http://'+vm.ipServer+':6543/uploadjobview', //webAPI exposed to upload the filefilename
                 data:{file:file, job_id:0, 'nombreArchivo':'pruebaNombreArchivo', 'filename':'pruebafilename'} //pass file as data, should be user ng-model
             }).then(function (resp) { //upload function returns a promise
                 console.log('Respuesta del servidor');

@@ -3,7 +3,7 @@
     angular.module("isyplus")
         .controller("ReportesSysCntrl", ReportesSysCntrl);
 
-    function ReportesSysCntrl($scope, ReportesServ, gridService, $state) {
+    function ReportesSysCntrl($scope, ReportesServ, gridService, $state, GeneralSrv) {
 
         var vm = $scope;
 
@@ -13,7 +13,7 @@
         vm.reportesList = [];
 
         //var ipServer = "157.230.129.131";
-        var ipServer = "localhost";
+        var ipServer = GeneralSrv.getIPServer();
 
 
         vm.imprimir = imprimir;
