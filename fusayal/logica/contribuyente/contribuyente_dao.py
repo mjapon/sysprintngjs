@@ -151,6 +151,60 @@ class TContribuyenteDao(BaseDao):
         cuenta = self.first_col(sql, col='cuenta')
         return cuenta > 0
 
+    def verificar(self,  nro):
+        l = len(nro)
+        result = False
+        if l == 10 or l == 13:  # verificar la longitud correcta
+            cp = int(nro[0:2])
+            if cp >= 1 and cp <= 22:  # verificar codigo de provincia
+                tercer_dig = int(nro[2])
+                if tercer_dig >= 0 and tercer_dig < 6:  # numeros enter 0 y 6
+                    if l == 10:
+                        result = self.validar_ced_ruc(nro, 0)
+                    elif l == 13:
+                        result = self.validar_ced_ruc(nro, 0) and nro[
+                                                             10:13] != '000'  # se verifica q los ultimos numeros no sean 000
+                elif tercer_dig == 6:
+                    result = self.validar_ced_ruc(nro, 1)  # sociedades publicas
+                elif tercer_dig == 9:  # si es ruc
+                    result = self.validar_ced_ruc(nro, 2)  # sociedades privadas
+                else:
+                    result = False
+                    #raise Exception(u'Tercer digito invalido')
+            else:
+                result = False
+                #raise Exception(u'Codigo de provincia incorrecto')
+        else:
+            result = False
+            #raise Exception(u'Longitud incorrecta del numero ingresado')
+
+        return result
+
+    def validar_ced_ruc(self, nro, tipo):
+        total = 0
+        if tipo == 0:  # cedula y r.u.c persona natural
+            base = 10
+            d_ver = int(nro[9])  # digito verificador
+            multip = (2, 1, 2, 1, 2, 1, 2, 1, 2)
+        elif tipo == 1:  # r.u.c. publicos
+            base = 11
+            d_ver = int(nro[8])
+            multip = (3, 2, 7, 6, 5, 4, 3, 2)
+        elif tipo == 2:  # r.u.c. juridicos y extranjeros sin cedula
+            base = 11
+            d_ver = int(nro[9])
+            multip = (4, 3, 2, 7, 6, 5, 4, 3, 2)
+        for i in range(0, len(multip)):
+            p = int(nro[i]) * multip[i]
+            if tipo == 0:
+                total += p if p < 10 else int(str(p)[0]) + int(str(p)[1])
+            else:
+                total += p
+        mod = total % base
+        val = base - mod if mod != 0 else 0
+        return val == d_ver
+
+
     def crear(self, form, user_crea):
         """
         Crea un nuevo contribuyente
@@ -161,14 +215,22 @@ class TContribuyenteDao(BaseDao):
         if not cadenas.es_nonulo_novacio(cnt_ruc):
             raise ErrorValidacionExc("Debe ingresar el ruc")
 
+        if not cnt_ruc.isdigit():
+            raise ErrorValidacionExc("El ruc ingresado es incorrecto")
+
+        #Logica para validacion de ruc
+        resvalid = self.verificar(cnt_ruc)
+        if not resvalid:
+            raise ErrorValidacionExc(u"El número de ruc ingresado es incorrecto")
+
         if self.ya_existe(cnt_ruc=cnt_ruc):
-            raise ErrorValidacionExc("El contribuyente con número de ruc: {0} ya ha sido registrado".format(cnt_ruc))
+            raise ErrorValidacionExc(u"El contribuyente con número de ruc: {0} ya ha sido registrado".format(cnt_ruc))
 
         if not cadenas.es_nonulo_novacio(form['cnt_razonsocial']):
-            raise ErrorValidacionExc("Ingrese la razón social")
+            raise ErrorValidacionExc(u"Ingrese la razón social")
 
         if not cadenas.es_nonulo_novacio(form['cnt_dirmatriz']):
-            raise ErrorValidacionExc("Ingrese la dirección matriz")
+            raise ErrorValidacionExc(u"Ingrese la dirección matriz")
 
         # if not cadenas.es_nonulo_novacio(form['cnt_nombrecomercial']):
         #     raise ErrorValidacionExc("Ingrese el nombre comercial")

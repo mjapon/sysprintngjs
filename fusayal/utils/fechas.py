@@ -246,5 +246,17 @@ def get_now():
     return datetime.datetime.now()
 
 
+def isvalid(date_text):
+    valid = False
+    try:
+        datetime.datetime.strptime(date_text, '%d/%m/%Y')
+        valid = True
+    except ValueError:
+        #raise ValueError("Incorrect data format, should be YYYY-MM-DD")
+        valid = False
+    return valid
+
+
+
 
 

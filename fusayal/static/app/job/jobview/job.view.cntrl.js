@@ -105,16 +105,16 @@
         }
 
         function okModalReimprimir(){
-            console.log(vm.formReprint);
             var res = JobRPService.save(vm.formReprint, function () {
                 if (res.estado == 200) {
-                    auxImprimir(1);
+
+                    verReporteGen();
+                    //auxImprimir(1);
                     NotifServ.success(res.msg);
                     ModalServ.hide('modalReprint');
                     auxCambiarEstado(5);
                 }
             });
-
         }
 
         function auxCambiarEstado(newEstado, notif) {

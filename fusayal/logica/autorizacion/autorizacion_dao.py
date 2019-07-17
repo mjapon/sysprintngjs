@@ -6,14 +6,13 @@ Fecha de creacion 3/25/19
 import copy
 import logging
 
-from pip._vendor.chardet import enums
-
 from fusayal.logica.auditorias.taudit_dao import TAuditDao
 from fusayal.logica.autorizacion.autorizacion_model import TAutorizacion
 from fusayal.logica.dao.base import BaseDao
 from fusayal.logica.excepciones.validacion import ErrorValidacionExc
 from fusayal.logica.utils import checkcambioutil, enums
 from fusayal.utils import cadenas, fechas
+from pip._vendor.chardet import enums
 
 log = logging.getLogger(__name__)
 
@@ -310,6 +309,19 @@ class TAutorizacionDao(BaseDao):
 
         fecha_autorizacion = fechas.parse_cadena(fecha_aut_str)
         fecha_caducidad = fechas.parse_cadena(fecha_cad_str)
+
+        #Validar que una fecha ingresada sea correcta
+        if not fechas.isvalid(fecha_autorizacion):
+            raise ErrorValidacionExc("La fecha de autorización ingresada es incorrecta verifique que se encuentre en el formato dd/mm/aaaa")
+
+        if not fechas.isvalid(fecha_caducidad):
+            raise ErrorValidacionExc(
+                "La fecha de caducidad ingresada es incorrecta verifique que se encuentre en el formato dd/mm/aaaa")
+
+
+        #Verificacion de numero de autorizacion
+        if not aut_numero.isdigit():
+            raise ErrorValidacionExc(u"El numero de autorización ingresado es incorrecto")
 
         diasvalidos = abs(fecha_caducidad - fecha_autorizacion).days
 
