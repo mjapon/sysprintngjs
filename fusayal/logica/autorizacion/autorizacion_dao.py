@@ -11,6 +11,7 @@ from fusayal.logica.autorizacion.autorizacion_model import TAutorizacion
 from fusayal.logica.dao.base import BaseDao
 from fusayal.logica.excepciones.validacion import ErrorValidacionExc
 from fusayal.logica.utils import checkcambioutil, enums
+from fusayal.logica.utils.enums import TBL_AUTORIZACIONES
 from fusayal.utils import cadenas, fechas
 from pip._vendor.chardet import enums
 
@@ -311,10 +312,10 @@ class TAutorizacionDao(BaseDao):
         fecha_caducidad = fechas.parse_cadena(fecha_cad_str)
 
         #Validar que una fecha ingresada sea correcta
-        if not fechas.isvalid(fecha_autorizacion):
+        if not fechas.isvalid(fecha_aut_str):
             raise ErrorValidacionExc("La fecha de autorización ingresada es incorrecta verifique que se encuentre en el formato dd/mm/aaaa")
 
-        if not fechas.isvalid(fecha_caducidad):
+        if not fechas.isvalid(fecha_cad_str):
             raise ErrorValidacionExc(
                 "La fecha de caducidad ingresada es incorrecta verifique que se encuentre en el formato dd/mm/aaaa")
 
@@ -363,6 +364,6 @@ class TAutorizacionDao(BaseDao):
         self.dbsession.flush()
 
         tautditdao = TAuditDao(self.dbsession)
-        tautditdao.crea_accion_insert(enums.TBL_AUTORIZACIONES, user_crea, tautorizacion.aut_id)
+        tautditdao.crea_accion_insert(TBL_AUTORIZACIONES, user_crea, tautorizacion.aut_id)
 
         return tautorizacion.aut_id
