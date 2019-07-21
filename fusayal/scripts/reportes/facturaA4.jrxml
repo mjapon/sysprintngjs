@@ -362,7 +362,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Arial Narrow" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CANT.]]></text>
 			</staticText>
@@ -371,7 +371,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Arial Narrow" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DESCRIPCION]]></text>
 			</staticText>
@@ -387,7 +387,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Arial Narrow" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[V. TOTAL]]></text>
 			</staticText>
@@ -454,7 +454,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Arial Narrow" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SUBTOTAL USD]]></text>
 			</staticText>
@@ -463,7 +463,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Arial Narrow" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[IVA 0%]]></text>
 			</staticText>
@@ -472,7 +472,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Arial Narrow" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[IVA 12%]]></text>
 			</staticText>
@@ -481,7 +481,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right">
-					<font fontName="Arial Narrow" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TOTAL $]]></text>
 			</staticText>
@@ -490,7 +490,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Arial Narrow" size="9" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FORMA DE PAGO: EFECTIVO___TARJETA DE CREDITO__DINERO ELECTRONICO__OTROS__]]></text>
 			</staticText>
@@ -499,7 +499,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Arial Narrow" size="10" isBold="true"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Son: ]]></text>
 			</staticText>
@@ -508,7 +508,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Arial Narrow" size="10" isBold="true"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[dólares]]></text>
 			</staticText>
@@ -555,7 +555,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Arial Narrow" size="10" isBold="false"/>
+					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[F. AUTORIZADA]]></text>
 			</staticText>
@@ -564,7 +564,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Arial Narrow" size="10" isBold="false"/>
+					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[RECIBIDO POR]]></text>
 			</staticText>
@@ -573,7 +573,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Arial Narrow" size="10" isBold="false" isItalic="true"/>
+					<font fontName="Arial" size="10" isBold="false" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Original:Cliente/Verde: Emisor]]></text>
 			</staticText>
@@ -582,7 +582,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Arial Narrow" size="10" isBold="true" isItalic="true"/>
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de Aut.:]]></text>
 			</staticText>
@@ -592,7 +592,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Arial Narrow" size="10" isBold="true" isItalic="true"/>
+					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de caduc.:]]></text>
 			</staticText>
@@ -680,7 +680,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Arial Narrow" size="10" isItalic="true"/>
+					<font fontName="Arial" size="10" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{aut_fechaautorizacion})]]></textFieldExpression>
 			</textField>
@@ -691,7 +691,7 @@ where tjob.job_id = $P{jobid};]]>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Arial Narrow" size="10" isItalic="true"/>
+					<font fontName="Arial" size="10" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{aut_fechacaducidad})]]></textFieldExpression>
 			</textField>
