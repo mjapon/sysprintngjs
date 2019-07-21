@@ -58,7 +58,7 @@ class UsuariosRest(DbComunView):
             result = usersdao.listar()
             # 'us_id', 'us_name', 'us_nomapel', 'us_datecreated', 'estado'
             cols = [{'name': 'us_name', 'displayName': 'Usuario', 'width': '90'},
-                    {'name': 'us_nomapel', 'displayName': 'Nombres y apellidos', 'width': '200'},
+                    {'name': 'us_nomapel', 'displayName': 'Nombres y apellidos', 'width': '380'},
                     {'name': 'us_datecreated', 'displayName': 'Fecha de registro', 'width': '180'},
                     {'name': 'estado', 'displayName': 'Estado', 'width': '150'}]
 

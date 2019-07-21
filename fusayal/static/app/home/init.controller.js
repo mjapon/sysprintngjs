@@ -3,10 +3,11 @@
     angular.module("isyplus")
         .controller("InitCntrl", InitCntrl);
 
-    function InitCntrl($scope, $state, LoginServ, NotifServ, AuthFactory) {
+    function InitCntrl($scope, $state, LoginServ, NotifServ, AlertSrv, AuthFactory, GeneralSrv) {
 
         var vm = $scope;
 
+        vm.ipServer = GeneralSrv.getIPServer();
 
         vm.isUsserLogged = false;
         vm.exitApp = exitApp;
@@ -19,51 +20,81 @@
         vm.goReportes = goReportes;
         vm.goJobWizard = goJobWizard;
         vm.goReportesSys = goReportesSys;
+        vm.salirSys = salirSys;
 
         init();
 
-
-        function init(){
+        function init() {
             console.log("InitCntrl ejecutado ----->");
             //$state.go("home");
+            console.log(globalUserLogged);
+            AuthFactory.loadRolesUser(globalUserLogged);
         }
 
+        function salirSys() {
+            AlertSrv.confirm("¿Seguro que desea salir?", function (isConfirm) {
+                if (isConfirm) {
+                    window.location.href = 'http://' + vm.ipServer + ':6543/logout';
+                }
+            });
+        }
 
-        function exitApp(){
+        function exitApp() {
             $state.go("home");
         }
 
-        function goFormIngreso(){
+        function goFormIngreso() {
             $state.go("login");
         }
 
-        function goUsuarios() {
-            $state.go("usuarios");
+        function checkRol(rol) {
+            if (AuthFactory.userHasRol(rol)) {
+                return true;
+            }
+            else {
+                AlertSrv.warning('Acceso no autorizado');
+                return false;
+            }
         }
 
-        function logout(){
+        function goUsuarios() {
+            if (checkRol('LISTAUSER')) {
+                $state.go("usuarios");
+            }
+        }
+
+        function logout() {
             console.log("logout");
         }
 
-        function goEmpresa(){
-            $state.go("empresa");
+        function goEmpresa() {
+            if (checkRol('EMPRESAEDIT')) {
+                $state.go("empresa");
+            }
         }
 
-        function goContribs(){
-            $state.go("contribs_list");
+        function goContribs() {
+            if (checkRol('LISTACONTRIB')) {
+                $state.go("contribs_list");
+            }
         }
 
         function goAuts() {
-            $state.go("auts_list");
+            if (checkRol('LISTAAUT')) {
+                $state.go("auts_list");
+            }
         }
 
-        function goJobs(){
-            $state.go("job_list");
+        function goJobs() {
+            if (checkRol('LISTADOC')) {
+                $state.go("job_list");
+            }
         }
 
         function goReportes() {
-            $state.go("reportes_list");
-            // $state.go("upload");
+            if (checkRol('ACCESPLANTILLAS')) {
+                $state.go("reportes_list");
+            }
         }
 
         function goJobWizard() {
@@ -71,7 +102,9 @@
         }
 
         function goReportesSys() {
-            $state.go("reportes_sys");
+            if (checkRol('ACCESREPORTES')) {
+                $state.go("reportes_sys");
+            }
         }
     }
 

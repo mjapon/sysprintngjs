@@ -29,6 +29,8 @@ def add_global(event):
         event['user_logged'] = 0
         if 'us_id' in req.session:
             event['user_logged'] = req.session['us_id']
+            event['user_loggedname'] = req.session['us_nomapel']
+
 
             # if verificar_datos_redis(req):
         #     emp_codigo = req.session['emp_codigo']

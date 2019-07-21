@@ -117,6 +117,7 @@ class TUsersDao(BaseDao):
         tuser.us_status = 0 #
         tuser.us_statusclave = 0
         tuser.us_nomapel = nomapel.upper()
+        tuser.us_superuser = 0
 
         self.dbsession.add(tuser)
         self.dbsession.flush()
@@ -146,11 +147,11 @@ class TUsersDao(BaseDao):
         """
 
         sql = """
-        select us_id, us_name, us_nomapel, us_datecreated, us_status,
+        select us_id, us_name, us_nomapel, us_datecreated, us_superuser, us_status, 
         case when us_status = 0 then 'ACTIVO' when us_status = 1 then 'INACTIVO' else 'ND' end as estado 
         from tuser ORDER BY us_nomapel"""
 
-        tupladesc = ('us_id', 'us_name', 'us_nomapel', 'us_datecreated','us_status','estado')
+        tupladesc = ('us_id', 'us_name', 'us_nomapel', 'us_datecreated','us_superuser', 'us_status','estado')
 
         return self.all(sql, tupladesc)
 
@@ -161,11 +162,11 @@ class TUsersDao(BaseDao):
         :return:
         """
         sql = """
-                select us_id, us_name, us_nomapel, us_datecreated, 
+                select us_id, us_name, us_nomapel, us_superuser, us_datecreated, 
                 case when us_status = 0 then 'ACTIVO' when us_status =1 then 'INACTIVO' else 'ND' end as estado 
                 from tuser where us_id = {0}""".format(id_user)
 
-        tupladesc = ('us_id', 'us_name', 'us_nomapel', 'us_datecreated', 'estado')
+        tupladesc = ('us_id', 'us_name', 'us_nomapel', 'us_superuser', 'us_datecreated', 'estado')
 
         return self.first(sql, tupladesc)
 

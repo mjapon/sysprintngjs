@@ -3,14 +3,14 @@
 </servi-page-header>
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-10">
 
         <div class="card">
             <div class="card-body">
 
                 <div class="row">
                     <div class="col-md-4">
-                        Contribuyente:
+                        Contribuyente <span class="gridRed"> * </span>:
                     </div>
                     <div class="col-md-8">
                         <ng-complete lstdatos="listas.contributentes"
@@ -25,7 +25,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        Numero de autorización:
+                        Numero de autorización <span class="gridRed"> * </span>:
                     </div>
                     <div class="col-md-8">
                         <input type="text" class="form-control" ng-model="form.aut_numero"
@@ -36,7 +36,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        Establecimiento:
+                        Establecimiento <span class="gridRed"> * </span>:
                     </div>
                     <div class="col-md-8">
                         <input type="text" id="aut_estab" class="form-control" ng-model="form.aut_estab" input-mask="{mask:'999'}"/>
@@ -66,7 +66,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        Fecha de autorización:
+                        Fecha de autorización <span class="gridRed"> * </span>:
                     </div>
                     <div class="col-md-8">
                         <servi-fecha elementid="e_fechaaut" model="form.aut_fechaautorizacion"
@@ -76,7 +76,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        Fecha de caducidad:
+                        Fecha de caducidad <span class="gridRed"> * </span>:
                     </div>
                     <div class="col-md-8">
                         <servi-fecha elementid="e_fechaaut" model="form.aut_fechacaducidad"

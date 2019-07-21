@@ -134,10 +134,10 @@ def upload_job_file(request):
                 uploadFileUtil = CargaArchivosUtil()
                 uploadFileUtil.save_bytarray(resp['ruta'], filecontent)
                 estado = 200
-                msg = 'success:{0}'.format(resp['msg'])
+                msg = '{0}'.format(resp['msg'])
             except ErrorValidacionExc as ex:
                 estado = -1
-                msg = 'danger:' + format(ex.message)
+                msg = '{0}'.format(ex.message)
                 log.error(u'Error al tratar de guardar el trabajo de impresión: {0}'.format(ex))
 
     """

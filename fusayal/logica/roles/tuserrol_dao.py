@@ -81,10 +81,13 @@ class TUserRolDao(BaseDao):
         """
 
         user_roles = self.listar_for_user(us_id)
+        return user_roles
+        """
         mapuserroles = {}
         if user_roles is not None:
             for usrol in user_roles:
                 mapuserroles[usrol['rl_abreviacion']] = usrol
+        """
 
     def asociar(self, us_id, roles_list, user_crea):
         """

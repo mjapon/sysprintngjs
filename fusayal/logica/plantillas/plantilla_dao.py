@@ -15,10 +15,10 @@ log = logging.getLogger(__name__)
 class TPlantillasDao(BaseDao):
 
     def listar(self, tipo):
-        sql = "select temp_id, temp_name, temp_desc from tplantilla where temp_tipo={0} order by temp_id".format(tipo)
+        sql = "select temp_id, temp_name, temp_desc, temp_params from tplantilla where temp_tipo={0} order by temp_id".format(tipo)
         log.info("sql que se ejecuta es:")
         log.info(sql)
-        tupla_desc = ('temp_id', 'temp_name', 'temp_desc')
+        tupla_desc = ('temp_id', 'temp_name', 'temp_desc', 'temp_params')
 
         return self.all(sql, tupla_desc)
 
@@ -37,6 +37,8 @@ class TPlantillasDao(BaseDao):
         tplantilla.temp_jrxml = temp_jrxml
         tplantilla.temp_tipo = 1
         tplantilla.temp_desc = ''
+        tplantilla.temp_params = ''
+
         self.dbsession.add(tplantilla)
 
     def actualizar(self, temp_id, new_temp_name, new_temp_jrxml):

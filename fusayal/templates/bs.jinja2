@@ -54,7 +54,10 @@
     </div>
 </main>
 
-<script src="static/dist/js/vendor.min.js?v=0.1"></script>
+<script src="static/dist/js/vendor.min.js?v=0.12"></script>
+<!--
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+-->
 <script src="static/js/utils.js?v=0.1"></script>
 
 </head>
@@ -63,6 +66,8 @@
     var globalgsvapp = '{{vapp}}';
     var globalEmpEsquema = '{{emp_esquema}}';
     var globalUserLogged = '{{user_logged}}';
+    var globalUserLoggedName ='{{user_loggedname}}';
+
     $(function () {
         setupJQuery();
         {% if request.session.peek_flash()|length>0 %}
@@ -82,9 +87,9 @@
         {% endif %}
     });
 </script>
-<!-- <script src="static/dist/js/app.js?v={{ vapp }}"></script> -->
+ <script src="static/dist/js/app.js?v={{ vapp }}"></script>
 <!-- <script src="//localhost:1337/livereload.js"></script> -->
 
-<script src="static/dist/js/app.min.js?v=1.2"></script>
+<!-- <script src="static/dist/js/app.min.js?v=1.2"></script> -->
 </body>
 </html>

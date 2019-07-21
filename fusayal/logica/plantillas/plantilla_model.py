@@ -27,3 +27,4 @@ class \
     temp_tipo = Column(Integer, nullable=False)
     temp_jrxml = Column(Text, nullable=False)
     temp_desc = Column(Text)
+    temp_params = Column(Text)

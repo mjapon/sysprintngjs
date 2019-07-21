@@ -27,7 +27,8 @@
             getMesLargo: getMesLargo,
             get_str_mes_largo: get_str_mes_largo,
             getFechaLetras: getFechaLetras,
-            esFechaValida: esFechaValida
+            esFechaValida: esFechaValida,
+            get_fecha_db:get_fecha_db
         };
 
         function format_momment_date(DATE) {
@@ -36,6 +37,11 @@
 
         function parse_cadena(cadena) {
             return moment(cadena, 'DD/MM/YYYY');
+        }
+
+        function get_fecha_db(fecha){
+            return parse_cadena(fecha).format('YYYY-MM-DD');
+
         }
 
         function get_fecha_actual() {

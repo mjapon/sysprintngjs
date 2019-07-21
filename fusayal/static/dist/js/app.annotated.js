@@ -697,10 +697,11 @@ var IsyplusApp = angular.
     angular.module("isyplus")
         .controller("InitCntrl", InitCntrl);
 
-    function InitCntrl($scope, $state, LoginServ, NotifServ, AuthFactory) {
+    function InitCntrl($scope, $state, LoginServ, NotifServ, AlertSrv, AuthFactory, GeneralSrv) {
 
         var vm = $scope;
 
+        vm.ipServer = GeneralSrv.getIPServer();
 
         vm.isUsserLogged = false;
         vm.exitApp = exitApp;
@@ -713,51 +714,82 @@ var IsyplusApp = angular.
         vm.goReportes = goReportes;
         vm.goJobWizard = goJobWizard;
         vm.goReportesSys = goReportesSys;
+        vm.salirSys = salirSys;
 
         init();
 
-
-        function init(){
+        function init() {
             console.log("InitCntrl ejecutado ----->");
             //$state.go("home");
+            console.log(globalUserLogged);
+            AuthFactory.loadRolesUser(globalUserLogged);
+        }
+
+        function salirSys() {
+            AlertSrv.confirm("¿Seguro que desea salir?", function (isConfirm) {
+                if (isConfirm) {
+                    window.location.href = 'http://' + vm.ipServer + ':6543/logout';
+                }
+            });
         }
 
 
-        function exitApp(){
+        function exitApp() {
             $state.go("home");
         }
 
-        function goFormIngreso(){
+        function goFormIngreso() {
             $state.go("login");
         }
 
-        function goUsuarios() {
-            $state.go("usuarios");
+        function checkRol(rol) {
+            if (AuthFactory.userHasRol(rol)) {
+                return true;
+            }
+            else {
+                AlertSrv.warning('Acceso no autorizado');
+                return false;
+            }
         }
 
-        function logout(){
+        function goUsuarios() {
+            if (checkRol('LISTAUSER')) {
+                $state.go("usuarios");
+            }
+        }
+
+        function logout() {
             console.log("logout");
         }
 
-        function goEmpresa(){
-            $state.go("empresa");
+        function goEmpresa() {
+            if (checkRol('EMPRESAEDIT')) {
+                $state.go("empresa");
+            }
         }
 
-        function goContribs(){
-            $state.go("contribs_list");
+        function goContribs() {
+            if (checkRol('LISTACONTRIB')) {
+                $state.go("contribs_list");
+            }
         }
 
         function goAuts() {
-            $state.go("auts_list");
+            if (checkRol('LISTAAUT')) {
+                $state.go("auts_list");
+            }
         }
 
-        function goJobs(){
-            $state.go("job_list");
+        function goJobs() {
+            if (checkRol('LISTADOC')) {
+                $state.go("job_list");
+            }
         }
 
         function goReportes() {
-            $state.go("reportes_list");
-            // $state.go("upload");
+            if (checkRol('ACCESPLANTILLAS')) {
+                $state.go("reportes_list");
+            }
         }
 
         function goJobWizard() {
@@ -765,10 +797,12 @@ var IsyplusApp = angular.
         }
 
         function goReportesSys() {
-            $state.go("reportes_sys");
+            if (checkRol('ACCESREPORTES')) {
+                $state.go("reportes_sys");
+            }
         }
     }
-    InitCntrl.$inject = ['$scope', '$state', 'LoginServ', 'NotifServ', 'AuthFactory'];
+    InitCntrl.$inject = ['$scope', '$state', 'LoginServ', 'NotifServ', 'AlertSrv', 'AuthFactory', 'GeneralSrv'];
 
 })();
 (function () {
@@ -1381,12 +1415,15 @@ var IsyplusApp = angular.
     angular.module("isyplus")
         .controller('JobUpCntrl', JobUpCntrl);
 
-    function JobUpCntrl($scope, $window, Upload, swalService) {
+    function JobUpCntrl($scope, $window, Upload, swalService, GeneralSrv) {
 
         var vm = $scope;
 
         vm.submit = submit;
         vm.upload = upload;
+
+        vm.ipServer = GeneralSrv.getIPServer();
+
 
         function init(){
             console.log('init up cntrl--->');
@@ -1406,7 +1443,7 @@ var IsyplusApp = angular.
 
         function upload (file) {
             Upload.upload({
-                url: 'http://localhost:6543/uploadjobview', //webAPI exposed to upload the filefilename
+                url: 'http://'+vm.ipServer+':6543/uploadjobview', //webAPI exposed to upload the filefilename
                 data:{file:file, job_id:0, 'nombreArchivo':'pruebaNombreArchivo', 'filename':'pruebafilename'} //pass file as data, should be user ng-model
             }).then(function (resp) { //upload function returns a promise
                 console.log('Respuesta del servidor');
@@ -1430,7 +1467,7 @@ var IsyplusApp = angular.
         };
 
     }
-    JobUpCntrl.$inject = ['$scope', '$window', 'Upload', 'swalService'];
+    JobUpCntrl.$inject = ['$scope', '$window', 'Upload', 'swalService', 'GeneralSrv'];
 
 
 })();
@@ -1717,15 +1754,18 @@ var IsyplusApp = angular.
     angular.module("isyplus")
         .factory("AuthFactory", AuthFactory);
 
-    function AuthFactory(RolesServ) {
+    function AuthFactory(RolesServ, GeneralSrv) {
         var userLogged = false;
-        var rolesUser = [];
+        //var rolesUser = [];
+        //var rolesMap = {};
+        //var tuser = {};
 
         return {
             isUserLogged: isUserLogged,
             setUserLogged: setUserLogged,
             loadRolesUser: loadRolesUser,
-            getRolesUserList: getRolesUserList
+            getRolesUserList: getRolesUserList,
+            userHasRol: userHasRol
         }
 
         function isUserLogged() {
@@ -1737,20 +1777,47 @@ var IsyplusApp = angular.
         }
 
         function loadRolesUser(userId) {
-            var res = RolesServ.getRolesUser({us_id: userId}, function () {
-                console.log("valor de res es:");
-                console.log(res);
-                if (res.estado === 200) {
-                    rolesUser = res.roles;
-                }
-            });
+            if (!userLogged) {
+                var res = RolesServ.getRolesUser({us_id: userId}, function () {
+                    console.log("valor de res es:");
+                    console.log(res);
+                    if (res.estado === 200) {
+                        var rolesMap = {};
+                        var rolesUser = res.roles;
+                        rolesUser.forEach(function (value) {
+                            rolesMap[value['rl_abreviacion']] = value;
+                        });
+                        userLogged = true;
+                        //tuser = res.tuser;
+                        GeneralSrv.setSSValue('tuser', res.tuser);
+                        GeneralSrv.setSSValue('rolesMap', rolesMap);
+                        GeneralSrv.setSSValue('rolesUser', rolesUser);
+                    }
+                });
+            }
+        }
+
+        function isSuperUser(){
+            var tuser = GeneralSrv.getSSValue('tuser');
+            return tuser['us_superuser'] === 1;
+        }
+
+        function userHasRol(abrRol) {
+            var rolesMap = GeneralSrv.getSSValue('rolesMap');
+            if (isSuperUser()) {
+                return true;
+            }
+            else if (rolesMap[abrRol]) {
+                return true;
+            }
+            return false;
         }
 
         function getRolesUserList() {
-            return rolesUser;
+            return GeneralSrv.getSSValue('rolesUser');
         }
     }
-    AuthFactory.$inject = ['RolesServ'];
+    AuthFactory.$inject = ['RolesServ', 'GeneralSrv'];
 
 })();
 (function () {
@@ -1959,9 +2026,26 @@ var IsyplusApp = angular.
 (function () {
     'use strict';
     angular.module("isyplus")
+        .factory("AuditService", AuditService);
+
+    function AuditService($resource) {
+        return $resource("/rest/audit/:aud_id",
+            {aud_id: '@aud_id'}, {
+
+            }
+        );
+    }
+    AuditService.$inject = ['$resource'];
+
+
+})();
+(function () {
+    'use strict';
+    angular.module("isyplus")
         .controller("ReportesSysCntrl", ReportesSysCntrl);
 
-    function ReportesSysCntrl($scope, ReportesServ, gridService, $state) {
+    function ReportesSysCntrl($scope, ReportesServ, gridService, $state, GeneralSrv, FechasServ, NotifServ,
+                              ContribuyenteServ, AuditService) {
 
         var vm = $scope;
 
@@ -1969,9 +2053,21 @@ var IsyplusApp = angular.
         vm.selReporte = selReporte;
         vm.selectedItem = {};
         vm.reportesList = [];
+        vm.paramsRepSel = {};
+        vm.form = {job_estado:2};
+        vm.fechasDisabled = false;
+        vm.contribsEnabled = false;
+        vm.estadoJobEnabled = false;
+
+        vm.formExport = {};
+        vm.contribsel = {};
+        vm.onContribSel = onContribSel;
+        vm.contribsLoaded = false;
+
+        vm.listas = {contributentes: [], estadosjob:[]};
 
         //var ipServer = "157.230.129.131";
-        var ipServer = "localhost";
+        var ipServer = GeneralSrv.getIPServer();
 
 
         vm.imprimir = imprimir;
@@ -1983,14 +2079,16 @@ var IsyplusApp = angular.
             listar();
         }
 
-        function listar(){
+        function listar() {
             console.log('Se ejecuta accion listar');
 
-            var res = ReportesServ.get({tipo:2}, function(){
-                if (res.status === 200){
+            var res = ReportesServ.get({tipo: 2}, function () {
+                if (res.status === 200) {
                     vm.reportesList = res.items;
                     console.log("reportes list es:");
                     console.log(vm.reportesList);
+                    vm.formExport = res.formexport;
+                    vm.listas.estadosjob = res.estadojob;
                 }
             });
 
@@ -2003,28 +2101,138 @@ var IsyplusApp = angular.
             });*/
         }
 
-        function selReporte(rep) {
-            console.log('reporte sel');
-            console.log(rep);
-
-            vm.selectedItem = rep;
+        function loadContribs() {
+            var res = ContribuyenteServ.get(function () {
+                if (res.estado === 200) {
+                    vm.listas.contributentes = res.items;
+                    vm.contribsLoaded = true;
+                }
+            });
         }
-        
-        function imprimir() {
 
-            var generadopor = "generadorpor";
-            var paramdesc = "paramdesc";
+        function onContribSel(contribsel) {
+            if (contribsel) {
+                vm.contribsel = contribsel;
+                vm.form.cnt_id = contribsel.cnt_id;
+            }
+        }
+
+
+        function selReporte(rep) {
+            vm.selectedItem = rep;
+
+            vm.fechasDisabled = false;
+            vm.contribsEnabled = false;
+            vm.estadoJobEnabled = false;
+
+            vm.paramsRepSel = JSON.parse(rep.temp_params);
+
+            if (vm.paramsRepSel && vm.paramsRepSel['fec']) {
+
+            }
+            else {
+                vm.fechasDisabled = true;
+            }
+
+            if (vm.paramsRepSel && vm.paramsRepSel['cnt']) {
+                vm.contribsEnabled = true;
+            }
+
+            if (vm.paramsRepSel && vm.paramsRepSel['statusjob']) {
+                vm.estadoJobEnabled = true;
+            }
+
+            if (vm.contribsEnabled) {
+                if (!vm.contribsLoaded) {
+                    loadContribs();
+                }
+            }
+
+        }
+
+        function fechasIngresadas() {
+            var result = true;
+            if (vm.form.desde === undefined || vm.form.desde.length === 0) {
+                result = false;
+                NotifServ.warning('Ingrese la fechas');
+            }
+            else if (vm.form.hasta === undefined || vm.form.hasta.length === 0) {
+                result = false;
+                NotifServ.warning('Ingrese la fechas');
+            }
+            return result;
+        }
+
+        function imprimir() {
             var codigorep = vm.selectedItem.temp_id;
 
-            var url = "http://"+ipServer+":8080/imprentas/ReportePathServlet?generadopor=" + generadopor + "&paramdesc=" + paramdesc + "&codigorep=" + codigorep;
-            console.log('url-->');
-            console.log(url);
-            window.open(url, "mywindow", "status=1,toolbar=1");
+            var prmObj = {
+                codigorep:codigorep,
+                pGeneradoPor:vm.formExport['pGeneradoPor'],
+                pContribuyente:vm.formExport['pContribuyente'],
+                pFechaDesde:FechasServ.get_fecha_db(vm.form.desde),
+                pFechaHasta:FechasServ.get_fecha_db(vm.form.hasta)
+            }
 
+            /*
+            var pGeneradoPor = vm.formExport['pGeneradoPor'];
+            var pContribuyente = vm.formExport['pContribuyente'];
+            var pFechaDesde = FechasServ.get_fecha_db(vm.form.desde);
+            var pFechaHasta = FechasServ.get_fecha_db(vm.form.hasta);
+            */
+
+            console.log("Valor de form es");
+            console.log(vm.form);
+
+            var continuar = true;
+
+            prmObj['pCntId'] = 0;
+            if (vm.contribsEnabled) {
+                if (!vm.contribsel.cnt_id){
+                    continuar = false;
+                    NotifServ.warning('Seleccione el contribuyente');
+                }
+                else{
+                    prmObj['pCntId'] = vm.contribsel.cnt_id;
+                    prmObj['pContribuyente'] = vm.contribsel.cnt_razonsocial;
+                }
+            }
+
+
+            if (!vm.fechasDisabled && !fechasIngresadas()) {
+                continuar = false;
+            }
+
+            if (vm.estadoJobEnabled){
+                prmObj['pStatusJob'] = vm.form.job_estado;
+            }
+
+            if (continuar) {
+                /*var allParams = "pGeneradoPor=" + pGeneradoPor +
+                    ";pContribuyente=" + pContribuyente +
+                    ";pFechaDesde=" + pFechaDesde +
+                    ";pFechaHasta=" + pFechaHasta;
+                    */
+                var allParams = $.param(prmObj);
+                var url = "http://" + ipServer + ":8080/imprentas/ReportePathServlet?" + allParams;
+                console.log('url-->');
+                console.log(url);
+                window.open(url, "mywindow", "status=1,toolbar=1");
+
+
+                var res = AuditService.save({
+                    aud_id: 0,
+                    temp_id: codigorep
+                }, function () {
+                    if (res.estado == 200) {
+                        console.log("Se registro exitosamente el log");
+                        console.log(res);
+                    }
+                });
+            }
         }
     }
-    ReportesSysCntrl.$inject = ['$scope', 'ReportesServ', 'gridService', '$state'];
-
+    ReportesSysCntrl.$inject = ['$scope', 'ReportesServ', 'gridService', '$state', 'GeneralSrv', 'FechasServ', 'NotifServ', 'ContribuyenteServ', 'AuditService'];
 })();
 (function () {
     'use strict';
@@ -5697,7 +5905,8 @@ var IsyplusApp = angular.
             getMesLargo: getMesLargo,
             get_str_mes_largo: get_str_mes_largo,
             getFechaLetras: getFechaLetras,
-            esFechaValida: esFechaValida
+            esFechaValida: esFechaValida,
+            get_fecha_db:get_fecha_db
         };
 
         function format_momment_date(DATE) {
@@ -5706,6 +5915,11 @@ var IsyplusApp = angular.
 
         function parse_cadena(cadena) {
             return moment(cadena, 'DD/MM/YYYY');
+        }
+
+        function get_fecha_db(fecha){
+            return parse_cadena(fecha).format('YYYY-MM-DD');
+
         }
 
         function get_fecha_actual() {

@@ -165,13 +165,13 @@
 
                 <div ng-show="currentStep===2">
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-8">
 
                             <div class="row">
-                                <div class="col-md-4">
-                                    Número de autorización:
+                                <div class="col-md-5">
+                                    Número de autorización <span class="gridRed"> * </span>:
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-7">
                                     <input type="text" class="form-control" ng-model="formAut.aut_numero"
                                            id="aut_numero"
                                            input-mask="{mask:'9999999999'}" ng-enter="buscarAutorizacion()"/>
@@ -179,30 +179,30 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-4">
-                                    Establecimiento:
+                                <div class="col-md-5">
+                                    Establecimiento <span class="gridRed"> * </span>:
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-7">
                                     <input type="text" id="aut_serie" class="form-control" ng-model="formAut.aut_estab"
                                            input-mask="{mask:'999'}" ng-enter="setInputFocus('e_fechaaut2')"/>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-4">
-                                    Fecha de autorización:
+                                <div class="col-md-5">
+                                    Fecha de autorización <span class="gridRed"> * </span>:
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-7">
                                     <servi-fecha elementid="e_fechaaut2" model="formAut.aut_fechaautorizacion"
                                                  required="true" onenter="onenterfecha()"></servi-fecha>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-4">
-                                    Fecha de caducidad:
+                                <div class="col-md-5">
+                                    Fecha de caducidad <span class="gridRed"> * </span>:
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-md-7">
                                     <servi-fecha elementid="e_fechaaut1" model="formAut.aut_fechacaducidad"
                                                  required="true"></servi-fecha>
                                 </div>
@@ -220,15 +220,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="card">
                                 <div class="card-header">
                                     Autorizaciones registradas
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item" ng-repeat="item in autsContribList"> {{item.aut_numero}}
-                                        - {{item.td_nombre}}
-                                    </li>
+                                    <li class="list-group-item" ng-repeat="item in autsContribList"> {{item.aut_numero}}</li>
                                 </ul>
                             </div>
                         </div>

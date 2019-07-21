@@ -8,6 +8,7 @@ import datetime
 from fusayal.logica.auditorias.taudit_model import TAudit
 from fusayal.logica.dao.base import BaseDao
 from fusayal.logica.utils import enums
+from fusayal.logica.utils.enums import TBL_JOBDOC, TBL_PLANTILLAS
 
 
 class TAuditDao(BaseDao):
@@ -47,7 +48,8 @@ class TAuditDao(BaseDao):
                            codreg,
                            aud_obs=''):
         self.crear(tbl_id=tbl_id, aud_accion=enums.UPDATE_ACTION, aud_userid=
-        aud_userid, aud_campo=aud_campo, aud_valorant=aud_valorant, aud_valordesp=aud_valordesp, aud_obs=aud_obs, aud_codreg=codreg)
+        aud_userid, aud_campo=aud_campo, aud_valorant=aud_valorant, aud_valordesp=aud_valordesp, aud_obs=aud_obs,
+                   aud_codreg=codreg)
 
     def crea_accion_delete(self, tbl_id,
                            aud_campo,
@@ -56,4 +58,10 @@ class TAuditDao(BaseDao):
                            aud_valordesp,
                            codreg):
         self.crear(tbl_id=tbl_id, aud_accion=enums.DELETE_ACTION, aud_userid=
-        aud_userid, aud_campo=aud_campo, aud_valorant=aud_valorant, aud_valordesp=aud_valordesp, aud_obs="", aud_codreg=codreg)
+        aud_userid, aud_campo=aud_campo, aud_valorant=aud_valorant, aud_valordesp=aud_valordesp, aud_obs="",
+                   aud_codreg=codreg)
+
+    def crea_acceso_log_audit(self, temp_id, user_acces):
+        self.crear(tbl_id=TBL_PLANTILLAS, aud_accion=enums.ACCEDELOG_ACTION, aud_userid=user_acces,
+                   aud_campo="", aud_valorant="", aud_valordesp="",
+                   aud_codreg=temp_id, aud_obs="")

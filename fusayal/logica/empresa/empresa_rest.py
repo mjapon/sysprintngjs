@@ -36,8 +36,8 @@ class TEmpresaRest(DbComunView):
         form = self.get_json_body()
         tempresadao = TEmpresaDao(self.dbsession)
         if int(emp_id) == 0:
-            tempresadao.crear(form)
+            tempresadao.crear(form, user_crea=self.get_userid())
             return {'estado':200, 'msg':'Creación exitosa'}
         else:
-            tempresadao.update(emp_codigo=emp_id, form=form)
+            tempresadao.update(emp_codigo=emp_id, form=form, user_edit=self.get_userid())
             return {'estado': 200, 'msg': 'Actualización exitosa'}

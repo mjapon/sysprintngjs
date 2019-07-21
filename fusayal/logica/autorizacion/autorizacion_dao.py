@@ -60,7 +60,7 @@ class TAutorizacionDao(BaseDao):
                     cnt.cnt_ruc,
                     cnt.cnt_razonsocial,
                     '' as td_nombre,
-				    tau.aut_estab||'-'||tau.aut_ptoemi aut_serie 
+				    tau.aut_estab aut_serie 
                 from tautorizacion tau
                     join tcontribuyente cnt ON tau.cnt_id = cnt.cnt_id                    
                  order by  aut_tipodoc, aut_numero

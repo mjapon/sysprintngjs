@@ -8,7 +8,7 @@
             <div class="list-group">
                 <button type="button" ng-repeat="rep in reportesList"
                         class="list-group-item list-group-item-action hand" ng-click="selReporte(rep)"
-                ng-class="rep==selectedItem?'active':''">
+                        ng-class="rep==selectedItem?'active':''">
                     {{rep.temp_name}}
                 </button>
 
@@ -18,14 +18,74 @@
     </div>
     <div class="col-md-8">
         <div class="card">
-            <div class="card-head">
-                Params
+            <div class="card-header">
+                Parámetros:
             </div>
             <div class="card-body">
 
+                <div ng-show="selectedItem.temp_id>0">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <p class="text-info">
+                                    Ingrese los parámetros que se solicitan y haga clic en el boton Generar
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            Rango de fechas:
+                        </div>
+                        <div class="col-md-8">
+                            <ng-rangofechas form="form"
+                                            setup="{}"
+                                            disabled="fechasDisabled">
+                            </ng-rangofechas>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-if="contribsEnabled">
+                        <div class="col-md-4">
+                            Contribuyente:
+                        </div>
+                        <div class="col-md-8">
+                            <ng-complete lstdatos="listas.contributentes"
+                                         model="contribsel"
+                                         filtro="cnt_razonsocial"
+                                         func="onContribSel"
+                                         elementid="contrib"
+                                         placeholder="Digite la razon social..">
+                            </ng-complete>
+                        </div>
+                    </div>
+
+
+                    <div class="row" ng-if="estadoJobEnabled">
+                        <div class="col-md-4">
+                            Estado del documento:
+                        </div>
+                        <div class="col-md-8">
+                             <select class="form-control"
+                                    ng-model="form.job_estado"
+                                    ng-options="jobestado.sjb_id as jobestado.sjb_nombre for jobestado in listas.estadosjob">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="!selectedItem.temp_id">
+                    <div class="jumbotron">
+                        <p class="lead">
+                            <span class="text-muted"> Seleccione un reporte </span>
+                        </p>
+                    </div>
+                </div>
+
             </div>
             <div class="card-footer">
-                <div class="row">
+                <div class="row" ng-show="selectedItem.temp_id>0">
                     <div class="col-md-12">
                         <button class="btn btn-outline-primary" type="button" ng-click="imprimir()">Generar</button>
                     </div>

@@ -30,6 +30,13 @@ class TJobDao(BaseDao):
         }
         return form
 
+    def listar_estadosjob(self):
+        sql = """
+        select sjb_id, sjb_nombre from tstatusjob order by sjb_id 
+        """
+        tupladesc = ("sjb_id", "sjb_nombre")
+        return  self.all(sql, tupladesc)
+
     def listar(self):
         sql = """
         select
@@ -50,7 +57,7 @@ class TJobDao(BaseDao):
             join tcontribuyente cnt ON tau.cnt_id = cnt.cnt_id
             join ttiposdoc td on tjob.job_tipodoc = td.td_id
             join tstatusjob sjob on tjob.job_estado = sjob.sjb_id
-            order by cnt.cnt_razonsocial        
+            order by job_id        
         """
 
         tupla_desc = (

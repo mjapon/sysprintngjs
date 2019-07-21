@@ -22,6 +22,7 @@ class AutorizacionRest(DbComunView):
 
         if accion == None:
             items = taudao.listar_all()
+            """
             cols = [{'prop': 'aut_numero', 'label': 'Número'},
                     {'prop': 'cnt_razonsocial', 'label': 'Razón social', 'width': '250'},
                     {'prop': 'cnt_ruc', 'label': 'RUC', 'width': '150'},
@@ -29,6 +30,15 @@ class AutorizacionRest(DbComunView):
                     {'prop': 'aut_serie', 'label': 'Serie'},
                     {'prop': 'job_secuencia_ini', 'label': 'Desde', 'width': '70'},
                     {'prop': 'job_secuencia_fin', 'label': 'Hasta', 'width': '70'},
+                    {'prop': 'aut_fechaautorizacion', 'label': 'Fecha autorización', 'width': '100'},
+                    {'prop': 'aut_fechacaducidad', 'label': 'Fecha caducidad', 'width': '100'}]
+            """
+            cols = [
+                {'prop': 'aut_id', 'label': '#'},
+                {'prop': 'aut_numero', 'label': 'Número'},
+                    {'prop': 'cnt_razonsocial', 'label': 'Razón social', 'width': '250'},
+                    {'prop': 'cnt_ruc', 'label': 'RUC', 'width': '150'},
+                    {'prop': 'aut_serie', 'label': 'Establecimiento'},
                     {'prop': 'aut_fechaautorizacion', 'label': 'Fecha autorización', 'width': '100'},
                     {'prop': 'aut_fechacaducidad', 'label': 'Fecha caducidad', 'width': '100'}]
             return {'estado': 200, 'items': items, 'cols': cols}

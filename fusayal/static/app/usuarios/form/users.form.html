@@ -4,71 +4,89 @@
 <br/>
 <form name="form">
     <div class="row">
-        <div class="col-md-8">
-            <div class="row">
-                <div class="col-md-4">
-                    <label>Nombres y apellidos:</label>
-                </div>
-                <div class="col-md-7">
-                    <input type="text" class="form-control" id="nomApelUser" ng-model="form.us_nomapel" capitalize
-                           ng-required="true" ng-disabled="accion ==='r'"/>
-                </div>
-            </div>
+        <div class="col-md-10">
 
-            <div class="row">
-                <div class="col-md-4">
-                    <label>Nombre de la cuenta:</label>
+            <div class="card">
+                <div class="card-header">
+                    Datos de la cuenta del usuario
                 </div>
-                <div class="col-md-7">
-                    <input type="text" class="form-control" ng-model="form.us_name" ng-required="true"
-                           ng-disabled="accion ==='r'"/>
-                </div>
-            </div>
+                <div class="card-body">
 
-            <div ng-show="form.us_id === 0 || accion ==='r'">
-                <div class="row">
-                    <div class="col-md-4">
-                        <label>Clave Temporal:</label>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label>Nombres y apellidos <span class="gridRed"> * </span>:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" id="nomApelUser" ng-model="form.us_nomapel"
+                                   capitalize
+                                   ng-required="true" ng-disabled="accion ==='r'"/>
+                        </div>
                     </div>
-                    <div class="col-md-7">
-                        <input type="password" class="form-control" id="claveTempInput" ng-model="form.claveTemp"
-                               ng-required="true"/>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <label>Confirmación Clave:</label>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label>Nombre de la cuenta <span class="gridRed"> * </span>:</label>
+                        </div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" ng-model="form.us_name" ng-required="true"
+                                   ng-disabled="accion ==='r'"/>
+                        </div>
                     </div>
-                    <div class="col-md-7">
-                        <input type="password" class="form-control" ng-model="form.confClaveTemp" ng-required="true"/>
+
+                    <div ng-show="form.us_id === 0 || accion ==='r'">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label>Clave Temporal <span class="gridRed"> * </span>:</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="password" class="form-control" id="claveTempInput"
+                                       ng-model="form.claveTemp"
+                                       ng-required="true"/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label>Confirmación Clave <span class="gridRed"> * </span>:</label>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="password" class="form-control" ng-model="form.confClaveTemp"
+                                       ng-required="true"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <br>
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-outline-primary" type="submit" ng-click="guardar()"> {{form.us_id ===
-                        0?'Guardar':'Actualizar'}}
-                    </button>
-                    <button class="btn btn-outline-secondary" ng-click="cancelar()"> Cancelar</button>
-                </div>
-            </div>
 
-        </div>
-        <div class="col-md-4">
-
-            <div class="card" style="width: 18rem;" ng-show="accion === 'c' || accion ==='e'">
-                <div class="card-header">
+            <div class="card" >
+                <div class="card-header" ng-show="accion !=='r'">
                     Roles
                 </div>
-                <ul class="list-group list-group-flush">
+
+                <ul class="list-group list-group-flush" ng-show="accion !=='r'">
                     <li class="list-group-item grab" ng-repeat="row in matrizRoles"
                         ng-click="row.marcado = row.marcado===1?0:1">
                         <i class="{{row.marcado===1 ? 'fas fa-check-square':'far fa-square' }}"></i> {{row.rl_name}}
                     </li>
                 </ul>
+
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-outline-primary" type="submit" ng-click="guardar()"> {{form.us_id ===
+                                0?'Guardar':'Actualizar'}}
+                            </button>
+                            <button class="btn btn-outline-secondary" ng-click="cancelar()"> Cancelar</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
+
+
+        </div>
+        <div class="col-md-2">
 
         </div>
     </div>

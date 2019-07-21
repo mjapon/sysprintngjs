@@ -6,6 +6,7 @@ Fecha de creacion 3/24/19
 import logging
 
 from fusayal.logica.roles.tuserrol_dao import TUserRolDao
+from fusayal.logica.users.users_dao import TUsersDao
 from fusayal.utils.pyramidutil import DbComunView
 from cornice.resource import resource
 
@@ -22,7 +23,9 @@ class RolesUsuarioRest(DbComunView):
         accion = self.get_request_param('accion')
         if accion is not None and accion == 'getrolesu':
             roles_user = tuserroldao.get_roles_json(us_id=us_id)
-            return {'estado':200, 'roles':roles_user}
+            tuserdao = TUsersDao(self.dbsession)
+            userinfo = tuserdao.find_byid(id_user=us_id)
+            return {'estado':200, 'roles':roles_user, 'tuser':userinfo}
 
         matrizroles = tuserroldao.get_matriz_roles(us_id=us_id)
 

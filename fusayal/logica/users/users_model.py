@@ -26,5 +26,6 @@ class TUser(Declarative, JsonAlchemy):
     us_status = Column(Integer) #0:activao,1:inactivo
     us_statusclave = Column(Integer) #0:temporal, 1:definitivo
     us_nomapel = Column(String(100))
+    us_superuser = Column(Integer)
 
 

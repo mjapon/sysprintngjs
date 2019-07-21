@@ -26,14 +26,16 @@ class TJobRest(DbComunView):
             return {'estado': 201, 'msg': 'Ninguna accion realizada'}
         else:
             items = tjobdao.listar()
-            cols = [{'prop': 'aut_numero', 'label': u'Autorización'},
+            cols = [
+                {'prop': 'job_id', 'label': u'#'},
+                {'prop': 'aut_numero', 'label': u'Autorización'},
                     {'prop': 'cnt_ruc', 'label': 'RUC'},
                     {'prop': 'cnt_razonsocial', 'label': u'Razón Social'},
                     {'prop': 'aut_fechaautorizacion', 'label': u'Fecha Autorización'},
                     {'prop': 'serie', 'label': u'Serie'},
                     {'prop': 'td_nombre', 'label': u'Tipo Documento'},
-                    {'prop': 'aut_secuencia_ini', 'label': u'Desde'},
-                    {'prop': 'aut_secuencia_fin', 'label': u'Hasta'},
+                    {'prop': 'job_secuencia_ini', 'label': u'Desde'},
+                    {'prop': 'job_secuencia_fin', 'label': u'Hasta'},
                     {'prop': 'job_nrocopias', 'label': u'Copias'},
                     {'prop': 'sjb_nombre', 'label': u'Estado'}]
             return {'estado': 200, 'items': items, 'cols': cols}
