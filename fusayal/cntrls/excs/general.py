@@ -15,11 +15,13 @@ log = logging.getLogger(__name__)
 
 def procesar_excepcion(exc, request):
     emp_codigo = 0
+    """
     try:
         if 'emp_codigo' in request.session:
             emp_codigo = int(request.session["emp_codigo"])
     except:
         log.error(u"Exception capturada, no pude recuperar el codigo de la empresa", exc_info=True)
+    """
 
     log.error(' Exception capturada: ', exc_info=True)
     log.error(' Empresa donde se genera el error es: {0} '.format(emp_codigo))

@@ -100,6 +100,9 @@ def upload_file(request):
             plantillasDao = TPlantillasDao(request.dbsession)
 
             try:
+                if 'emp_esquema' in request.session:
+                    emp_esquema = request.session['emp_esquema']
+                    request.dbsession.execute("SET search_path TO {0}".format(emp_esquema))
 
                 paramsdao = ParamsDao(request.dbsession)
                 path_save_jobs = paramsdao.get_ruta_savejobs()
@@ -107,6 +110,7 @@ def upload_file(request):
 
                 uploadFileUtil = CargaArchivosUtil()
                 uploadFileUtil.save_bytarray(ruta, filecontent)
+
 
                 if temp_id is not None and len(temp_id) > 0 and int(temp_id) > 0:
                     plantillasDao.actualizar(temp_id=temp_id,
@@ -146,6 +150,10 @@ def upload_job_file(request):
             estado = -1
             msg = 'Archivo incorrecto, debe cargar un archivo con extension .pdf'
         else:
+            if 'emp_esquema' in request.session:
+                emp_esquema = request.session['emp_esquema']
+                request.dbsession.execute("SET search_path TO {0}".format(emp_esquema))
+
             thefile = request.POST['file'].file
             nombreArchivo = request.POST['nombreArchivo']
             filecontent = thefile.read()
