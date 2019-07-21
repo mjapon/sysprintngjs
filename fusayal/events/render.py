@@ -22,7 +22,7 @@ def add_global(event):
         event['modoDespligeApp'] = "{0}".format(ctes.GET_MODO_LOGOUT_ISYPLUS2(req))
         event['vapp'] = str(time.time())
         event['emp_codigo'] = 0
-        event['emp_esquema'] = 0
+        event['emp_esquema'] = ''
         event['alm_codigo'] = 0
         event['num_user'] = 0
 
@@ -30,6 +30,7 @@ def add_global(event):
         if 'us_id' in req.session:
             event['user_logged'] = req.session['us_id']
             event['user_loggedname'] = req.session['us_nomapel']
+            event['emp_esquema'] = req.session['emp_esquema']
 
 
             # if verificar_datos_redis(req):

@@ -1,6 +1,9 @@
 # coding: utf-8
 import logging
+import os
 
+from fusayal.logica.imprentas.imprentas_dao import ImprentasDao
+from fusayal.logica.params.param_dao import ParamsDao
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import forget
 from pyramid.view import view_config
@@ -37,19 +40,29 @@ def login_view(request):
     if 'usuario' in request.POST:
         usuario = request.POST['usuario']
         clave = request.POST['clave']
+        empresa = request.POST['empresa']
 
-        userdao = TUsersDao(request.dbsession)
-        autenticado = userdao.autenticar(username=usuario, password=clave)
-        if autenticado:
-            tuser = userdao.get_user(username=usuario)
-            request.session['userlogged'] = 1
-            request.session['us_nomapel'] = tuser.us_nomapel
-            request.session['us_id'] = tuser.us_id
-            request.session['us_name'] = tuser.us_name
-            request.session['tuser'] = tuser
-            return HTTPFound(request.route_url('homeApp'))
+        imprentasdao =  ImprentasDao(request.dbsession)
+        datosimprenta =  imprentasdao.get_datos_empresa(imp_codigo=empresa)
+        if datosimprenta is None:
+            return {'autenticado': 0, 'msg': 'Empresa no registrada'}
         else:
-            return {'autenticado': 0, 'msg': 'Usuario o clave incorrectos'}
+            emp_esquema = datosimprenta['timp_esquema']
+            request.dbsession.execute("SET search_path TO {0}".format(emp_esquema))
+            userdao = TUsersDao(request.dbsession)
+            autenticado = userdao.autenticar(username=usuario, password=clave)
+            if autenticado:
+                tuser = userdao.get_user(username=usuario)
+                request.session['emp_esquema'] = emp_esquema
+                request.session['emp_codigo'] = empresa
+                request.session['userlogged'] = 1
+                request.session['us_nomapel'] = tuser.us_nomapel
+                request.session['us_id'] = tuser.us_id
+                request.session['us_name'] = tuser.us_name
+                request.session['tuser'] = tuser
+                return HTTPFound(request.route_url('homeApp'))
+            else:
+                return {'autenticado': 0, 'msg': 'Usuario o clave incorrectos'}
 
     return {'msg': '', 'autenticado': 0}
 
@@ -87,14 +100,22 @@ def upload_file(request):
             plantillasDao = TPlantillasDao(request.dbsession)
 
             try:
+
+                paramsdao = ParamsDao(request.dbsession)
+                path_save_jobs = paramsdao.get_ruta_savejobs()
+                ruta = "{0}{1}{2}".format(path_save_jobs, os.path.sep, nombreArchivo)
+
+                uploadFileUtil = CargaArchivosUtil()
+                uploadFileUtil.save_bytarray(ruta, filecontent)
+
                 if temp_id is not None and len(temp_id) > 0 and int(temp_id) > 0:
                     plantillasDao.actualizar(temp_id=temp_id,
                                              new_temp_name=nombreArchivo,
-                                             new_temp_jrxml=filecontent)
+                                             new_temp_jrxml=ruta)
                     request.session.flash('success:Reporte actualizado correctamente')
                 else:
                     plantillasDao.crear(temp_name=nombreArchivo,
-                                        temp_jrxml=filecontent)
+                                        temp_jrxml=ruta)
 
                     request.session.flash('success:Reporte registrado correctamente')
             except ErrorValidacionExc as ex:

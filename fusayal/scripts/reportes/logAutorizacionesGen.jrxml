@@ -27,6 +27,7 @@
 	<parameter name="pFechaDesde" class="java.lang.String"/>
 	<parameter name="pFechaHasta" class="java.lang.String"/>
 	<parameter name="pCntId" class="java.lang.String"/>
+	<parameter name="emp_esquema" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select ROW_NUMBER() OVER (ORDER BY taut.aut_id) as rowid,
        taut.aut_numero                          as aut_numero,
@@ -36,14 +37,12 @@
        contrib.cnt_nombrecomercial as cnt_nombrecomercial,
        taut.aut_estab                           as aut_estab,
        contrib.cnt_dirmatriz                    as cnt_dirmatriz
-from tautorizacion taut
-         join tjob job on job.aut_id = taut.aut_id
-         join tcontribuyente contrib on taut.cnt_id = contrib.cnt_id
+from $P!{emp_esquema}.tautorizacion taut
+         join $P!{emp_esquema}.tjob job on job.aut_id = taut.aut_id
+         join $P!{emp_esquema}.tcontribuyente contrib on taut.cnt_id = contrib.cnt_id
 where taut.aut_fechaautorizacion::date between '$P!{pFechaDesde} ' and '$P!{pFechaHasta}'
   and contrib.cnt_id = $P!{pCntId}::int
-order by aut_fechaautorizacion;
-
-]]>
+order by aut_fechaautorizacion;]]>
 	</queryString>
 	<field name="rowid" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.label" value="rowid"/>

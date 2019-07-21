@@ -716,7 +716,6 @@ var IsyplusApp = angular.
             });
         }
 
-
         function exitApp() {
             $state.go("home");
         }
@@ -1634,7 +1633,7 @@ var IsyplusApp = angular.
             var desde = vm.formJob.job_secuencia_ini;
             var hasta = vm.formJob.job_secuencia_fin;
             var jobid = vm.formJob.job_id;
-            var url = "http://"+vm.ipServer+":8080/imprentas/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
+            var url = "http://"+vm.ipServer+":8080/imprentas/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid+"&emp_esquema="+globalEmpEsquema;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
@@ -1669,7 +1668,7 @@ var IsyplusApp = angular.
         }
 
         function verReporteGen(){
-            var url = "http://"+vm.ipServer+":8080/imprentas/DescargaReportServlet?codjob=" + vm.formJob.job_id;
+            var url = "http://"+vm.ipServer+":8080/imprentas/DescargaReportServlet?codjob=" + vm.formJob.job_id+"&emp_esquema="+globalEmpEsquema;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
@@ -2028,7 +2027,7 @@ var IsyplusApp = angular.
 
         vm.listas = {contributentes: [], estadosjob:[]};
 
-        //var ipServer = "157.230.129.131";
+
         var ipServer = GeneralSrv.getIPServer();
 
 
@@ -2133,8 +2132,9 @@ var IsyplusApp = angular.
                 pGeneradoPor:vm.formExport['pGeneradoPor'],
                 pContribuyente:vm.formExport['pContribuyente'],
                 pFechaDesde:FechasServ.get_fecha_db(vm.form.desde),
-                pFechaHasta:FechasServ.get_fecha_db(vm.form.hasta)
-            }
+                pFechaHasta:FechasServ.get_fecha_db(vm.form.hasta),
+                emp_esquema:globalEmpEsquema
+            };
 
             /*
             var pGeneradoPor = vm.formExport['pGeneradoPor'];

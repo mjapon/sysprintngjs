@@ -30,6 +30,7 @@
 	<parameter name="pFechaHasta" class="java.lang.String"/>
 	<parameter name="pCntId" class="java.lang.String"/>
 	<parameter name="pStatusJob" class="java.lang.String"/>
+	<parameter name="emp_esquema" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select ROW_NUMBER() OVER (ORDER BY taut.aut_id) as rowid,
        contrib.cnt_ruc                  as cnt_ruc,
@@ -44,12 +45,12 @@
        job.job_secuencia_ini as job_secuencia_ini,
        job.job_secuencia_fin as job_secuencia_fin,
        estadoj.sjb_nombre as estado
-from tautorizacion taut
-join tjob job on job.aut_id = taut.aut_id
-join tcontribuyente contrib on taut.cnt_id = contrib.cnt_id
-join tuser tu on job.user_crea = tu.us_id
-join ttiposdoc tipdoc on tipdoc.td_id = job.job_tipodoc
-join tstatusjob estadoj on job.job_estado = estadoj.sjb_id
+from $P!{emp_esquema}.tautorizacion taut
+join $P!{emp_esquema}.tjob job on job.aut_id = taut.aut_id
+join $P!{emp_esquema}.tcontribuyente contrib on taut.cnt_id = contrib.cnt_id
+join $P!{emp_esquema}.tuser tu on job.user_crea = tu.us_id
+join $P!{emp_esquema}.ttiposdoc tipdoc on tipdoc.td_id = job.job_tipodoc
+join $P!{emp_esquema}.tstatusjob estadoj on job.job_estado = estadoj.sjb_id
 where job.job_fechacreacion::date between '$P!{pFechaDesde} ' and '$P!{pFechaHasta}'
 and contrib.cnt_id = $P!{pCntId}::int and estadoj.sjb_id = $P!{pStatusJob}::int
 order by aut_fechaautorizacion]]>

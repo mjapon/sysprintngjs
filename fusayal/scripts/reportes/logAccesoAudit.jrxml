@@ -26,6 +26,7 @@
 	<parameter name="pContribuyente" class="java.lang.String"/>
 	<parameter name="pFechaDesde" class="java.lang.String"/>
 	<parameter name="pFechaHasta" class="java.lang.String"/>
+	<parameter name="emp_esquema" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select t.aud_id as rowid,
        t.tbl_id as tbl_id ,
@@ -33,10 +34,10 @@
        t.aud_fechahora::time as hora,
        tu.us_nomapel as userrealiza,
        taa.taa_accion ||' al '||plant.temp_name as accion
-from taudit t
-join tuser tu on t.aud_userid = tu.us_id
-join tauditaccion taa on t.aud_accion = taa.taa_id
-join tplantilla plant on t.aud_codreg =plant.temp_id
+from  $P!{emp_esquema}.taudit t
+join $P!{emp_esquema}.tuser tu on t.aud_userid = tu.us_id
+join $P!{emp_esquema}.tauditaccion taa on t.aud_accion = taa.taa_id
+join $P!{emp_esquema}.tplantilla plant on t.aud_codreg =plant.temp_id
 where t.tbl_id = 8
 and t.aud_fechahora::date between '$P!{pFechaDesde} ' and '$P!{pFechaHasta}'
 order by t.aud_fechahora;]]>

@@ -134,6 +134,16 @@ class DbComunView(PyramidView):
     def conf_dbsession(self):
         self.dbsession = get_dbsession_comun(self.request.registry.settings)
     """
+    def init(self):
+        if 'emp_esquema' in self.request.session:
+            esquema_emp =self.request.session['emp_esquema']
+            print 'DBCOMUNVIEW se setea en {0}'.format(esquema_emp)
+            self.request.dbsession.execute("SET search_path TO {0}".format(esquema_emp))
+
+    def change_dbschema(self, emp_esquema):
+        print 'DBCOMUNVIEW se setea en {0}'.format(emp_esquema)
+        self.request.dbsession.execute("SET search_path TO {0}".format(emp_esquema))
+
 
     def get_userid(self):
         if 'us_id' in self.request.session:

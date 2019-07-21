@@ -174,7 +174,7 @@
             var desde = vm.formJob.job_secuencia_ini;
             var hasta = vm.formJob.job_secuencia_fin;
             var jobid = vm.formJob.job_id;
-            var url = "http://"+vm.ipServer+":8080/imprentas/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid;
+            var url = "http://"+vm.ipServer+":8080/imprentas/ReporteServlet?desde=" + desde + "&hasta=" + hasta + "&codrep=" + temp_id + "&tipocopia=" + tipocopia + "&jobid=" + jobid+"&emp_esquema="+globalEmpEsquema;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");
@@ -209,7 +209,7 @@
         }
 
         function verReporteGen(){
-            var url = "http://"+vm.ipServer+":8080/imprentas/DescargaReportServlet?codjob=" + vm.formJob.job_id;
+            var url = "http://"+vm.ipServer+":8080/imprentas/DescargaReportServlet?codjob=" + vm.formJob.job_id+"&emp_esquema="+globalEmpEsquema;
             console.log('url-->');
             console.log(url);
             window.open(url, "mywindow", "status=1,toolbar=1");

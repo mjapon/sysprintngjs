@@ -26,6 +26,7 @@
 	<parameter name="pContribuyente" class="java.lang.String"/>
 	<parameter name="pFechaDesde" class="java.lang.String"/>
 	<parameter name="pFechaHasta" class="java.lang.String"/>
+	<parameter name="emp_esquema" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select t.tbl_id as tbl_id ,
        t.aud_fechahora::date as fecha,
@@ -37,10 +38,10 @@
        coalesce(ttc.ttc_label,'') as campoRead,
        t.aud_valorant as valorant,
        t.aud_valordesp as valordesp
-from taudit t
-join tuser tu on t.aud_userid = tu.us_id
-    left join ttablacol ttc on ttc.tbl_id = 2 and ttc.ttc_name = t.aud_campo
-join tauditaccion taa on t.aud_accion = taa.taa_id
+from $P!{emp_esquema}.taudit t
+join $P!{emp_esquema}.tuser tu on t.aud_userid = tu.us_id
+    left join $P!{emp_esquema}.ttablacol ttc on ttc.tbl_id = 2 and ttc.ttc_name = t.aud_campo
+join $P!{emp_esquema}.tauditaccion taa on t.aud_accion = taa.taa_id
 where t.tbl_id = 2
 order by t.aud_fechahora;]]>
 	</queryString>

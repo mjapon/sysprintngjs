@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="logAudit" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
@@ -25,11 +25,12 @@
 	<parameter name="pFechaGen" class="java.lang.String"/>
 	<parameter name="pGeneradoPor" class="java.lang.String"/>
 	<parameter name="pParmetrosDesc" class="java.lang.String"/>
+	<parameter name="emp_esquema" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select t.aut_numero, t.aut_fechaautorizacion, t.aut_fechacaducidad,
        cont.cnt_ruc, cont.cnt_razonsocial, t.aut_estab, cont.cnt_nombrecomercial
-from tautorizacion t
-join tcontribuyente cont on t.cnt_id = cont.cnt_id order by cont.cnt_razonsocial]]>
+from $P!{emp_esquema}.tautorizacion t
+join $P!{emp_esquema}.tcontribuyente cont on t.cnt_id = cont.cnt_id order by cont.cnt_razonsocial]]>
 	</queryString>
 	<field name="aut_numero" class="java.math.BigDecimal">
 		<property name="com.jaspersoft.studio.field.label" value="aut_numero"/>

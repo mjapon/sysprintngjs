@@ -25,7 +25,7 @@
 
         vm.listas = {contributentes: [], estadosjob:[]};
 
-        //var ipServer = "157.230.129.131";
+
         var ipServer = GeneralSrv.getIPServer();
 
 
@@ -130,8 +130,9 @@
                 pGeneradoPor:vm.formExport['pGeneradoPor'],
                 pContribuyente:vm.formExport['pContribuyente'],
                 pFechaDesde:FechasServ.get_fecha_db(vm.form.desde),
-                pFechaHasta:FechasServ.get_fecha_db(vm.form.hasta)
-            }
+                pFechaHasta:FechasServ.get_fecha_db(vm.form.hasta),
+                emp_esquema:globalEmpEsquema
+            };
 
             /*
             var pGeneradoPor = vm.formExport['pGeneradoPor'];

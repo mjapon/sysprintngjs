@@ -32,10 +32,11 @@ class TJobDocDao(BaseDao):
                 tjobdoc.tjd_ruta = ruta
 
                 tauditdao = TAuditDao(self.dbsession)
-                tauditdao.crea_accion_update(enums.TBL_JOBDOC, 'tjd_ruta', user_crea, tjobdoc_cloned.tjd_ruta, '{0}_*'.format(ruta),
+                tauditdao.crea_accion_update(enums.TBL_JOBDOC, 'tjd_ruta', user_crea, tjobdoc_cloned.tjd_ruta,
+                                             '{0}_*'.format(ruta),
                                              tjobdoc.tjd_id, aud_obs='Archivo actualizado')
 
-            return {'msg':'Trabajo de Impresión actualizado correctamente', 'ruta':ruta}
+            return {'msg': 'Trabajo de Impresión actualizado correctamente', 'ruta': ruta}
         else:
 
             ruta = u"{0}{1}{2}".format(path_save_jobs, os.path.sep, nombre_archivo)
@@ -47,7 +48,7 @@ class TJobDocDao(BaseDao):
             tjobdoc.tjd_usercrea = user_crea
 
             self.dbsession.add(tjobdoc)
-            return {'msg':'Trabajo de Impresión registrado correctamente', 'ruta':ruta}
+            return {'msg': 'Trabajo de Impresión registrado correctamente', 'ruta': ruta}
 
     def existe(self, job_id):
         sql = "select count(*) as cuenta from tjobdoc where  tjob_id = {0}".format(job_id)
@@ -57,3 +58,9 @@ class TJobDocDao(BaseDao):
     def find_by_job(self, job_id):
         tjobdoc = self.dbsession.query(TJobDoc).filter(TJobDoc.tjob_id == job_id).first()
         return tjobdoc
+
+    def pathsaveddoc(self, job_id):
+        tjobdoc = self.find_by_job(job_id)
+        if tjobdoc is not None:
+            return tjobdoc.tjd_ruta
+        return None
