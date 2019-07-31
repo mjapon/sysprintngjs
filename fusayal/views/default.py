@@ -159,7 +159,7 @@ def upload_job_file(request):
             filecontent = thefile.read()
             tjobdocdao = TJobDocDao(request.dbsession)
             try:
-                resp = tjobdocdao.crear(job_id=job_id, nombre_archivo=filename, user_crea=request.session['us_id'])
+                resp = tjobdocdao.crear(job_id=job_id, nombre_archivo=filename, user_crea=request.session['us_id'], tipocarga=1)
                 uploadFileUtil = CargaArchivosUtil()
                 uploadFileUtil.save_bytarray(resp['ruta'], filecontent)
                 estado = 200

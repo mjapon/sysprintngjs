@@ -22,5 +22,5 @@ class ParamsDao(BaseDao):
     def get_ruta_savejobs(self):
         val = self.get_param_value('pathSaveJobs')
         if val is None:
-            raise ErrorValidacionExc('El parametro pathSaveJobs no está registrado en la base de datos, favor verificar')
+            raise ErrorValidacionExc(u'El parametro pathSaveJobs no está registrado en la base de datos, favor verificar')
         return val

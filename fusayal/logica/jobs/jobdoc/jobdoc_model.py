@@ -29,3 +29,5 @@ class TJobDoc(Declarative, JsonAlchemy):
     tjd_ruta = Column(Text, nullable=False)
     tjd_fechacrea = Column(DateTime, nullable=False)
     tjd_usercrea = Column(Integer, nullable=False)
+    tjd_tipo = Column(Integer, nullable=False)
+

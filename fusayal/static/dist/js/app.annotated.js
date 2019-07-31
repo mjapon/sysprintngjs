@@ -1203,6 +1203,7 @@ var IsyplusApp = angular.
         vm.listas = {tiposdoc: []};
         vm.existeContrib = false;
         vm.contribFinded = false;//Indica si se busco el contribuyente
+        vm.numautFinded = false;
 
         vm.onEnterFindContrib = onEnterFindContrib;
         vm.onFocusContribRazonSocial = onFocusContribRazonSocial;
@@ -1214,6 +1215,7 @@ var IsyplusApp = angular.
         vm.anterior = anterior;
         vm.setInputFocus = setInputFocus;
         vm.buscarAutorizacion = buscarAutorizacion;
+        vm.onBlurNumAutorizacion = onBlurNumAutorizacion;
 
         function init() {
             console.log("init jobsteps-->");
@@ -1259,6 +1261,7 @@ var IsyplusApp = angular.
 
         function buscarAutorizacion() {
             console.log('buscar autorizacion--->');
+            vm.numautFinded = false;
             if (vm.formAut.aut_numero.length > 5) {
                 var res = AutorizacionServ.getByNumAndRuc({
                     cnt_ruc: vm.formContrib.cnt_ruc,
@@ -1268,6 +1271,7 @@ var IsyplusApp = angular.
                     console.log(res);
                     if (res.estado === 200) {
                         vm.formAut = res.aut;
+                        vm.numautFinded = true;
                     }
                     focusService.setFocus('aut_serie', 100);//
                 });
@@ -1386,6 +1390,13 @@ var IsyplusApp = angular.
 
         function goToJobView(job_id) {
             $state.go('job_view', {job_id: job_id});
+        }
+
+        function onBlurNumAutorizacion() {
+            console.log("On blur num autorizarion")
+            if (!vm.numautFinded) {
+                buscarAutorizacion();
+            }
         }
 
         init();
@@ -1672,9 +1683,7 @@ var IsyplusApp = angular.
                 if (res.status === 200) {
                     vm.repgrid.columnDefs = res.cols;
                     vm.repgrid.data = res.items;
-
                     getDatosJob();
-
                 }
                 ModalServ.show('modalSelPlant');
             });
@@ -6522,7 +6531,7 @@ var IsyplusApp = angular.
 
         function getIpServer() {
             return "157.230.129.131";
-            //return "localhost";
+            // return "localhost";
         }
 
     }
@@ -9755,7 +9764,7 @@ ngImgupload.$inject = ['$timeout'];
 (function (module) {
     'use strict';
     module.directive("serviRender", rerender);
-    function rerender(){
+    function rerender(){
             controller.$inject = ['$scope'];
         return {
             restrict: 'EA',
@@ -9822,7 +9831,7 @@ ngImgupload.$inject = ['$timeout'];
         .module("isyplus")
         .directive("serviFecha", serviFecha);
 
-    function serviFecha(){
+    function serviFecha(){
         controller.$inject = ['$element', '$timeout', '$scope', '$attrs', 'FechasServ'];
         return {
             restrict: 'EA',

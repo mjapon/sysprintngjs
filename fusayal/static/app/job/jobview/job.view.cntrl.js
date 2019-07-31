@@ -185,9 +185,7 @@
                 if (res.status === 200) {
                     vm.repgrid.columnDefs = res.cols;
                     vm.repgrid.data = res.items;
-
                     getDatosJob();
-
                 }
                 ModalServ.show('modalSelPlant');
             });

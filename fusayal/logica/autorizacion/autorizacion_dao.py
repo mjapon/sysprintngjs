@@ -108,6 +108,45 @@ class TAutorizacionDao(BaseDao):
 
         return self.first(sql, tupla_desc)
 
+    def listar_for_contrib(self, cnt_id):
+
+        sql = """
+                        select  tau.aut_id,
+                                tau.aut_numero,
+                                tau.aut_fechaautorizacion,
+                                tau.aut_fechacaducidad,
+                                tau.aut_tipodoc,
+                                tau.aut_ptoemi,
+                                tau.aut_secuencia_ini,
+                                tau.aut_secuencia_fin,
+                                tau.cnt_id,
+                                cnt.cnt_ruc,
+                                cnt.cnt_razonsocial,
+                                '' as td_nombre,
+                                tau.aut_estab||'-'||tau.aut_ptoemi aut_serie                                
+                            from tautorizacion tau
+                                join tcontribuyente cnt ON tau.cnt_id = cnt.cnt_id
+                            where tau.cnt_id = {0}
+                             order by  aut_tipodoc, aut_numero
+                    """.format(cnt_id)
+
+        tupla_desc = ('aut_id',
+                      'aut_numero',
+                      'aut_fechaautorizacion',
+                      'aut_fechacaducidad',
+                      'aut_tipodoc',
+                      'aut_ptoemi',
+                      'aut_secuencia_ini',
+                      'aut_secuencia_fin',
+                      'cnt_id',
+                      'cnt_ruc',
+                      'cnt_razonsocial',
+                      'td_nombre',
+                      'aut_serie')
+
+        return self.all(sql, tupla_desc)
+
+
     def listar(self, cnt_id):
 
         sql = """

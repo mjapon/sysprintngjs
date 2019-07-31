@@ -147,12 +147,14 @@ class TJobDao(BaseDao):
                       tjob.job_estado,
                       sjob.sjb_nombre,
                       sjob.sjb_id,
-                      tjob.temp_id
+                      tjob.temp_id,
+                      coalesce(jd.tjd_tipo,0) as tjd_tipo 
                       from tjob tjob
                     join tautorizacion tau ON tau.aut_id = tjob.aut_id
                     join tcontribuyente cnt ON tau.cnt_id = cnt.cnt_id
                     join ttiposdoc td on tjob.job_tipodoc = td.td_id
                     join tstatusjob sjob on tjob.job_estado = sjob.sjb_id
+                    left join tjobdoc jd on tjob.job_id = jd.tjob_id
                     where tjob.job_id = {0}
                     order by cnt.cnt_razonsocial        
                 """.format(job_id)
@@ -175,6 +177,7 @@ class TJobDao(BaseDao):
             'job_estado',
             'sjb_nombre',
             'sjb_id',
-            'temp_id')
+            'temp_id',
+            'tjd_tipo')
 
         return self.first(sql, tupla_desc)

@@ -192,12 +192,18 @@
                     </div>
                 </div>
 
+                <div class="row" ng-show="formJob.tjd_tipo===1">
+                    <div class="col-md-12">
+                        <span class="badge badge-info"> Tipo carga Manual </span>
+                    </div>
+                </div>
+
             </div>
             <div class="card-footer">
                 <div class="row">
                     <div class="col-md-12">
                         <button class="btn btn-outline-primary" type="button" ng-show="formJob.job_estado===1"
-                                ng-click="anular()">Anular
+                                ng-click="anular()">No Realizado
                         </button>
                         <button class="btn btn-outline-primary" type="button" ng-show="formJob.job_estado===1"
                                 ng-click="plantilla()">Plantilla

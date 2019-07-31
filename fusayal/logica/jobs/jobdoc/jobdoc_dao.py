@@ -19,7 +19,7 @@ log = logging.getLogger(__name__)
 
 class TJobDocDao(BaseDao):
 
-    def crear(self, job_id, nombre_archivo, user_crea):
+    def crear(self, job_id, nombre_archivo, user_crea, tipocarga=0):
 
         paramsdao = ParamsDao(self.dbsession)
         path_save_jobs = paramsdao.get_ruta_savejobs()
@@ -30,6 +30,7 @@ class TJobDocDao(BaseDao):
                 tjobdoc_cloned = copy.copy(tjobdoc)
                 ruta = "{0}{1}{2}".format(path_save_jobs, os.path.sep, nombre_archivo)
                 tjobdoc.tjd_ruta = ruta
+                tjobdoc.tjd_tipo = tipocarga
 
                 tauditdao = TAuditDao(self.dbsession)
                 tauditdao.crea_accion_update(enums.TBL_JOBDOC, 'tjd_ruta', user_crea, tjobdoc_cloned.tjd_ruta,
@@ -46,6 +47,7 @@ class TJobDocDao(BaseDao):
             tjobdoc.tjd_ruta = ruta
             tjobdoc.tjd_fechacrea = datetime.datetime.now()
             tjobdoc.tjd_usercrea = user_crea
+            tjobdoc.tjd_tipo = tipocarga
 
             self.dbsession.add(tjobdoc)
             return {'msg': 'Trabajo de Impresión registrado correctamente', 'ruta': ruta}

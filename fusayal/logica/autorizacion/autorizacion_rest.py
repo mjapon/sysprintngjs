@@ -44,7 +44,7 @@ class AutorizacionRest(DbComunView):
             return {'estado': 200, 'items': items, 'cols': cols}
         elif accion == 'contribauts':
             cnt_id = self.get_request_param("cnt_id")
-            contribauts = taudao.listar(cnt_id=cnt_id)
+            contribauts = taudao.listar_for_contrib(cnt_id=cnt_id)
             return {'estado': 200, 'items': contribauts}
         elif accion == 'findbyrucnum':
             cnt_ruc = self.get_request_param('cnt_ruc')

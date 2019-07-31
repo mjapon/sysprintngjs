@@ -174,7 +174,7 @@
                                 <div class="col-md-7">
                                     <input type="text" class="form-control" ng-model="formAut.aut_numero"
                                            id="aut_numero"
-                                           input-mask="{mask:'9999999999'}" ng-enter="buscarAutorizacion()"/>
+                                           input-mask="{mask:'9999999999'}" ng-enter="buscarAutorizacion()" ng-blur="onBlurNumAutorizacion()"/>
                                 </div>
                             </div>
 

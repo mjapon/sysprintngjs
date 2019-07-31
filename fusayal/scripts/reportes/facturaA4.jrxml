@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FacturaA4" pageWidth="595" pageHeight="830" columnWidth="574" leftMargin="20" rightMargin="1" topMargin="1" bottomMargin="1" uuid="7602f22c-deb8-46a4-b644-5e2e941694e7">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -32,7 +32,7 @@
        taut.aut_numero,
        taut.aut_secuencia_ini,
        taut.aut_secuencia_fin,
-       'SERIE '|| taut.aut_estab||'-'||taut.aut_ptoemi as serie,
+       'SERIE '|| taut.aut_estab||'-'||tjob.job_ptoemi as serie,
        lpad(s.a::text, 9, '0') AS numFactura,
        taut.aut_fechaautorizacion,
        taut.aut_fechacaducidad
@@ -373,7 +373,7 @@ where tjob.job_id = $P{jobid};]]>
 				<textElement textAlignment="Left">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[DESCRIPCION]]></text>
+				<text><![CDATA[DESCRIPCIÓN]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="390" y="205" width="46" height="13" uuid="6a5fd208-0e6a-4745-a686-14f32a74f481"/>
@@ -383,8 +383,9 @@ where tjob.job_id = $P{jobid};]]>
 				<text><![CDATA[VALOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="480" y="210" width="46" height="18" uuid="9f8c4bb6-28c8-4f3e-826f-1a9178118c56">
+				<reportElement x="480" y="210" width="55" height="18" uuid="9f8c4bb6-28c8-4f3e-826f-1a9178118c56">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
 					<font fontName="Arial" size="12" isBold="true"/>
@@ -392,7 +393,9 @@ where tjob.job_id = $P{jobid};]]>
 				<text><![CDATA[V. TOTAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="386" y="217" width="54" height="13" uuid="0916d3aa-8ed7-4375-a7ca-8bee49073d3d"/>
+				<reportElement x="386" y="217" width="56" height="13" uuid="0916d3aa-8ed7-4375-a7ca-8bee49073d3d">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Left">
 					<font isBold="true"/>
 				</textElement>
@@ -492,7 +495,7 @@ where tjob.job_id = $P{jobid};]]>
 				<textElement textAlignment="Left">
 					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[FORMA DE PAGO: EFECTIVO___TARJETA DE CREDITO__DINERO ELECTRONICO__OTROS__]]></text>
+				<text><![CDATA[FORMA DE PAGO: EFECTIVO___TARJETA DE CRÉDITO__DINERO ELECTRONICO__OTROS__]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="6" y="610" width="29" height="18" uuid="21a2049b-2d4e-4947-971f-d7590b9b07df">
@@ -504,8 +507,9 @@ where tjob.job_id = $P{jobid};]]>
 				<text><![CDATA[Son: ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="314" y="630" width="35" height="18" uuid="379e7cb8-88d3-42a8-8b86-e3b9d493f845">
+				<reportElement x="314" y="630" width="38" height="18" uuid="379e7cb8-88d3-42a8-8b86-e3b9d493f845">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
 					<font fontName="Arial" size="10" isBold="true"/>
@@ -551,8 +555,9 @@ where tjob.job_id = $P{jobid};]]>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="58" y="752" width="70" height="18" uuid="cfbbaa91-d711-4db2-b72c-c381a87076d4">
+				<reportElement x="58" y="752" width="80" height="18" uuid="cfbbaa91-d711-4db2-b72c-c381a87076d4">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
 					<font fontName="Arial" size="10" isBold="false"/>
@@ -578,8 +583,9 @@ where tjob.job_id = $P{jobid};]]>
 				<text><![CDATA[Original:Cliente/Verde: Emisor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="371" y="752" width="64" height="15" uuid="0cfc9946-3e20-4857-8a71-854476edb46a">
+				<reportElement x="371" y="752" width="90" height="15" uuid="0cfc9946-3e20-4857-8a71-854476edb46a">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
 					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
@@ -587,9 +593,10 @@ where tjob.job_id = $P{jobid};]]>
 				<text><![CDATA[Fecha de Aut.:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="372" y="768" width="78" height="15" uuid="ec0846ac-4f24-4ff1-93eb-74e0986ed3d3">
+				<reportElement x="372" y="768" width="90" height="15" uuid="ec0846ac-4f24-4ff1-93eb-74e0986ed3d3">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left">
 					<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
@@ -674,7 +681,7 @@ where tjob.job_id = $P{jobid};]]>
 				<textFieldExpression><![CDATA["Autorización SRI No. "+ $F{aut_numero}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="450" y="752" width="94" height="15" uuid="6996783c-904c-4216-a6df-277bd6f8518c">
+				<reportElement x="463" y="752" width="94" height="15" uuid="6996783c-904c-4216-a6df-277bd6f8518c">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -685,7 +692,7 @@ where tjob.job_id = $P{jobid};]]>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{aut_fechaautorizacion})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="451" y="768" width="94" height="15" uuid="d18e31eb-b480-4c69-a8f4-da87ee820a67">
+				<reportElement x="464" y="768" width="94" height="15" uuid="d18e31eb-b480-4c69-a8f4-da87ee820a67">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -714,7 +721,7 @@ where tjob.job_id = $P{jobid};]]>
 				<textElement textAlignment="Left">
 					<font fontName="Arial" size="9" isBold="false" isItalic="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["1104450877001   BARRERA PEPINOS MARIA CRISTINA, 1395  Telf: 3330492 * Desde "+$F{aut_secuencia_ini}+" al "+ $F{aut_secuencia_fin}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["1104450877001   BARRERA PEPINOS MARIA CRISTINA, 1395  Telf: 3330492 * Desde "+$P{desde}+" al "+ $P{hasta}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

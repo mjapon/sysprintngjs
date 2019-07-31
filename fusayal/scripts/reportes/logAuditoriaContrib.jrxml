@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="logAudit" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
@@ -89,7 +89,7 @@ order by t.aud_fechahora;]]>
 				<text><![CDATA[LOG DE AUDITORÍA DEL CONTRIBUYENTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="119" width="190" height="20" uuid="b507f4c4-be59-4b25-9fb2-17b6d6e6867a">
+				<reportElement x="0" y="119" width="220" height="20" uuid="b507f4c4-be59-4b25-9fb2-17b6d6e6867a">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -98,7 +98,7 @@ order by t.aud_fechahora;]]>
 				<text><![CDATA[Fecha y Hora de Emisión:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="1" y="74" width="189" height="20" uuid="982ba063-e5c2-42f9-9b3c-7188a22900ed">
+				<reportElement x="1" y="74" width="219" height="20" uuid="982ba063-e5c2-42f9-9b3c-7188a22900ed">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -107,7 +107,7 @@ order by t.aud_fechahora;]]>
 				<text><![CDATA[Usuario que generó LOG:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="201" y="75" width="548" height="20" uuid="ec3bc9f2-755f-4035-b780-6e194dc0187a">
+				<reportElement x="228" y="75" width="548" height="20" uuid="ec3bc9f2-755f-4035-b780-6e194dc0187a">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -116,7 +116,7 @@ order by t.aud_fechahora;]]>
 				<textFieldExpression><![CDATA[$P{pGeneradoPor}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy hh:mm a">
-				<reportElement x="196" y="120" width="486" height="20" uuid="35ade498-0eb5-4655-9cea-2863221b40c2">
+				<reportElement x="223" y="120" width="486" height="20" uuid="35ade498-0eb5-4655-9cea-2863221b40c2">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -125,7 +125,7 @@ order by t.aud_fechahora;]]>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="52" width="198" height="20" uuid="bf239e54-95a3-4ae7-84b5-2232fc8b475f">
+				<reportElement x="0" y="52" width="220" height="20" uuid="bf239e54-95a3-4ae7-84b5-2232fc8b475f">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -134,7 +134,7 @@ order by t.aud_fechahora;]]>
 				<text><![CDATA[Nombre del contribuyente:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="200" y="53" width="557" height="20" uuid="20078728-0e12-4794-9d8a-a3b1056585f5">
+				<reportElement x="227" y="53" width="557" height="20" uuid="20078728-0e12-4794-9d8a-a3b1056585f5">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -143,7 +143,7 @@ order by t.aud_fechahora;]]>
 				<textFieldExpression><![CDATA[$P{pContribuyente}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1" y="97" width="189" height="20" uuid="d3235dc8-2fe4-4658-8e5f-0977f24a0e9a">
+				<reportElement x="1" y="97" width="219" height="20" uuid="d3235dc8-2fe4-4658-8e5f-0977f24a0e9a">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
@@ -152,7 +152,7 @@ order by t.aud_fechahora;]]>
 				<text><![CDATA[Título del LOG:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="200" y="98" width="189" height="20" uuid="7c460b4d-d0c8-426b-9027-72e3413737e4">
+				<reportElement x="227" y="98" width="189" height="20" uuid="7c460b4d-d0c8-426b-9027-72e3413737e4">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement>
