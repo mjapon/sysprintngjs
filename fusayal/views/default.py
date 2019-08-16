@@ -2,14 +2,14 @@
 import logging
 import os
 
-from fusayal.logica.imprentas.imprentas_dao import ImprentasDao
-from fusayal.logica.params.param_dao import ParamsDao
 from pyramid.httpexceptions import HTTPFound
 from pyramid.security import forget
 from pyramid.view import view_config
 
 from fusayal.logica.excepciones.validacion import ErrorValidacionExc
+from fusayal.logica.imprentas.imprentas_dao import ImprentasDao
 from fusayal.logica.jobs.jobdoc.jobdoc_dao import TJobDocDao
+from fusayal.logica.params.param_dao import ParamsDao
 from fusayal.logica.plantillas.plantilla_dao import TPlantillasDao
 from fusayal.logica.users.users_dao import TUsersDao
 from fusayal.utils.archivos import CargaArchivosUtil
@@ -42,8 +42,8 @@ def login_view(request):
         clave = request.POST['clave']
         empresa = request.POST['empresa']
 
-        imprentasdao =  ImprentasDao(request.dbsession)
-        datosimprenta =  imprentasdao.get_datos_empresa(imp_codigo=empresa)
+        imprentasdao = ImprentasDao(request.dbsession)
+        datosimprenta = imprentasdao.get_datos_empresa(imp_codigo=empresa)
         if datosimprenta is None:
             return {'autenticado': 0, 'msg': 'Empresa no registrada'}
         else:
@@ -111,7 +111,6 @@ def upload_file(request):
                 uploadFileUtil = CargaArchivosUtil()
                 uploadFileUtil.save_bytarray(ruta, filecontent)
 
-
                 if temp_id is not None and len(temp_id) > 0 and int(temp_id) > 0:
                     plantillasDao.actualizar(temp_id=temp_id,
                                              new_temp_name=nombreArchivo,
@@ -159,7 +158,8 @@ def upload_job_file(request):
             filecontent = thefile.read()
             tjobdocdao = TJobDocDao(request.dbsession)
             try:
-                resp = tjobdocdao.crear(job_id=job_id, nombre_archivo=filename, user_crea=request.session['us_id'], tipocarga=1)
+                resp = tjobdocdao.crear(job_id=job_id, nombre_archivo=filename, user_crea=request.session['us_id'],
+                                        tipocarga=1)
                 uploadFileUtil = CargaArchivosUtil()
                 uploadFileUtil.save_bytarray(resp['ruta'], filecontent)
                 estado = 200

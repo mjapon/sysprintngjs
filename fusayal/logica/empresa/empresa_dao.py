@@ -7,6 +7,7 @@ import copy
 import logging
 
 from fusayal.logica.auditorias.taudit_dao import TAuditDao
+from fusayal.logica.contribuyente.contribuyente_dao import TContribuyenteDao
 from fusayal.logica.dao.base import BaseDao
 from fusayal.logica.empresa.empresa_model import TEmpresa
 from fusayal.logica.excepciones.validacion import ErrorValidacionExc
@@ -35,8 +36,8 @@ class TEmpresaDao(BaseDao):
         if not cadenas.es_nonulo_novacio(form['emp_razonsocial']):
             raise ErrorValidacionExc(u"Debe ingresar la razon social")
 
-        if not cadenas.es_nonulo_novacio(form['emp_nroautorizacion']):
-            raise ErrorValidacionExc(u"Debe ingresar el número de autorización")
+        # if not cadenas.es_nonulo_novacio(form['emp_nroautorizacion']):
+        #     raise ErrorValidacionExc(u"Debe ingresar el número de autorización")
 
         if not cadenas.es_nonulo_novacio(form['emp_fechaautorizacion']):
             raise ErrorValidacionExc(u"Debe ingresar la fecha de autorización")
@@ -48,7 +49,7 @@ class TEmpresaDao(BaseDao):
             tempresa.emp_razonsocial = form.get("emp_razonsocial")
             tempresa.emp_nombrecomercial = form.get("emp_nombrecomercial")
             tempresa.emp_fechaautorizacion = fechas.parse_cadena(form.get("emp_fechaautorizacion"))
-            tempresa.emp_nroautorizacion = form.get("emp_nroautorizacion")
+            # tempresa.emp_nroautorizacion = form.get("emp_nroautorizacion")
 
             tauditdao = TAuditDao(self.dbsession)
             list_cambios = checkcambioutil.valor_cambiado(tempresa_cloned.__json__(), form)
@@ -65,14 +66,37 @@ class TEmpresaDao(BaseDao):
         if not cadenas.es_nonulo_novacio(form['emp_ruc']):
             raise ErrorValidacionExc(u"Debe ingresar el ruc")
 
+        #Validar que el ruc ingresado este correcto
+        resvalid = TContribuyenteDao.verificar(form['emp_ruc'])
+        if not resvalid:
+            raise ErrorValidacionExc(u"El número de ruc ingresado es incorrecto")
+
         if not cadenas.es_nonulo_novacio(form['emp_razonsocial']):
             raise ErrorValidacionExc(u"Debe ingresar la razon social")
 
         if not cadenas.es_nonulo_novacio(form['emp_nroautorizacion']):
             raise ErrorValidacionExc(u"Debe ingresar el número de autorización")
 
+        #Validar que el numero de autorizacion sea distinto de cero
+        emp_nroautorizacion = form['emp_nroautorizacion']
+        if not emp_nroautorizacion.isdigit():
+            raise ErrorValidacionExc(u"El número de autorización es incorrecto debe ser solo números")
+        elif int(emp_nroautorizacion) == 0:
+            raise ErrorValidacionExc(u"El número de autorización debe ser distinto de cero")
+
         if not cadenas.es_nonulo_novacio(form['emp_fechaautorizacion']):
             raise ErrorValidacionExc(u"Debe ingresar la fecha de autorización")
+        else:
+            #Validar que no sean fechas posteriores a la fecha actual
+            if not fechas.isvalid(form['emp_fechaautorizacion']):
+                raise ErrorValidacionExc(
+                    "La fecha de autorización ingresada es incorrecta verifique que se encuentre en el formato dd/mm/aaaa")
+
+            fecha_actual = fechas.get_str_fecha_actual()
+
+            if not fechas.es_fecha_a_mayor_fecha_b(form['emp_fechaautorizacion'], fecha_actual):
+                raise ErrorValidacionExc(u"La fecha de autorización no puede estar despues de la fecha de actual")
+
 
         tempresa = TEmpresa()
         tempresa.emp_ruc = form.get("emp_ruc")

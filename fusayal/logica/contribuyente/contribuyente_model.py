@@ -40,3 +40,4 @@ class TContribuyente(Declarative, JsonAlchemy):
     cnt_nrocntespecial = Column(String(40), nullable=False)
     cnt_oblcontab = Column(Integer, nullable=False, default=0)
     cnt_nombrecomercial = Column(String(80), nullable=False)
+    cnt_direstab = Column(String(150))

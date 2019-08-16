@@ -358,7 +358,6 @@ class TAutorizacionDao(BaseDao):
             raise ErrorValidacionExc(
                 "La fecha de caducidad ingresada es incorrecta verifique que se encuentre en el formato dd/mm/aaaa")
 
-
         #Verificacion de numero de autorizacion
         if not aut_numero.isdigit():
             raise ErrorValidacionExc(u"El numero de autorización ingresado es incorrecto")

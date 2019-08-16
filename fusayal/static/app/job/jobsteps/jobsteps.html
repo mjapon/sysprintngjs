@@ -112,6 +112,19 @@
 
                                 <div class="row">
                                     <div class="col-md-4">
+                                        Dirección Establecimiento <span class="gridRed"> * </span>:
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" ng-model="formContrib.cnt_direstab"
+                                               id="cnt_direstab"
+                                               capitalize
+                                               ng-required="true">
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-4">
                                         Clase <span class="gridRed"> * </span>:
                                     </div>
                                     <div class="col-md-8">
@@ -128,7 +141,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <input type="number" class="form-control"
-                                               ng-model="formContrib.cnt_nrocntespecial">
+                                               ng-model="formContrib.cnt_nrocntespecial" ng-disabled="formContrib.cnt_clase!==2">
                                     </div>
                                 </div>
 

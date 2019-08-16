@@ -27,6 +27,7 @@ class TContribuyenteDao(BaseDao):
             'cnt_telf': '',
             'cnt_email': '',
             'cnt_dirmatriz': '',
+            'cnt_direstab': '',
             'cnt_clase': 1,
             'cnt_nrocntespecial': '',
             'cnt_oblcontab': 0,
@@ -151,7 +152,8 @@ class TContribuyenteDao(BaseDao):
         cuenta = self.first_col(sql, col='cuenta')
         return cuenta > 0
 
-    def verificar(self,  nro):
+    @staticmethod
+    def verificar(nro):
         l = len(nro)
         result = False
         if l == 10 or l == 13:  # verificar la longitud correcta
@@ -160,14 +162,14 @@ class TContribuyenteDao(BaseDao):
                 tercer_dig = int(nro[2])
                 if tercer_dig >= 0 and tercer_dig < 6:  # numeros enter 0 y 6
                     if l == 10:
-                        result = self.validar_ced_ruc(nro, 0)
+                        result = TContribuyenteDao.validar_ced_ruc(nro, 0)
                     elif l == 13:
-                        result = self.validar_ced_ruc(nro, 0) and nro[
+                        result = TContribuyenteDao.validar_ced_ruc(nro, 0) and nro[
                                                              10:13] != '000'  # se verifica q los ultimos numeros no sean 000
                 elif tercer_dig == 6:
-                    result = self.validar_ced_ruc(nro, 1)  # sociedades publicas
+                    result = TContribuyenteDao.validar_ced_ruc(nro, 1)  # sociedades publicas
                 elif tercer_dig == 9:  # si es ruc
-                    result = self.validar_ced_ruc(nro, 2)  # sociedades privadas
+                    result = TContribuyenteDao.validar_ced_ruc(nro, 2)  # sociedades privadas
                 else:
                     result = False
                     #raise Exception(u'Tercer digito invalido')
@@ -180,7 +182,8 @@ class TContribuyenteDao(BaseDao):
 
         return result
 
-    def validar_ced_ruc(self, nro, tipo):
+    @staticmethod
+    def validar_ced_ruc(nro, tipo):
         total = 0
         if tipo == 0:  # cedula y r.u.c persona natural
             base = 10
@@ -219,7 +222,7 @@ class TContribuyenteDao(BaseDao):
             raise ErrorValidacionExc("El ruc ingresado es incorrecto")
 
         #Logica para validacion de ruc
-        resvalid = self.verificar(cnt_ruc)
+        resvalid = TContribuyenteDao.verificar(cnt_ruc)
         if not resvalid:
             raise ErrorValidacionExc(u"El número de ruc ingresado es incorrecto")
 
@@ -246,6 +249,7 @@ class TContribuyenteDao(BaseDao):
         # tcontribuyente.cnt_oblcontab = 1 if form.get('cnt_oblcontab') else 0
         tcontribuyente.cnt_oblcontab = form.get('cnt_oblcontab')
         tcontribuyente.cnt_nombrecomercial = form.get('cnt_nombrecomercial')
+        tcontribuyente.cnt_direstab = form.get('cnt_direstab')
 
         self.dbsession.add(tcontribuyente)
         self.dbsession.flush()

@@ -12,7 +12,7 @@
                         </div>
                         <div class="col-md-9">
                             <input type="text" class="form-control" id="nomApelUser" ng-model="form.emp_ruc" capitalize
-                                   ng-required="true" maxlength="13"/>
+                                   ng-required="true" maxlength="13" input-mask="{mask:'9999999999999'}"/>
                         </div>
                     </div>
 
@@ -44,7 +44,7 @@
                         </div>
                         <div class="col-md-9">
                             <servi-fecha elementid="emp_fechaautorizacion" model="form.emp_fechaautorizacion"
-                                         required="true"></servi-fecha>
+                                         required="true" disabled="form.emp_id!==0"></servi-fecha>
                         </div>
                     </div>
 
@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-md-9">
                             <input type="text" class="form-control" id="nomApelUser" ng-model="form.emp_nroautorizacion"
-                                   capitalize ng-required="true" input-mask="{mask:'99999'}"/>
+                                   capitalize ng-required="true" input-mask="{mask:'99999'}" ng-disabled="form.emp_id!==0"/>
                         </div>
                     </div>
                 </div>

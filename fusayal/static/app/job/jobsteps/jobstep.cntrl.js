@@ -179,13 +179,24 @@
             console.log('Dats enviados');
             console.log(vm.formJob);
 
-            var res = JobService.save(vm.formJob, function () {
-                if (res.estado === 200) {
-                    var job_id_gen = res.job_id;
-                    NotifServ.success(res.msg);
-                    goToJobView(job_id_gen);
-                }
-            });
+            //Validar las secuencias ingresadas
+            console.log("Valores de las secuencias:");
+            console.log(vm.formJob.job_secuencia_ini);
+            console.log(vm.formJob.job_secuencia_fin);
+
+            if (vm.formJob.job_secuencia_ini > 999999999) {
+                NotifServ.warning('El valor de la secuencia inicial es incorrecto, el máximo valor permitido es 999999999');
+            } else if (vm.formJob.job_secuencia_fin > 999999999) {
+                NotifServ.warning('El valor de la secuencia final es incorrecto, el máximo valor permitido es 999999999');
+            } else {
+                var res = JobService.save(vm.formJob, function () {
+                    if (res.estado === 200) {
+                        var job_id_gen = res.job_id;
+                        NotifServ.success(res.msg);
+                        goToJobView(job_id_gen);
+                    }
+                });
+            }
         }
 
         function anterior(step) {

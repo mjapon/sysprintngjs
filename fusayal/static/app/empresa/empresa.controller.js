@@ -17,7 +17,7 @@
             var res = EmpresaServ.save(vm.form, function(){
                 if (res.estado === 200){
                     NotifServ.success(res.msg);
-                    loadDatosEmpresa();
+                    loadDatosEmpresa(false);
                 }
             });
         }
@@ -27,18 +27,22 @@
         }
 
         function init() {
-            loadDatosEmpresa();
+            loadDatosEmpresa(true);
         }
 
-        function loadDatosEmpresa(){
+        function loadDatosEmpresa(showmsgs){
             var res = EmpresaServ.get({emp_id:0}, function(){
                 if (res.tempresa){
                     vm.form = res.tempresa;
                     if (vm.form.emp_id ===0){
-                        NotifServ.warning("El establecimiento grafico, no ha sido parametrizado");
+                        if (showmsgs) {
+                            NotifServ.warning("El establecimiento grafico, no ha sido parametrizado");
+                        }
                     }
                     else{
-                        NotifServ.warning("El establecimiento grafico, ya ha sido parametrizado");
+                        if (showmsgs) {
+                            NotifServ.warning("El establecimiento grafico, ya ha sido parametrizado");
+                        }
                     }
                 }
             });
