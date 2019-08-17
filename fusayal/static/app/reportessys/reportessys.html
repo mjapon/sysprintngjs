@@ -47,6 +47,46 @@
                         </div>
                     </div>
 
+
+                    <div class="row" ng-if="tipodocEnabled">
+                        <div class="col-md-4">
+                            Tipo Documento <span class="gridRed"> * </span>:
+                        </div>
+                        <div class="col-md-8">
+                            <select class="form-control"
+                                    ng-model="form.job_tipodoc"
+                                    ng-options="tipodoc.td_id as tipodoc.td_nombre for tipodoc in listas.tiposdoc">
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="row" ng-if="estabEnabled">
+                        <div class="col-md-4">
+                            Establecimiento <span class="gridRed"> * </span>:
+                        </div>
+                        <div class="col-md-8">
+                             <input type="text" id="job_ptoemi" class="form-control"
+                                                   ng-model="form.job_stab"
+                                                   input-mask="{mask:'999'}"/>
+
+                        </div>
+                    </div>
+
+
+                    <div class="row" ng-if="ptoEmiEnabled">
+                        <div class="col-md-4">
+                            Punto de Emisión <span class="gridRed"> * </span>:
+                        </div>
+                        <div class="col-md-8">
+                             <input type="text" id="job_ptoemi" class="form-control"
+                                                   ng-model="form.job_ptoemi"
+                                                   input-mask="{mask:'999'}"/>
+
+                        </div>
+                    </div>
+
+
                     <div class="row" ng-if="contribsEnabled">
                         <div class="col-md-4">
                             Contribuyente:

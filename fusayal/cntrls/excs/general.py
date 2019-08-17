@@ -34,7 +34,7 @@ def procesar_excepcion(exc, request):
 
     status_code = None
     if 'status_code' in dir(exc):
-        status_code = exc.status_code
+        status_code = exc.status_codex
     if status_code is None:
         status_code = 400  # Bad request
 

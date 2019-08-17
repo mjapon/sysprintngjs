@@ -75,8 +75,10 @@ class TUsersDao(BaseDao):
             if password is None or len(password.strip()) < 4:
                 raise ErrorValidacionExc("Por favor ingrese la clave, debe ser mínimo de 4 caracteres")
 
+            """
             if password == tuser.us_pass:
                 raise ErrorValidacionExc("La clave ingresada no puede ser la misma que se le asignó")
+            """
 
             tuser.us_pass = password
             tuser.us_statusclave = 1
@@ -137,7 +139,7 @@ class TUsersDao(BaseDao):
         :param username:
         :return:
         """
-        tuser = self.dbsession.query(TUser).filter(TUser.us_name == username)
+        tuser = self.dbsession.query(TUser).filter(TUser.us_name == username).first()
         return tuser
 
     def listar(self):

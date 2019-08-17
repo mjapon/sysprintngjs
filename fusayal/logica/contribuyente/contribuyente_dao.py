@@ -301,6 +301,7 @@ class TContribuyenteDao(BaseDao):
             tcontribuyente.cnt_nrocntespecial = form.get('cnt_nrocntespecial')
             tcontribuyente.cnt_oblcontab = form.get('cnt_oblcontab')
             tcontribuyente.cnt_nombrecomercial = form.get('cnt_nombrecomercial')
+            tcontribuyente.cnt_direstab = form.get('cnt_direstab')
 
         # Agregamos informacion de auditoria
         tauditdao = TAuditDao(self.dbsession)

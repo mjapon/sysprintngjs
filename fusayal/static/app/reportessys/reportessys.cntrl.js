@@ -18,12 +18,16 @@
         vm.contribsEnabled = false;
         vm.estadoJobEnabled = false;
 
+        vm.estabEnabled = false;
+        vm.ptoEmiEnabled = false;
+        vm.tipodocEnabled = false;
+
         vm.formExport = {};
         vm.contribsel = {};
         vm.onContribSel = onContribSel;
         vm.contribsLoaded = false;
 
-        vm.listas = {contributentes: [], estadosjob:[]};
+        vm.listas = {contributentes: [], estadosjob:[], tiposdoc :[]};
 
 
         var ipServer = GeneralSrv.getIPServer();
@@ -48,6 +52,7 @@
                     console.log(vm.reportesList);
                     vm.formExport = res.formexport;
                     vm.listas.estadosjob = res.estadojob;
+                    vm.listas.tiposdoc = res.tiposdoc;
                 }
             });
 
@@ -84,6 +89,10 @@
             vm.contribsEnabled = false;
             vm.estadoJobEnabled = false;
 
+            vm.estabEnabled = false;
+            vm.ptoEmiEnabled = false;
+            vm.tipodocEnabled = false;
+
             vm.paramsRepSel = JSON.parse(rep.temp_params);
 
             if (vm.paramsRepSel && vm.paramsRepSel['fec']) {
@@ -99,6 +108,18 @@
 
             if (vm.paramsRepSel && vm.paramsRepSel['statusjob']) {
                 vm.estadoJobEnabled = true;
+            }
+
+            if (vm.paramsRepSel && vm.paramsRepSel['stab']) {
+                vm.estabEnabled = true;
+            }
+
+            if (vm.paramsRepSel && vm.paramsRepSel['ptoemi']) {
+                vm.ptoEmiEnabled = true;
+            }
+
+            if (vm.paramsRepSel && vm.paramsRepSel['tipodoc']) {
+                vm.tipodocEnabled = true;
             }
 
             if (vm.contribsEnabled) {

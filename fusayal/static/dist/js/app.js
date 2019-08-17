@@ -547,7 +547,7 @@ var IsyplusApp = angular.
             var res = EmpresaServ.save(vm.form, function(){
                 if (res.estado === 200){
                     NotifServ.success(res.msg);
-                    loadDatosEmpresa();
+                    loadDatosEmpresa(false);
                 }
             });
         }
@@ -557,18 +557,22 @@ var IsyplusApp = angular.
         }
 
         function init() {
-            loadDatosEmpresa();
+            loadDatosEmpresa(true);
         }
 
-        function loadDatosEmpresa(){
+        function loadDatosEmpresa(showmsgs){
             var res = EmpresaServ.get({emp_id:0}, function(){
                 if (res.tempresa){
                     vm.form = res.tempresa;
                     if (vm.form.emp_id ===0){
-                        NotifServ.warning("El establecimiento grafico, no ha sido parametrizado");
+                        if (showmsgs) {
+                            NotifServ.warning("El establecimiento grafico, no ha sido parametrizado");
+                        }
                     }
                     else{
-                        NotifServ.warning("El establecimiento grafico, ya ha sido parametrizado");
+                        if (showmsgs) {
+                            NotifServ.warning("El establecimiento grafico, ya ha sido parametrizado");
+                        }
                     }
                 }
             });
@@ -1341,13 +1345,24 @@ var IsyplusApp = angular.
             console.log('Dats enviados');
             console.log(vm.formJob);
 
-            var res = JobService.save(vm.formJob, function () {
-                if (res.estado === 200) {
-                    var job_id_gen = res.job_id;
-                    NotifServ.success(res.msg);
-                    goToJobView(job_id_gen);
-                }
-            });
+            //Validar las secuencias ingresadas
+            console.log("Valores de las secuencias:");
+            console.log(vm.formJob.job_secuencia_ini);
+            console.log(vm.formJob.job_secuencia_fin);
+
+            if (vm.formJob.job_secuencia_ini > 999999999) {
+                NotifServ.warning('El valor de la secuencia inicial es incorrecto, el máximo valor permitido es 999999999');
+            } else if (vm.formJob.job_secuencia_fin > 999999999) {
+                NotifServ.warning('El valor de la secuencia final es incorrecto, el máximo valor permitido es 999999999');
+            } else {
+                var res = JobService.save(vm.formJob, function () {
+                    if (res.estado === 200) {
+                        var job_id_gen = res.job_id;
+                        NotifServ.success(res.msg);
+                        goToJobView(job_id_gen);
+                    }
+                });
+            }
         }
 
         function anterior(step) {
@@ -1474,7 +1489,7 @@ var IsyplusApp = angular.
         .controller("JobViewCntrl", JobViewCntrl);
 
     function JobViewCntrl($scope, $stateParams, $state, JobService, focusService,
-                          NotifServ, ReportesServ, swalService, ModalServ, JobRPService, Upload,GeneralSrv) {
+                          NotifServ, ReportesServ, swalService, ModalServ, JobRPService, Upload,GeneralSrv, StringServ) {
         var vm = $scope;
 
         vm.formContrib = {};
@@ -1575,16 +1590,31 @@ var IsyplusApp = angular.
         }
 
         function okModalReimprimir(){
-            var res = JobRPService.save(vm.formReprint, function () {
-                if (res.estado == 200) {
 
-                    verReporteGen();
-                    //auxImprimir(1);
-                    NotifServ.success(res.msg);
-                    ModalServ.hide('modalReprint');
-                    auxCambiarEstado(5);
-                }
-            });
+            //Validar que se ingresen datos
+
+            if (!StringServ.noNuloNoVacio(vm.formReprint.jobrp_secini.toString())) {
+                NotifServ.warning('Debe ingresar las secuencias');
+            }
+            else if(!StringServ.noNuloNoVacio(vm.formReprint.jobrp_secfin.toString())){
+                NotifServ.warning('Debe ingresar las secuencias');
+            }
+            else if(!StringServ.noNuloNoVacio(vm.formReprint.jobrp_obs)){
+                NotifServ.warning('Elija el motivo de la reimpresión');
+            }
+            else{
+                var res = JobRPService.save(vm.formReprint, function () {
+                    if (res.estado == 200) {
+
+                        verReporteGen();
+                        //auxImprimir(1);
+                        NotifServ.success(res.msg);
+                        ModalServ.hide('modalReprint');
+                        auxCambiarEstado(5);
+                    }
+                });
+            }
+
         }
 
         function auxCambiarEstado(newEstado, notif) {
@@ -2029,12 +2059,16 @@ var IsyplusApp = angular.
         vm.contribsEnabled = false;
         vm.estadoJobEnabled = false;
 
+        vm.estabEnabled = false;
+        vm.ptoEmiEnabled = false;
+        vm.tipodocEnabled = false;
+
         vm.formExport = {};
         vm.contribsel = {};
         vm.onContribSel = onContribSel;
         vm.contribsLoaded = false;
 
-        vm.listas = {contributentes: [], estadosjob:[]};
+        vm.listas = {contributentes: [], estadosjob:[], tiposdoc :[]};
 
 
         var ipServer = GeneralSrv.getIPServer();
@@ -2059,6 +2093,7 @@ var IsyplusApp = angular.
                     console.log(vm.reportesList);
                     vm.formExport = res.formexport;
                     vm.listas.estadosjob = res.estadojob;
+                    vm.listas.tiposdoc = res.tiposdoc;
                 }
             });
 
@@ -2095,6 +2130,10 @@ var IsyplusApp = angular.
             vm.contribsEnabled = false;
             vm.estadoJobEnabled = false;
 
+            vm.estabEnabled = false;
+            vm.ptoEmiEnabled = false;
+            vm.tipodocEnabled = false;
+
             vm.paramsRepSel = JSON.parse(rep.temp_params);
 
             if (vm.paramsRepSel && vm.paramsRepSel['fec']) {
@@ -2110,6 +2149,18 @@ var IsyplusApp = angular.
 
             if (vm.paramsRepSel && vm.paramsRepSel['statusjob']) {
                 vm.estadoJobEnabled = true;
+            }
+
+            if (vm.paramsRepSel && vm.paramsRepSel['stab']) {
+                vm.estabEnabled = true;
+            }
+
+            if (vm.paramsRepSel && vm.paramsRepSel['ptoemi']) {
+                vm.ptoEmiEnabled = true;
+            }
+
+            if (vm.paramsRepSel && vm.paramsRepSel['tipodoc']) {
+                vm.tipodocEnabled = true;
             }
 
             if (vm.contribsEnabled) {

@@ -33,6 +33,10 @@ class TEmpresaDao(BaseDao):
         if not cadenas.es_nonulo_novacio(form['emp_ruc']):
             raise ErrorValidacionExc(u"Debe ingresar el ruc")
 
+        resvalid = TContribuyenteDao.verificar(form['emp_ruc'])
+        if not resvalid:
+            raise ErrorValidacionExc(u"El número de ruc ingresado es incorrecto")
+
         if not cadenas.es_nonulo_novacio(form['emp_razonsocial']):
             raise ErrorValidacionExc(u"Debe ingresar la razon social")
 

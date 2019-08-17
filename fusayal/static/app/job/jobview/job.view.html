@@ -290,10 +290,19 @@
                         Motivo:
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" ng-model="formReprint.jobrp_obs"
+
+                         <select class="form-control" ng-model="formReprint.jobrp_obs" ng-enter="setInputFocus('jobrp_secini')" id="jobrp_obs">
+                              <option>Error en la impresión parcial o total del trabajo realizado</option>
+                              <option>Error u omisión de impresión de información tributaria en los documentos autorizados</option>
+                              <option>Error en el periférico de impresión por atasco de papel, papel no adecuado, falta de tinta o tóner, etc</option>
+                         </select>
+
+                            <!--
+                            <input type="text" class="form-control" ng-model="formReprint.jobrp_obs"
                                capitalize
                                id="jobrp_obs"
                                ng-enter="setInputFocus('jobrp_secini')">
+                               -->
                     </div>
                 </div>
                 <div class="row">
@@ -301,8 +310,7 @@
                         Numero Inicial:
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" ng-model="formReprint.jobrp_secini"
-                               capitalize
+                        <input type="number" class="form-control" ng-model="formReprint.jobrp_secini"
                                ng-required="true" id="jobrp_secini"
                                ng-enter="setInputFocus('jobrp_secfin')">
                     </div>
@@ -312,8 +320,7 @@
                         Numero Final:
                     </div>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" ng-model="formReprint.jobrp_secfin"
-                               capitalize
+                        <input type="number" class="form-control" ng-model="formReprint.jobrp_secfin"
                                ng-required="true" id="jobrp_secfin">
                     </div>
                 </div>

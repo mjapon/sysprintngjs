@@ -3,6 +3,7 @@ def includeme(config):
     #config.add_route('home', '/')
     config.add_route('initApp', '/')
     config.add_route('loginApp', '/login')
+    config.add_route('confirmClaveApp', '/confirmClave')
     config.add_route('logoutApp', '/logout')
     config.add_route('homeApp', '/home')
     config.add_route('upload_view', '/uploadview')

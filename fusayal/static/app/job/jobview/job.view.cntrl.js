@@ -4,7 +4,7 @@
         .controller("JobViewCntrl", JobViewCntrl);
 
     function JobViewCntrl($scope, $stateParams, $state, JobService, focusService,
-                          NotifServ, ReportesServ, swalService, ModalServ, JobRPService, Upload,GeneralSrv) {
+                          NotifServ, ReportesServ, swalService, ModalServ, JobRPService, Upload,GeneralSrv, StringServ) {
         var vm = $scope;
 
         vm.formContrib = {};
@@ -105,16 +105,31 @@
         }
 
         function okModalReimprimir(){
-            var res = JobRPService.save(vm.formReprint, function () {
-                if (res.estado == 200) {
 
-                    verReporteGen();
-                    //auxImprimir(1);
-                    NotifServ.success(res.msg);
-                    ModalServ.hide('modalReprint');
-                    auxCambiarEstado(5);
-                }
-            });
+            //Validar que se ingresen datos
+
+            if (!StringServ.noNuloNoVacio(vm.formReprint.jobrp_secini.toString())) {
+                NotifServ.warning('Debe ingresar las secuencias');
+            }
+            else if(!StringServ.noNuloNoVacio(vm.formReprint.jobrp_secfin.toString())){
+                NotifServ.warning('Debe ingresar las secuencias');
+            }
+            else if(!StringServ.noNuloNoVacio(vm.formReprint.jobrp_obs)){
+                NotifServ.warning('Elija el motivo de la reimpresión');
+            }
+            else{
+                var res = JobRPService.save(vm.formReprint, function () {
+                    if (res.estado == 200) {
+
+                        verReporteGen();
+                        //auxImprimir(1);
+                        NotifServ.success(res.msg);
+                        ModalServ.hide('modalReprint');
+                        auxCambiarEstado(5);
+                    }
+                });
+            }
+
         }
 
         function auxCambiarEstado(newEstado, notif) {

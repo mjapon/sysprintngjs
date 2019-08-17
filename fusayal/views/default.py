@@ -33,6 +33,32 @@ def logout_view(request):
     return HTTPFound(request.route_url('initApp'), headers=headers)
 
 
+@view_config(route_name='confirmClaveApp', renderer='../templates/confirmClave.jinja2')
+def confirm_clave(request):
+    log.info('confirm_clave view procesing')
+
+    if 'clave' in request.POST:
+        clave = request.POST['clave']
+        confclave = request.POST['confclave']
+
+        imprentasdao = ImprentasDao(request.dbsession)
+        datosimprenta = imprentasdao.get_datos_empresa(imp_codigo=request.session['emp_codigo'])
+        if datosimprenta is None:
+            return {'autenticado': 0, 'msg': 'Empresa no registrada'}
+        else:
+            emp_esquema = datosimprenta['timp_esquema']
+            request.dbsession.execute("SET search_path TO {0}".format(emp_esquema))
+            userdao = TUsersDao(request.dbsession)
+            try:
+                userdao.cambiar_clave(user_name=request.session['us_name'], password=clave, rpassword=confclave)
+                return HTTPFound(request.route_url('homeApp'))
+            except Exception as ex:
+                return {'autenticado': 0, 'msg': 'Error:'+ex.message}
+
+    return {'msg': '', 'autenticado': 0}
+
+
+
 @view_config(route_name='loginApp', renderer='../templates/loginApp.jinja2')
 def login_view(request):
     log.info("request login view processing")
@@ -60,7 +86,11 @@ def login_view(request):
                 request.session['us_id'] = tuser.us_id
                 request.session['us_name'] = tuser.us_name
                 request.session['tuser'] = tuser
-                return HTTPFound(request.route_url('homeApp'))
+
+                if int(tuser.us_statusclave) == 0:
+                    return HTTPFound(request.route_url('confirmClaveApp'))
+                else:
+                    return HTTPFound(request.route_url('homeApp'))
             else:
                 return {'autenticado': 0, 'msg': 'Usuario o clave incorrectos'}
 

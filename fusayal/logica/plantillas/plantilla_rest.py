@@ -5,6 +5,7 @@ Fecha de creacion 2019-06-07
 """
 import logging
 
+from fusayal.logica.autorizacion.autorizacion_dao import TAutorizacionDao
 from fusayal.logica.empresa.empresa_dao import TEmpresaDao
 from fusayal.logica.jobs.job_dao import TJobDao
 from fusayal.logica.plantillas.plantilla_dao import TPlantillasDao
@@ -43,8 +44,11 @@ class PlantillasRest(DbComunView):
 
         tjobdao =  TJobDao(self.dbsession)
         estadosjob =  tjobdao.listar_estadosjob()
+        tautdao = TAutorizacionDao(self.dbsession)
 
-        return {'status': 200, 'items': items, 'cols': cols, 'formexport': formexport, 'estadojob':estadosjob}
+        tiposdoc =  tautdao.listar_tiposdoc()
+
+        return {'status': 200, 'items': items, 'cols': cols, 'formexport': formexport, 'estadojob':estadosjob, 'tiposdoc': tiposdoc}
 
     def get(self):
         temp_id = self.request.matchdict['tempid']
