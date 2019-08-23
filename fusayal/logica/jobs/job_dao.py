@@ -97,6 +97,15 @@ class TJobDao(BaseDao):
         if secuencia_fin <= secuencia_ini:
             raise ErrorValidacionExc(u"Valor para secuencia final incorrecto, favor verifique")
 
+        int_job_secuencia_ini = int(form['job_secuencia_ini'])
+        if int_job_secuencia_ini == 0:
+            raise ErrorValidacionExc(u"El valor de la secuencia inicial debe ser distinto de cero")
+
+        #Verificar que el punto de emision sea distinto de cero
+        int_job_ptoemi = int(form['job_ptoemi'])
+        if int_job_ptoemi == 0:
+            raise ErrorValidacionExc(u"El punto de emisión debe ser distinto de cero")
+
         tjob.cnt_id = form['cnt_id']
         tjob.aut_id = form['aut_id']
         tjob.job_nrocopias = form['job_nrocopias']

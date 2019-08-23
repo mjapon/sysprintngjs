@@ -19,7 +19,7 @@
                         <div class="col-md-7">
                             <input type="text" class="form-control" id="nomApelUser" ng-model="form.us_nomapel"
                                    capitalize
-                                   ng-required="true" ng-disabled="accion ==='r'"/>
+                                   ng-required="true" ng-disabled="accion ==='r'" maxlength="50"/>
                         </div>
                     </div>
 
@@ -29,7 +29,7 @@
                         </div>
                         <div class="col-md-7">
                             <input type="text" class="form-control" ng-model="form.us_name" ng-required="true"
-                                   ng-disabled="accion ==='r'"/>
+                                   ng-disabled="accion ==='r'" maxlength="20"/>
                         </div>
                     </div>
 
@@ -41,7 +41,7 @@
                             <div class="col-md-7">
                                 <input type="password" class="form-control" id="claveTempInput"
                                        ng-model="form.claveTemp"
-                                       ng-required="true"/>
+                                       ng-required="true" maxlength="20"/>
                             </div>
                         </div>
 
@@ -51,7 +51,7 @@
                             </div>
                             <div class="col-md-7">
                                 <input type="password" class="form-control" ng-model="form.confClaveTemp"
-                                       ng-required="true"/>
+                                       ng-required="true" maxlength="20"/>
                             </div>
                         </div>
                     </div>

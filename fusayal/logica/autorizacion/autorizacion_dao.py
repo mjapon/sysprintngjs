@@ -330,6 +330,10 @@ class TAutorizacionDao(BaseDao):
         """
         if not cadenas.es_nonulo_novacio(form['aut_estab']):
             raise ErrorValidacionExc("Ingrese el establecimiento")
+        else:
+            int_aut_estab = int(form['aut_estab'])
+            if int_aut_estab == 0:
+                raise ErrorValidacionExc(u"El establecimiento debe ser distinto de cero")
 
         # if not cadenas.es_nonulo_novacio(form['aut_secuencia_ini']):
         #     raise ErrorValidacionExc("Ingrese la secuencia inicial")
@@ -361,11 +365,23 @@ class TAutorizacionDao(BaseDao):
         #Verificacion de numero de autorizacion
         if not aut_numero.isdigit():
             raise ErrorValidacionExc(u"El numero de autorización ingresado es incorrecto")
+        else:
+            aut_numero_int = int(aut_numero)
+            if aut_numero_int == 0:
+                raise ErrorValidacionExc(
+                    u"El número de autorización debe ser distinto de cero")
+
+
 
         diasvalidos = abs(fecha_caducidad - fecha_autorizacion).days
 
         if not fechas.es_fecha_a_mayor_fecha_b(fecha_cad_str, fecha_aut_str):
             raise ErrorValidacionExc(u"La fecha de autorización no puede estar despues de la fecha de caducidad")
+
+        fecha_actual = fechas.get_str_fecha_actual()
+        if fechas.es_fecha_a_mayor_fecha_b(fecha_aut_str, fecha_actual):
+            raise ErrorValidacionExc(u"La fecha de autorización no puede estar despues de la fecha actual")
+
 
         if diasvalidos > 366:
             raise ErrorValidacionExc(

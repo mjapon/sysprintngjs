@@ -99,10 +99,12 @@ class TUserRolDao(BaseDao):
         current_list = self.dbsession.query(TUserRol).filter(TUserRol.us_id == us_id).all()
         tautditdao = TAuditDao(self.dbsession)
 
+        """
         if current_list is not None and len(current_list) > 0:
             for item in current_list:
-                tautditdao.crea_accion_delete(enums.TBL_USER_ROLES, user_crea, item.rl_id)
+                tautditdao.crea_accion_delete(enums.TBL_USER_ROLES, '',user_crea, '','', item.rl_id)
                 self.dbsession.delete(item)
+        """
 
         # Se registran los nuevos roles enviados
         for item in roles_list:
