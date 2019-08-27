@@ -202,6 +202,15 @@ class TAutorizacionDao(BaseDao):
         cuenta = self.first_col(sql, col="cuenta")
         return cuenta > 0
 
+    def get_aut_id(self, cnt_id, aut_numero):
+
+        sql = "select aut_id as aut_id from tautorizacion where cnt_id = {0} and aut_numero={1}".format(
+            cnt_id,
+            aut_numero
+        )
+        return self.first_col(sql,col="aut_id")
+
+
     def find_bynum_and_contrib(self, aut_numero, cnt_ruc):
 
         sql = """
@@ -273,12 +282,14 @@ class TAutorizacionDao(BaseDao):
 
             diasvalidos = abs(fecha_caducidad - fecha_autorizacion).days
 
+            """
             if not fechas.es_fecha_a_mayor_fecha_b(fecha_cad_str, fecha_aut_str):
                 raise ErrorValidacionExc(u"La fecha de autorización no puede estar despues de la fecha de caducidad")
 
             if diasvalidos > 366:
                 raise ErrorValidacionExc(
                     u"La fecha de caducidad no puede ser mayor a un año a partir de la fecha de autorización")
+            """
 
             """
             secuencia_ini = int(form['aut_secuencia_ini'])
@@ -287,6 +298,20 @@ class TAutorizacionDao(BaseDao):
             if secuencia_fin <= secuencia_ini:
                 raise ErrorValidacionExc(u"Valor para secuencia final incorrecto, favor verifique")
             """
+
+            diasvalidos = abs(fecha_caducidad - fecha_autorizacion).days
+
+            if not fechas.es_fecha_a_mayor_fecha_b(fecha_cad_str, fecha_aut_str):
+                raise ErrorValidacionExc(u"La fecha de autorización no puede estar despues de la fecha de caducidad")
+
+            fecha_actual = fechas.get_str_fecha_actual()
+            if fechas.es_fecha_a_mayor_fecha_b(fecha_aut_str, fecha_actual):
+                raise ErrorValidacionExc(u"La fecha de autorización no puede estar despues de la fecha actual")
+
+            if diasvalidos > 366:
+                raise ErrorValidacionExc(
+                    u"La fecha de caducidad no puede ser mayor a un año a partir de la fecha de autorización")
+
 
             tautorizacion.aut_numero = form.get('aut_numero')
             tautorizacion.aut_fechaautorizacion = fecha_autorizacion
@@ -371,8 +396,6 @@ class TAutorizacionDao(BaseDao):
                 raise ErrorValidacionExc(
                     u"El número de autorización debe ser distinto de cero")
 
-
-
         diasvalidos = abs(fecha_caducidad - fecha_autorizacion).days
 
         if not fechas.es_fecha_a_mayor_fecha_b(fecha_cad_str, fecha_aut_str):
@@ -382,22 +405,23 @@ class TAutorizacionDao(BaseDao):
         if fechas.es_fecha_a_mayor_fecha_b(fecha_aut_str, fecha_actual):
             raise ErrorValidacionExc(u"La fecha de autorización no puede estar despues de la fecha actual")
 
-
         if diasvalidos > 366:
             raise ErrorValidacionExc(
                 u"La fecha de caducidad no puede ser mayor a un año a partir de la fecha de autorización")
 
         cnt_id = int(form.get('cnt_id'))
         if self.ya_exite(cnt_id=cnt_id, aut_numero=form.get('aut_numero')):
+            log.info(u"Este numero de autorizacíon ya ha sido registrado, se procede a actualizar")
+            return self.editar(aut_id=self.get_aut_id(cnt_id=cnt_id,aut_numero=form.get('aut_numero')),
+                               form=form,user_edit=user_crea)
+            """
             raise ErrorValidacionExc(
                 u"La autorización nro:{0} ya ha sido registrada, ingrese otra".format(form.get('aut_numero')))
-
+            """
         # secuencia_ini = int(form['aut_secuencia_ini'])
         # secuencia_fin = int(form['aut_secuencia_fin'])
-
         # if secuencia_fin <= secuencia_ini:
         #     raise ErrorValidacionExc(u"Valor para secuencia final incorrecto, favor verifique")
-
         tautorizacion.aut_numero = form.get('aut_numero')
         tautorizacion.aut_fechaautorizacion = fecha_autorizacion
         tautorizacion.aut_fechacaducidad = fecha_caducidad
@@ -408,16 +432,14 @@ class TAutorizacionDao(BaseDao):
         tautorizacion.aut_ptoemi = ''
         # tautorizacion.aut_secuencia_ini = form.get('aut_secuencia_ini')
         # tautorizacion.aut_secuencia_fin = form.get('aut_secuencia_fin')
-
         tautorizacion.aut_secuencia_ini = 0
         tautorizacion.aut_secuencia_fin = 0
-
         tautorizacion.cnt_id = cnt_id
 
         self.dbsession.add(tautorizacion)
         self.dbsession.flush()
 
         tautditdao = TAuditDao(self.dbsession)
-        tautditdao.crea_accion_insert(TBL_AUTORIZACIONES, user_crea, tautorizacion.aut_id)
+        tautditdao.crea_accion_insert(enums.TBL_AUTORIZACIONES, user_crea, tautorizacion.aut_id)
 
         return tautorizacion.aut_id

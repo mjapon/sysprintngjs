@@ -165,20 +165,20 @@ class TContribuyenteDao(BaseDao):
                         result = TContribuyenteDao.validar_ced_ruc(nro, 0)
                     elif l == 13:
                         result = TContribuyenteDao.validar_ced_ruc(nro, 0) and nro[
-                                                             10:13] != '000'  # se verifica q los ultimos numeros no sean 000
+                                                                               10:13] != '000'  # se verifica q los ultimos numeros no sean 000
                 elif tercer_dig == 6:
                     result = TContribuyenteDao.validar_ced_ruc(nro, 1)  # sociedades publicas
                 elif tercer_dig == 9:  # si es ruc
                     result = TContribuyenteDao.validar_ced_ruc(nro, 2)  # sociedades privadas
                 else:
                     result = False
-                    #raise Exception(u'Tercer digito invalido')
+                    # raise Exception(u'Tercer digito invalido')
             else:
                 result = False
-                #raise Exception(u'Codigo de provincia incorrecto')
+                # raise Exception(u'Codigo de provincia incorrecto')
         else:
             result = False
-            #raise Exception(u'Longitud incorrecta del numero ingresado')
+            # raise Exception(u'Longitud incorrecta del numero ingresado')
 
         return result
 
@@ -207,7 +207,6 @@ class TContribuyenteDao(BaseDao):
         val = base - mod if mod != 0 else 0
         return val == d_ver
 
-
     def crear(self, form, user_crea):
         """
         Crea un nuevo contribuyente
@@ -221,7 +220,7 @@ class TContribuyenteDao(BaseDao):
         if not cnt_ruc.isdigit():
             raise ErrorValidacionExc("El ruc ingresado es incorrecto")
 
-        #Logica para validacion de ruc
+        # Logica para validacion de ruc
         resvalid = TContribuyenteDao.verificar(cnt_ruc)
         if not resvalid:
             raise ErrorValidacionExc(u"El número de ruc ingresado es incorrecto")
@@ -231,12 +230,37 @@ class TContribuyenteDao(BaseDao):
 
         if not cadenas.es_nonulo_novacio(form['cnt_razonsocial']):
             raise ErrorValidacionExc(u"Ingrese la razón social")
+        elif len(form['cnt_razonsocial'].strip()) > 100:
+            raise ErrorValidacionExc(
+                u"El nombre de la razon social es muy extenso, la longitud máxima es de 100 caracteres")
 
         if not cadenas.es_nonulo_novacio(form['cnt_dirmatriz']):
             raise ErrorValidacionExc(u"Ingrese la dirección matriz")
 
         # if not cadenas.es_nonulo_novacio(form['cnt_nombrecomercial']):
         #     raise ErrorValidacionExc("Ingrese el nombre comercial")
+
+        if len(form['cnt_nombrecomercial'].strip()) > 80:
+            raise ErrorValidacionExc(u"El nombre comercial es muy extenso, la longitud máxima es de 80 caracteres")
+
+        if len(form['cnt_dirmatriz'].strip()) > 100:
+            raise ErrorValidacionExc(u"La dirección matriz es muy extenso, la longitud máxima es de 100 caracteres")
+
+        if len(form['cnt_direstab'].strip()) > 100:
+            raise ErrorValidacionExc(u"La dirección del establecimiento es muy extenso, la longitud máxima es de 100 caracteres")
+
+        #Validador de correo
+        if len(form['cnt_email'].strip())>0:
+            if not cadenas.es_correo_valido(form['cnt_email'].strip()):
+                raise ErrorValidacionExc(u"La dirección de correo ingresada es incorrecta, favor verificar")
+            elif len(form['cnt_email'].strip())>40:
+                raise ErrorValidacionExc(u"La dirección de correo electrónica es muy extensa, la longitud maxima es de 40 caracteres")
+
+
+        if len(form['cnt_telf'].strip())>40:
+            raise ErrorValidacionExc(
+                u"El número de teléfono es muy extensa, la longitud maxima es de 40 caracteres")
+
 
         tcontribuyente = TContribuyente()
         tcontribuyente.cnt_ruc = cnt_ruc
@@ -286,10 +310,46 @@ class TContribuyenteDao(BaseDao):
             if not cadenas.es_nonulo_novacio(form['cnt_dirmatriz']):
                 raise ErrorValidacionExc("Ingrese la dirección matriz")
 
+            if not cadenas.es_nonulo_novacio(form['cnt_razonsocial']):
+                raise ErrorValidacionExc(u"Ingrese la razón social")
+            elif len(form['cnt_razonsocial'].strip()) > 100:
+                raise ErrorValidacionExc(
+                    u"El nombre de la razon social es muy extenso, la longitud máxima es de 100 caracteres")
+
+            if not cadenas.es_nonulo_novacio(form['cnt_dirmatriz']):
+                raise ErrorValidacionExc(u"Ingrese la dirección matriz")
+
             # if not cadenas.es_nonulo_novacio(form['cnt_nombrecomercial']):
             #     raise ErrorValidacionExc("Ingrese el nombre comercial")
 
-            #Clonamos el objeto para auditoria
+            if len(form['cnt_nombrecomercial'].strip()) > 80:
+                raise ErrorValidacionExc(u"El nombre comercial es muy extenso, la longitud máxima es de 80 caracteres")
+
+            if len(form['cnt_dirmatriz'].strip()) > 100:
+                raise ErrorValidacionExc(u"La dirección matriz es muy extenso, la longitud máxima es de 100 caracteres")
+
+            if form.get('cnt_direstab') is None:
+                raise ErrorValidacionExc(u"La dirección del establecimiento es requerido")
+            elif len(form['cnt_direstab'].strip()) > 100:
+                raise ErrorValidacionExc(
+                    u"La dirección del establecimiento es muy extenso, la longitud máxima es de 100 caracteres")
+
+            # Validador de correo
+            if len(form['cnt_email'].strip()) > 0:
+                if not cadenas.es_correo_valido(form['cnt_email'].strip()):
+                    raise ErrorValidacionExc(u"La dirección de correo ingresada es incorrecta, favor verificar")
+                elif len(form['cnt_email'].strip()) > 40:
+                    raise ErrorValidacionExc(
+                        u"La dirección de correo electrónica es muy extensa, la longitud maxima es de 40 caracteres")
+
+            if len(form['cnt_telf'].strip()) > 40:
+                raise ErrorValidacionExc(
+                    u"El número de teléfono es muy extensa, la longitud maxima es de 40 caracteres")
+
+            # if not cadenas.es_nonulo_novacio(form['cnt_nombrecomercial']):
+            #     raise ErrorValidacionExc("Ingrese el nombre comercial")
+
+            # Clonamos el objeto para auditoria
             tcontribuyente_cloned = copy.copy(tcontribuyente)
 
             tcontribuyente.cnt_ruc = cnt_ruc
@@ -311,6 +371,7 @@ class TContribuyenteDao(BaseDao):
                 col = row['col']
                 valorant = row['valorant']
                 valordesp = row['valordesp']
-                tauditdao.crea_accion_update(enums.TBL_CONTRIBUYENTE, col, user_edit, valorant, valordesp, tcontribuyente.cnt_id)
+                tauditdao.crea_accion_update(enums.TBL_CONTRIBUYENTE, col, user_edit, valorant, valordesp,
+                                             tcontribuyente.cnt_id)
 
         return cnt_id

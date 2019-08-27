@@ -57,7 +57,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" ng-model="formContrib.cnt_razonsocial"
-                                               ng-focus="onFocusContribRazonSocial()"
+                                               ng-focus="onFocusContribRazonSocial()" maxlength="100"
                                                capitalize
                                                ng-required="true" id="cnt_razonsocial"
                                                ng-enter="setInputFocus('cnt_nombrecomercial')">
@@ -70,7 +70,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" id="cnt_nombrecomercial"
-                                               ng-model="formContrib.cnt_nombrecomercial"
+                                               ng-model="formContrib.cnt_nombrecomercial" maxlength="80"
                                                capitalize
                                                ng-required="true" ng-enter="setInputFocus('cnt_telf')">
                                     </div>
@@ -82,7 +82,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" id="cnt_telf"
-                                               ng-model="formContrib.cnt_telf"
+                                               ng-model="formContrib.cnt_telf" maxlength="39"
                                                ng-enter="setInputFocus('cnt_email')">
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" id="cnt_email"
-                                               ng-model="formContrib.cnt_email"
+                                               ng-model="formContrib.cnt_email" maxlength="39"
                                                ng-enter="setInputFocus('cnt_dirmatriz')">
                                     </div>
                                 </div>
@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" ng-model="formContrib.cnt_dirmatriz"
-                                               id="cnt_dirmatriz"
+                                               id="cnt_dirmatriz" maxlength="100"
                                                capitalize
                                                ng-required="true">
                                     </div>
@@ -117,7 +117,7 @@
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" ng-model="formContrib.cnt_direstab"
                                                id="cnt_direstab"
-                                               capitalize
+                                               capitalize maxlength="100"
                                                ng-required="true">
                                     </div>
                                 </div>
