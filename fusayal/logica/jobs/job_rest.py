@@ -15,7 +15,7 @@ from fusayal.utils.pyramidutil import DbComunView
 log = logging.getLogger(__name__)
 
 
-@resource(path="/rest/job/{job_id}", collection_path="/rest/job")
+@resource(path="/rest/job/{job_id}", collection_path="/rest/job", cors_origins=('*',))
 class TJobRest(DbComunView):
 
     def collection_get(self):

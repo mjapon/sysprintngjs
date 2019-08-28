@@ -6,7 +6,7 @@ Fecha de creacion 28/7/18
 from fusayal.logica.dao.base import BaseDao
 
 
-class TSociosDao(BaseDao):
+class TSociosAuxDao(BaseDao):
 
     def listar(self):
 
