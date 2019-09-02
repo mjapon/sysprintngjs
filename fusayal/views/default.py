@@ -26,6 +26,11 @@ def init_view(request):
     return {}
 
 
+@view_config(route_name='initFusay', renderer='../templates/fusaybs.jinja2')
+def init_fusay_view(request):
+    return {}
+
+
 @view_config(route_name='logoutApp', renderer='../templates/initApp.jinja2')
 def logout_view(request):
     headers = forget(request)

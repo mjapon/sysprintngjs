@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="es" ng-app="isyplus">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Fundación Salud y Vida Nueva, Centro de Curación">
+    <meta name="author" content="fusay.org">
+    <meta name="keywords" content="fusay, saraguro,fundacion, fundacion salud y vida, kambo, medicina, ancestral">
+    <meta name="og:title" property="og:title" content="Fundación Salud y Vida Nueva, Centro de Curación">
+    <meta name="robots" content="index, follow">
+
+    <link rel="icon" href="static/fusay/img/favicon.png">
+    <title>Fudanción Salud y Vida Nueva</title>
+    <link rel="stylesheet" href="static/dist/css/vendor.min.css?v0.1.2"/>
+    <!--
+    <link rel="stylesheet" href="static/dist/css/app.min.css?v0.24"/>
+    -->
+    <link rel="stylesheet" href="static/css/app.css?v0.24"/>
+
+    <link rel="stylesheet" href="static/bower_components/font-awesome/css/all.css?v=5.9.0"/>
+</head>
+
+<body onload="if(history.length>0)history.go(+1)" ng-cloak>
+
+<div id="ajax_anim" class='ajax_anim_modal text-center'>
+    <br/>
+    <img src='static/img/loading13.gif' alt=''/>
+    <br/>
+    <span class='text-info' id="divajax_anim_msg">
+            Espere...
+    </span>
+</div>
+
+<div id="load">
+    <img src="static/fusay/img/2.jpeg" alt="Fundación Salud y Vida Nueva; Centro de Curación"
+         title="Fundación Salud y Vida Nueva; Centro de Curación" width="421.5" height="128.5">
+</div>
+
+<div class="listo">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+            <a class="navbar-brand" href="{{ request.route_url('initFusay') }}">
+                <img src="static/fusay/img/logoFusay.png" class="d-inline-block align-top"
+                     alt="Fundación Salud y Vida Nueva">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-capitalize colorfusay" href="#sec_quiensomos">¿Quienes somos?</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-capitalize colorfusay" href="#sec_servicios">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-capitalize colorfusay" href="#sec_ubicacion">Ubicación</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-capitalize colorfusay" href="#">Eventos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-capitalize colorfusay" href="#modalContacto" data-toggle="modal"
+                           data-target="#modalContacto">Cantacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="lineaverde">
+            a
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+                <li data-target="#myCarousel" data-slide-to="3"></li>
+                <li data-target="#myCarousel" data-slide-to="4"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+
+                <div class="carousel-item active">
+                    <img src="static/fusay/img/banners/2_m.jpg" class="d-block img-fluid w-100" alt="...">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="static/fusay/img/banners/3_m.jpg" class="d-block img-fluid w-100" alt="...">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="static/fusay/img/banners/4_m.jpg" class="d-block img-fluid w-100" alt="...">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="static/fusay/img/banners/5_m.jpg" class="d-block img-fluid w-100" alt="...">
+                </div>
+
+                <div class="carousel-item">
+                    <img src="static/fusay/img/banners/1_m.jpg" class="d-block img-fluid w-100" alt="...">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Anterior</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Siguiente</span>
+            </a>
+        </div>
+
+
+        <section class="pb-0 overflow-hidden " data-background="static/fusay/img/fondovideo.png"
+                 style="background-image: url(&quot;static/fusay/img/fondovideo.png&quot;); padding-bottom: 40px !important;"
+                 id="sec_quiensomos">
+            <div class="container">
+                <div class="col-lg-12 text-center">
+                    <p class="subtitle textofusay" data-aos="fade-up">¿Quiénes Somos?</p>
+                    <hr>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-5 text-center text-md-left mb-4 mb-md-0">
+                        <img src="static/fusay/img/quienessomos.jpg" class="img-fluid" alt="Fusay"
+                             data-aos="fade-right">
+                    </div>
+                    <div class="col-lg-6 col-md-7 text-center text-md-left">
+                        <p class="mb-4 text-justify textofusay" data-aos="fade-left" data-aos-delay="300">
+                            Somos una entidad de derecho privado, constituida el 22 de Septiembre del 2004,
+                            mediante Acuerdo Ministerial No 1447, con el objetivo de impulsar, estimular e
+                            inter-relacionar
+                            el desarollo de la salud preventiva con la atención integrada de salud, mediante acciones de
+                            intervención como:
+                            promoción, prevención, recuperación y rehabilitación con medicinas naturales, ancestrales y
+                            convencionales,
+                            para el desarrollo de los pueblos indígenas y campesinos.
+                        </p>
+                    </div>
+                </div>
+                <br>
+                <div class="card-deck">
+                    <div class="card fondotituloB">
+                        <div class="card-body">
+                            <h5 class="card-title font-italic font-weight-bold ">MISIÓN</h5>
+                            <p class="card-text font-italic textofusay">
+                                Propiciar una convivencia intercultural en la dinámica de las relaciones que desarrolla
+                                la Fundación Salud y Vida Nueva hacia la construcción del buen vivir
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card fondotituloA">
+                        <div class="card-body textofusay">
+                            <h5 class="card-title font-italic font-weight-bold">VISIÓN</h5>
+                            <p class="card-text font-italic textofusay">
+                                Canalizar proyectos interdisciplinario para fomentar el desarrollo integral,
+                                intercultural
+                                para el pueblo Saraguro
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section pb-0" id="sec_servicios">
+
+        <!-- <div class="container"> -->
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p class="subtitle textofusay" data-aos="fade-up">Servicios</p>
+                    <hr>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4 aos-init aos-animate" data-aos="fade-up">
+                    <div class="text-center position-relative px-4 py-5 rounded-lg shadow">
+                        <img src="static/fusay/img/servicios/medancestral_prod.jpg" class="img-fluid rounded"
+                             alt="feature-image">
+                        <h5 class="pt-5 pb-3 text-capitalize card-title font-italic">Medicina Ancestral</h5>
+                        <p class="mb-4 textofusay">Rituales de sanación con medicina ancestral.</p>
+                        <a class="btn btn-outline-primary" href="#">Leer mas</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-center position-relative px-4 py-5 rounded-lg shadow">
+                        <img src="static/fusay/img/servicios/medtrad_prod.jpeg" class="img-fluid rounded"
+                             alt="feature-image">
+                        <h5 class="pt-5 pb-3 text-capitalize card-title font-italic">Medicina Tradicional</h5>
+                        <p class="mb-4 textofusay">Atención en medicina convencional</p>
+                        <a class="btn btn-outline-primary" href="#">Leer mas</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-center position-relative px-4 py-5 rounded-lg shadow">
+                        <img src="static/fusay/img/servicios/kambo_prod.jpeg" class="img-fluid rounded"
+                             alt="feature-image">
+                        <h5 class="pt-5 pb-3 text-capitalize card-title font-italic">Kambo</h5>
+                        <p class="mb-4 textofusay">Terapias de curación usando la medicina del Kambó</p>
+                        <a class="btn btn-outline-primary" href="#">Leer mas</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-center position-relative px-4 py-5 rounded-lg shadow">
+                        <img src="static/fusay/img/servicios/terapiasal_prod.jpeg" class="img-fluid rounded"
+                             alt="feature-image">
+                        <h5 class="pt-5 pb-3 text-capitalize card-title font-italic">Terapias alternativas</h5>
+                        <p class="mb-4 textofusay">Acupuntura, Sintergetica, Masaje Tuina, Terapia Ortomolecular</p>
+                        <a class="btn btn-outline-primary" href="#">Leer mas</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-center position-relative px-4 py-5 rounded-lg shadow">
+                        <img src="static/fusay/img/servicios/temascal_prod.jpg" class="img-fluid rounded"
+                             alt="feature-image">
+                        <h5 class="pt-5 pb-3 text-capitalize card-title font-italic">Temascal</h5>
+                        <p class="mb-4 textofusay">Adentrate al vientre de la madre tierra en nuestros temascales</p>
+                        <a class="btn btn-outline-primary" href="#">Leer mas</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4 aos-init aos-animate" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-center position-relative px-4 py-5 rounded-lg shadow">
+                        <img src="static/fusay/img/servicios/rumi1_prod.jpg" class="img-fluid rounded"
+                             alt="feature-image">
+                        <h5 class="pt-5 pb-3 text-capitalize card-title font-italic">Rumihawa</h5>
+                        <p class="mb-4 textofusay">Disfruta de platos típicos de la localidad en el Rumihawa
+                            <span class="text-white">ddddd</span>
+                        </p>
+                        <a class="btn btn-outline-primary" href="#">Leer mas</a>
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->
+    </section>
+
+
+        <section class="section pb-0 bg-cover" data-background="static/fusay/img/fondovideo.png"
+             style="background-image: url(&quot;static/fusay/img/fondovideo.png&quot;);" id="sec_video">
+            <!--
+        <div class="container">
+        -->
+
+            <div class="col-lg-12 text-center">
+                <p class="subtitle textofusay" data-aos="fade-up">Documental Ranti Ranti</p>
+                <hr>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-md-7 pr-lg-5 mb-md-0 mb-5">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/D0o_TA2aEjE?start=611"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="col-md-5 px-4">
+                    <p class="mb-4 aos-init aos-animate textofusay text-justify" data-aos="fade-up"
+                       data-aos-delay="400">Les invitamos a observar
+                        el documental que el programa de televisión ecuatoriano Ranti Ranti realizó sobre la identidad
+                        del pueblo saraguro, y en el que se menciona el trabajo que nuestra Fundación lleva a cabo a
+                        favor del pueblo saraguro</p>
+                </div>
+            </div>
+            <!--
+        </div>
+        -->
+    </section>
+
+
+        <section class="section pb-0">
+            <!--
+        <div class="container">-->
+
+            <div class="col-lg-12 text-center">
+                <p class="subtitle textofusay" data-aos="fade-up">Nuestra Directiva (periodo 2017-2021)</p>
+                <hr>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="text-center position-relative px-4 py-5 rounded-lg shadow">
+                        <img src="static/fusay/img/personas/presid.jpg" width="120px" height="150px"
+                             class="rounded-circle"/>
+                        <p class="mb-4 textofusay">Msc. Angel Rodrigo Japón Gualán</p>
+                        <h5 class="pt-5 pb-3 text-capitalize card-title font-italic">Presidente</h5>
+                        <a class="btn btn-outline-primary" href="#">Ver</a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center position-relative px-4 py-5 rounded-lg shadow">
+                        <img src="static/fusay/img/personas/mamadelfina.jpg" width="120px" height="150px" alt="..."
+                             class="rounded-circle">
+                        <p class="mb-4 textofusay">Prof. María Delfina Gualán Lozano</p>
+                        <h5 class="pt-5 pb-3 text-capitalize card-title font-italic">Tesorera</h5>
+                        <a class="btn btn-outline-primary" href="#">Ver</a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center position-relative px-4 py-5 rounded-lg shadow">
+                        <img src="static/fusay/img/personas/manuel.jpeg" width="120px" height="150px" alt="..."
+                             class="rounded-circle">
+                        <p class="mb-4 textofusay">Ing. Manuel Efraín Japón Gualán</p>
+                        <h5 class="pt-5 pb-3 text-capitalize card-title font-italic">Secretario</h5>
+                        <a class="btn btn-outline-primary" href="#">Ver</a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center position-relative px-4 py-5 rounded-lg shadow">
+                        <img src="static/fusay/img/personas/polibio.jpeg" width="120px" height="150px" alt="..."
+                             class="rounded-circle">
+                        <p class="mb-4 textofusay">Msc. Angel Polibio Japón Gualán</p>
+                        <h5 class="pt-5 pb-3 text-capitalize card-title font-italic">Fiscalizador</h5>
+                        <a class="btn btn-outline-primary" href="#">Ver</a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="text-center position-relative px-4 py-5 rounded-lg shadow">
+                        <img src="static/fusay/img/personas/lauro.jpeg" width="120px" height="150px" alt="..."
+                             class="rounded-circle">
+                        <p class="mb-4 textofusay">Sr. Lauro Quishpe</p>
+                        <h5 class="pt-5 pb-3 text-capitalize card-title font-italic">Primer Vocal</h5>
+                        <a class="btn btn-outline-primary" href="#">Ver</a>
+                    </div>
+                </div>
+            </div>
+            <!--
+        </div>
+        -->
+    </section>
+
+
+
+        <section class="section" id="sec_ubicacion">
+            <!--
+        <div class="container">
+        -->
+            <div class="col-lg-12 text-center">
+                <p class="subtitle textofusay" data-aos="fade-up">Ubicación - Saraguro</p>
+                <hr>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <p class="textofusay text-center">
+                        Nos encontramos ubicados al sur del Ecuador, provincia de Loja, Canton Saraguro, a 200 Mts Via
+                        al Barrio Ilincho.
+                        <br>
+                        <b>Horarios de atención:</b>
+                        <br>
+                        Lunes - Viernes: 8h00 - 17h00
+                        <br>
+                        Fines de Semana: 8h00 - 15h00
+                        <br><b><i>Previa Cita</i></b>, para mayor informacion llamar al Teléfono: 0990244830
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4735.232098921098!2d-79.24060078538129!3d-3.624077207167521!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91cca8e405fb7601%3A0xc2fc54d52983cc3d!2sSaraguro!5e0!3m2!1ses-419!2sec!4v1566578200579!5m2!1ses-419!2sec"
+                                width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            <!--
+        </div>
+        -->
+        <br>
+        <br>
+        <br>
+            <!--
+        <div class="container">
+        -->
+            <div class="col-lg-12 text-center">
+                <p class="subtitle textofusay" data-aos="fade-up">Ubicación - Cuenca</p>
+                <hr>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <p class="textofusay text-center">
+                        También atendemos en la ciudad de Cuenca, Sector Baguanchi, junto al centro de convenciones
+                        <br>
+                        <b>Horarios de atención:</b>
+                        Lunes - Viernes: 8h00 - 17h00
+                        <br>
+                        Fines de Semana: 8h00 - 15h00
+                        <br>
+                        <b><i>Previa Cita</i></b>, para mayor informacion llamar al Teléfono: 0998975316
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2548.153132186626!2d-78.95164674435235!3d-2.917780313237281!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91cd199f257023b1%3A0xe2fc4b1027ea2176!2sCasa%20del%20Wiki%20Saraguro!5e0!3m2!1ses-419!2sec!4v1566742444343!5m2!1ses-419!2sec"
+                                width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                    </div>
+                </div>
+            </div>
+            <!--
+        </div>
+        -->
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </section>
+
+        <section class="subscription">
+        <div class="container">
+            <div class="subscription-wrapper">
+
+                <div class="d-flex position-relative mx-5 justify-content-between align-items-center flex-column flex-md-row text-center text-md-left">
+                    <h3 class="text-white flex-fill">Suscríbite <br> a nuestro grupo de whatsap</h3>
+
+
+                    <img src="static/fusay/img/whatsapp48.png" height="48" width="48"/>
+                    <span class="text-white h4">FUND. SALUD Y VIDA NUEVA</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+        <footer class="bg-secondary pt-5">
+        <section class="section border-bottom border-color">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-md-5 mb-4 mb-md-0">
+                        <img src="static/fusay/img/logoFusay_.png" class="mb-4"
+                             alt="Fundación Salud y Vida Nueva, Centro de curación">
+                        <p class="text-light mb-4">
+                            Desde Saraguro-Ecuador para el mundo.
+                            <br>
+                            Desea mas información. <br>
+                            Visítenos en nuestrar redes sociales.</p>
+                        <ul class="list-inline social-icons">
+                            <li class="list-inline-item"><a href="https://www.facebook.com/FundacionSaludYVidaNueva"
+                                                            target="_blank"><i
+                                    class="fa fa-facebook"></i></a></li>
+                            <li class="list-inline-item"><a href="https://twitter.com/FundacinSaludy1"
+                                                            target="_blank"><i
+                                    class="fa fa-twitter"></i></a></li>
+                            <li class="list-inline-item"><a
+                                    href="https://www.youtube.com/channel/UC38iDzpDv-jl0-TlT-LpjxQ"
+                                    target="_blank"><i class="fa fa-youtube"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <h4 class="text-white mb-4">Servicios</h4>
+                        <ul class="list-styled list-hover-underline">
+                            <li class="mb-3 text-light"><a href="about.html" class="text-light">Ceremonias</a></li>
+                            <li class="mb-3 text-light"><a href="about.html" class="text-light">Kambo</a></li>
+                            <li class="mb-3 text-light"><a href="contact.html" class="text-light">Artesanias</a></li>
+                            <li class="mb-3 text-light"><a href="services.html" class="text-light">Danzas</a></li>
+                            <li class="mb-3 text-light"><a href="#" class="text-light">Farmacia Medicina Natural</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <h4 class="text-white mb-4">Información de Contacto</h4>
+                        <p class="text-light">Saraguro - Loja - Ecuador, 200 Mts vía al Barrio Ilincho</p>
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><a class="text-light" href="tel:+07-3030-181">Telf: 07-3030-181</a></li>
+                            <li class="mb-3"><a class="text-light" href="tel:+07-3030-181">Celular: 0990244830 Saraguro</a></li>
+                            <li class="mb-3"><a class="text-light" href="tel:+07-3030-181">Celular: 0998975316 Cuenca</a></li>
+                            <li class="mb-3"><a class="text-light"
+                                                href="mailto:fusayvinue@hotmail.com">fusayvinue@hotmail.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
+                        <p class="mb-0 text-light">Copyright ©
+                            <script>
+                                var currentYear = new Date().getFullYear();
+                                document.write(currentYear);
+                            </script>
+                            <a href="http://fusay.org">fusay.org</a></p>
+                    </div>
+                    <div class="col-md-6 text-md-right text-center">
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a href="#" class="text-light">Terminos de Servicio</a></li>
+                            <li class="list-inline-item">| &nbsp;<a href="#" class="text-light">Política de
+                                privacidad</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </footer>
+
+
+
+    </div>
+
+
+</div>
+
+
+<main role="main" class="container-fluid">
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+
+<script src="static/dist/js/vendor.min.js?v=0.13"></script>
+<!--
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+-->
+<script src="static/js/utils.js?v=0.1"></script>
+
+</head>
+
+<script type="text/javascript" charset="utf-8">
+    var globalgsvapp = '{{vapp}}';
+    var globalEmpEsquema = '{{emp_esquema}}';
+    var globalUserLogged = '{{user_logged}}';
+    var globalUserLoggedName = '{{user_loggedname}}';
+
+    $(window).on('load', function () {
+        $("#load").fadeOut("slow");
+        $(".listo").animate({opacity: 1}, 1500);
+    });
+    $().ready(function () {
+        console.log("se ejecuta load");
+    });
+
+    $(function () {
+        setupJQuery();
+        {% if request.session.peek_flash()|length>0 %}
+            {% set msg = request.session.pop_flash()[0].split(':') %}
+            {% set msg_sty = msg[0] %}
+            {% set msg_desc = msg[1] %}
+            var flashMsg = '{{msg_desc}}';
+            var flashMsgType = '{{msg_sty}}';
+            if ('danger' === flashMsgType) {
+                toastr.error(flashMsg);
+            }
+            else if ('success' === flashMsgType) {
+                toastr.success(flashMsg);
+            } else {
+                toastr.info(flashMsg);
+            }
+        {% endif %}
+    });
+</script>
+<!--
+ <script src="static/dist/js/app.js?v={{ vapp }}"></script>
+ -->
+<!-- <script src="//localhost:1337/livereload.js"></script> -->
+<script src="static/dist/js/app.min.js?v=1.142"></script>
+</body>
+</html>

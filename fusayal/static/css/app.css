@@ -41,3 +41,38 @@
 .tablelayout{
     table-layout: auto !important;
 }
+
+
+/**Estilos agregados para la pagina de la fundacion **/
+
+
+.textofusay{
+  font-family: Roboto,sans-serif;
+  color: #092303 !important;
+  font-size: 18px;
+}
+
+.colorfusay {
+  color: #007348 !important;
+}
+
+.lineaverde{
+    color: #ffffff;
+    width: 100%;
+    font-size: 2px;
+    background: linear-gradient(80deg, #007348 0%, #9BCB8B 100%)
+}
+
+.fondotituloA{
+
+/*  background-image: linear-gradient(to right, #ffffff, #ebf3ff, #c8ecfd, #a2e6eb, #8dddc9, #8dddc9, #8dddc9, #8dddc9, #a2e6eb, #c8ecfd, #ebf3ff, #ffffff);*/
+
+    background: linear-gradient(90deg, #ffffff 0%, #9BCB8B 100%);
+}
+
+.fondotituloB{
+
+  /*  background-image: linear-gradient(to right, #ffffff, #ebf3ff, #c8ecfd, #a2e6eb, #8dddc9, #8dddc9, #8dddc9, #8dddc9, #a2e6eb, #c8ecfd, #ebf3ff, #ffffff);*/
+
+  background: linear-gradient(90deg, #9BCB8B 0%,  #ffffff 100%);
+}
