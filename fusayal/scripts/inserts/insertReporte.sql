@@ -1,0 +1,5 @@
+INSERT INTO public.tplantilla (temp_id, temp_name, temp_jrxml, temp_tipo, temp_desc, temp_params) VALUES (9, 'COMPROBANTE RETENCION A5', '/opt/sysprintngjs/fusayal/scripts/reportes/ComprobanteRetencionA5.jrxml', 1, null, null);
+INSERT INTO public.tplantilla (temp_id, temp_name, temp_jrxml, temp_tipo, temp_desc, temp_params) VALUES (10, 'FACTURA A5', '/opt/sysprintngjs/fusayal/scripts/reportes/facturaA5.jrxml', 1, null, null);
+INSERT INTO public.tplantilla (temp_id, temp_name, temp_jrxml, temp_tipo, temp_desc, temp_params) VALUES (11, 'GUIA REMISION A4', '/opt/sysprintngjs/fusayal/scripts/reportes/guiaRemisionA4.jrxml', 1, null, null);
+INSERT INTO public.tplantilla (temp_id, temp_name, temp_jrxml, temp_tipo, temp_desc, temp_params) VALUES (12, 'LIQUIDACIÓN COMPRAS A5', '/opt/sysprintngjs/fusayal/scripts/reportes/liquidacionComprasA5.jrxml', 1, null, null);
+INSERT INTO public.tplantilla (temp_id, temp_name, temp_jrxml, temp_tipo, temp_desc, temp_params) VALUES (13, 'NOTA CREDITO A5', '/opt/sysprintngjs/fusayal/scripts/reportes/notaCreditoA5.jrxml', 1, null, null);

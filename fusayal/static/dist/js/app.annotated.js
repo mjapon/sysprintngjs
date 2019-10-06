@@ -6581,8 +6581,8 @@ var IsyplusApp = angular.
         }
 
         function getIpServer() {
-            return "157.230.129.131";
-            // return "localhost";
+            //return "157.230.129.131";
+            return "localhost";
         }
 
     }
