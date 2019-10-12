@@ -41,6 +41,10 @@ class TContribuyenteDao(BaseDao):
         return self.all(sql, tupla_desc)
 
     def find_by_ruc(self, ruc):
+
+        if not ruc.isdigit():
+            raise ErrorValidacionExc("El ruc ingresado es incorrecto")
+
         sql = """
                             select cnt_id,
                                    cnt_ruc,
@@ -49,6 +53,7 @@ class TContribuyenteDao(BaseDao):
                                    cnt_telf,
                                    cnt_email,
                                    cnt_dirmatriz,
+                                   cnt_direstab,
                                    cnt_clase,
                                    cls.cls_nombre,
                                    cnt_nrocntespecial,
@@ -66,6 +71,7 @@ class TContribuyenteDao(BaseDao):
                       'cnt_telf',
                       'cnt_email',
                       'cnt_dirmatriz',
+                      'cnt_direstab',
                       'cnt_clase',
                       'cls_nombre',
                       'cnt_nrocntespecial',

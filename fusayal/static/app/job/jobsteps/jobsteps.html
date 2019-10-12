@@ -44,7 +44,8 @@
                                                    ng-disabled="formContrib.cnt_id>0">
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button"
-                                                        id="button-addon2" ng-click="findContrib()">Buscar
+                                                        id="button-addon2" ng-click="findContrib()">
+                                                    {{formContrib.cnt_id>0?'Limpiar':'Buscar'}}
                                                 </button>
                                             </div>
                                         </div>
@@ -161,6 +162,10 @@
                                 <br/>
                                 <div class="row">
                                     <div class="col-md-12">
+                                        <button class="btn btn-outline-secondary" type="button"
+                                                ng-click="init()">Cancelar
+                                            <span class="fa fa-times"></span>
+                                        </button>
                                         <button class="btn btn-outline-primary" type="button"
                                                 ng-click="guardarContrib()">Siguiente
                                             <span class="fa fa-angle-right"></span>

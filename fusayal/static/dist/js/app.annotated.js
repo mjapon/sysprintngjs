@@ -1209,6 +1209,7 @@ var IsyplusApp = angular.
         vm.contribFinded = false;//Indica si se busco el contribuyente
         vm.numautFinded = false;
 
+        vm.init = init;
         vm.onEnterFindContrib = onEnterFindContrib;
         vm.onFocusContribRazonSocial = onFocusContribRazonSocial;
         vm.findContrib = findContrib;
@@ -1305,7 +1306,9 @@ var IsyplusApp = angular.
 
         function findContrib() {
             vm.contribFinded = true;
-            if (vm.formContrib.cnt_ruc.length > 10) {
+            if (vm.formContrib.cnt_id > 0) {
+                initFormContrib();
+            } else if (vm.formContrib.cnt_ruc.length > 10) {
                 var res = ContribuyenteServ.findByRuc({ruc: vm.formContrib.cnt_ruc}, function () {
                     if (res.estado === 200) {
                         NotifServ.info('El contribuyente ya esta registrado');
