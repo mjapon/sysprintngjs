@@ -4,6 +4,8 @@ Created on '02/12/2014'
 @author: 'Manuel'
 """
 import logging
+
+from fusayal.logica.excepciones.validacion import UnauthorizedExc
 from pyramid.exceptions import Forbidden
 from pyramid.httpexceptions import HTTPFound
 import simplejson
@@ -144,11 +146,66 @@ class DbComunView(PyramidView):
         print 'DBCOMUNVIEW se setea en {0}'.format(emp_esquema)
         self.request.dbsession.execute("SET search_path TO {0}".format(emp_esquema))
 
-
     def get_userid(self):
         if 'us_id' in self.request.session:
             return self.request.session['us_id']
         return None
+
+
+class TokenView(PyramidView):
+    """
+    Clase para implementar autenticacion basada en token, en la cabecera de la peticion debe venir
+    el codigo de la empresa, el esquema de la empresa y el token de autenticacion
+    """
+
+    def conf_dbsession(self):
+        if 'emp_codigo' not in self.request.headers \
+                or 'emp_esquema' not in self.request.headers \
+                or 'auth_token' not in self.request.headers:
+            raise UnauthorizedExc("No autenticado")
+
+        self.emp_codigo = self.request.headers['emp_codigo']
+        self.emp_esquema = self.request.headers['emp_esquema']
+        self.num_user = self.request.headers['num_user']
+        self.auth_token = self.request.headers['auth_token']
+
+        #TODO: Codigo para verificar si token ya ha expirado
+
+        #self.dbsession = get_dbsession_emp(self.emp_codigo, self.emp_esquema)
+
+    def get_num_user(self):
+        return self.num_user
+
+    def get_emp_codigo(self):
+        return self.emp_codigo
+
+    def get_emp_esquema(self):
+        return self.emp_esquema
+
+
+
+class FusayPublicView(PyramidView):
+    """
+    Clase que implementa consultas publicas, no requieren de autenticacion previa
+    """
+
+    def init(self):
+
+        """
+        if 'token' not in self.request.headers \
+                or 'emp_esquema' not in self.request.headers \
+                or 'auth_token' not in self.request.headers:
+            raise UnauthorizedExc("No autenticado")
+        """
+        self.emp_esquema = 'fusay'
+        if self.request.method == 'OPTIONS':
+            # Http OPTIONS parsed avoid this request
+            pass
+        else:
+            self.request.dbsession.execute("SET search_path TO {0}".format(self.emp_esquema))
+
+
+
 
 
 

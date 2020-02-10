@@ -11,7 +11,7 @@ with open(os.path.join(here, 'CHANGES.txt')) as f:
 requires = [
     'plaster_pastedeploy',
     #'pyramid >= 1.9a',
-    'pyramid==1.9',
+    'pyramid==1.7',
     'pyramid_debugtoolbar',
     'pyramid_jinja2',
     'pyramid_retry',
@@ -22,10 +22,13 @@ requires = [
     'waitress',
     'cornice',
     'psycopg2',
+    'psycopg2-binary',
     'simplejson',
     'cornice',
     'pyramid_beaker',
     'pyramid_mailer',
+    'python-jwt'
+    #'PyJWT'
     #'reportbro-lib'
 
 ]

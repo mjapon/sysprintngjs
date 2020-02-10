@@ -29,6 +29,9 @@ def es_nonulo_novacio(cadena):
 def strip(cadena):
     return cadena.strip() if cadena is not None else None
 
+def strip_upper(cadena):
+    return cadena.strip().upper() if cadena is not None else ''
+
 def replace_amp(cad):
     return unicode(cad).replace("&","&amp;")
 
