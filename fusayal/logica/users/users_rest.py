@@ -32,7 +32,7 @@ class UsuariosRest(DbComunView):
                 self.psession("userlogged", 1)
 
             return {'estado': 200, 'resultado': result, 'msg': mensaje}
-        else:
+        else :
             return {'estado': 200, 'msg': 'Ninguna accion se ha realizado'}
 
     def collection_get(self):

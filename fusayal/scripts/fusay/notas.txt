@@ -1,0 +1,28 @@
+cols = [
+    {label:'Código Barra', field:'ic_code'},
+    {label:'Nombre', field:'ic_nombre'},
+    {label:'Graba IVA', field:'grabaiva'},
+    {label:'Precio Compra (Sin Iva)', field:'dprod_preciocompra'},
+    {label:'Precio Compra (Con Iva)', field:'preciocompraiva'},
+    {label:'Precio Venta (Iva Incluido)', field:'dprod_precioventa'},
+    {label:'Existencias', field:'dprod_existencias'},
+    {label:'Existencias', field:'dprod_fechacaducidad'}
+]
+
+
+
+[
+    {"label":"Código Barra", "field":"ic_code"},
+    {"label":"Nombre", "field":"ic_nombre"},
+    {"label":"Graba IVA", "field":"grabaiva"},
+    {"label":"Precio Compra (Sin Iva)", "field":"dprod_preciocompra"},
+    {"label":"Precio Compra (Con Iva)", "field":"preciocompraiva"}
+    {"label":"Precio Venta (Iva Incluido)", "field":"dprod_precioventa"},
+    {"label":"Existencias", "field":"dprod_existencias"},
+    {"label":"Existencias", "field":"dprod_fechacaducidad"}
+]
+
+
+
+
+["ic_id", "ic_nombre", "ic_code", "ic_nota", "tipic_nombre", "dprod_grabaiva", "grabaiva", "dprod_preciocompra","dprod_existencias","dprod_fechacaducidad"]

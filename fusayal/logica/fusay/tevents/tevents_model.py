@@ -10,7 +10,6 @@ from fusayal.utils.jsonutil import JsonAlchemy
 
 log = logging.getLogger(__name__)
 
-
 from sqlalchemy import Column, Integer, String, TIMESTAMP, Text, Numeric, Date, Boolean, DATETIME
 
 
@@ -41,7 +40,7 @@ class TFusayEvent(Declarative, JsonAlchemy):
     ev_horafin = Column(Text)
     ev_nota = Column(Text)
     ev_publicidad = Column(Text)
-    ev_tipo = Column(Integer, nullable=False) #1:Cer, 2:Bañ, 3:Limp con med, 4:Limp ca, 5:Danza, 6: Temazcal
+    ev_tipo = Column(Integer, nullable=False)  # 1:Cer, 2:Bañ, 3:Limp con med, 4:Limp ca, 5:Danza, 6: Temazcal
     ev_precionormal = Column(Numeric(15, 4), default=0.0)
     ev_precioespecial = Column(Numeric(15, 4), default=0.0)
     ev_img = Column(Text)

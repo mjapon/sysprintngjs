@@ -70,7 +70,7 @@ class TEmpresaDao(BaseDao):
         if not cadenas.es_nonulo_novacio(form['emp_ruc']):
             raise ErrorValidacionExc(u"Debe ingresar el ruc")
 
-        #Validar que el ruc ingresado este correcto
+        # Validar que el ruc ingresado este correcto
         resvalid = TContribuyenteDao.verificar(form['emp_ruc'])
         if not resvalid:
             raise ErrorValidacionExc(u"El número de ruc ingresado es incorrecto")
@@ -81,7 +81,7 @@ class TEmpresaDao(BaseDao):
         if not cadenas.es_nonulo_novacio(form['emp_nroautorizacion']):
             raise ErrorValidacionExc(u"Debe ingresar el número de autorización")
 
-        #Validar que el numero de autorizacion sea distinto de cero
+        # Validar que el numero de autorizacion sea distinto de cero
         emp_nroautorizacion = form['emp_nroautorizacion']
         if not emp_nroautorizacion.isdigit():
             raise ErrorValidacionExc(u"El número de autorización es incorrecto debe ser solo números")
@@ -91,7 +91,7 @@ class TEmpresaDao(BaseDao):
         if not cadenas.es_nonulo_novacio(form['emp_fechaautorizacion']):
             raise ErrorValidacionExc(u"Debe ingresar la fecha de autorización")
         else:
-            #Validar que no sean fechas posteriores a la fecha actual
+            # Validar que no sean fechas posteriores a la fecha actual
             if not fechas.isvalid(form['emp_fechaautorizacion']):
                 raise ErrorValidacionExc(
                     "La fecha de autorización ingresada es incorrecta verifique que se encuentre en el formato dd/mm/aaaa")
@@ -100,7 +100,6 @@ class TEmpresaDao(BaseDao):
 
             if not fechas.es_fecha_a_mayor_fecha_b(form['emp_fechaautorizacion'], fecha_actual):
                 raise ErrorValidacionExc(u"La fecha de autorización no puede estar despues de la fecha de actual")
-
 
         tempresa = TEmpresa()
         tempresa.emp_ruc = form.get("emp_ruc")
@@ -113,3 +112,25 @@ class TEmpresaDao(BaseDao):
 
         tautditdao = TAuditDao(self.dbsession)
         tautditdao.crea_accion_insert(enums.TBL_EMPRESA, user_crea, tempresa.emp_id)
+
+    def buscar_por_codigo(self, emp_codigo):
+
+        sql = """select emp_id,          
+                emp_ruc,
+                emp_razonsocial,
+                emp_nombrecomercial,
+                emp_nroautorizacion,
+                emp_fechaautorizacion,
+                emp_esquema,          
+                emp_codigo,           
+                emp_menu from tempresa where emp_codigo = '{0}'""".format(emp_codigo)
+        tupla_desc = ('emp_id',
+                      'emp_ruc',
+                      'emp_razonsocial',
+                      'emp_nombrecomercial',
+                      'emp_nroautorizacion',
+                      'emp_fechaautorizacion',
+                      'emp_esquema',
+                      'emp_codigo',
+                      'emp_menu')
+        return self.first(sql, tupla_desc)

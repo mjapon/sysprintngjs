@@ -15,6 +15,7 @@ from sqlalchemy.orm.session import sessionmaker
 from zope.sqlalchemy.datamanager import ZopeTransactionExtension
 
 #from fusayal.models.conf import get_dbsession_comun
+from fusayal.logica.utils.generatokenutil import GeneraTokenUtil
 from fusayal.utils.jsonutil import SimpleJsonUtil
 
 log = logging.getLogger(__name__)
@@ -157,7 +158,42 @@ class TokenView(PyramidView):
     Clase para implementar autenticacion basada en token, en la cabecera de la peticion debe venir
     el codigo de la empresa, el esquema de la empresa y el token de autenticacion
     """
+    def init(self):
 
+        """
+        if 'token' not in self.request.headers \
+                or 'emp_esquema' not in self.request.headers \
+                or 'auth_token' not in self.request.headers:
+            raise UnauthorizedExc("No autenticado")
+        """
+        if self.request.method == 'OPTIONS':
+            # Http OPTIONS parsed avoid this request
+            pass
+        else:
+            self.conf_dbsession()
+
+    def change_dbschema(self, emp_esquema):
+        print 'DBCOMUNVIEW se setea en {0}'.format(emp_esquema)
+        self.request.dbsession.execute("SET search_path TO {0}".format(emp_esquema))
+
+    def conf_dbsession(self):
+        if 'auth_token' not in self.request.headers:
+            raise UnauthorizedExc("No autenticado")
+
+        auth_token = self.request.headers['auth_token']
+
+        # TODO: Codigo para verificar si token ya ha expirado
+
+        genera_token_util = GeneraTokenUtil()
+        datostoken =  genera_token_util.get_datos_fromtoken(auth_token)
+
+        self.emp_codigo = datostoken['emp_codigo']
+        self.emp_esquema = datostoken['emp_esquema']
+        self.user_id = datostoken['us_id']
+
+        self.change_dbschema(self.emp_esquema)
+
+    """
     def conf_dbsession(self):
         if 'emp_codigo' not in self.request.headers \
                 or 'emp_esquema' not in self.request.headers \
@@ -172,9 +208,10 @@ class TokenView(PyramidView):
         #TODO: Codigo para verificar si token ya ha expirado
 
         #self.dbsession = get_dbsession_emp(self.emp_codigo, self.emp_esquema)
+    """
 
-    def get_num_user(self):
-        return self.num_user
+    def get_user_id(self):
+        return self.user_id
 
     def get_emp_codigo(self):
         return self.emp_codigo
