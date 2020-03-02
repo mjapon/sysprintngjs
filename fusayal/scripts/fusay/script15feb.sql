@@ -226,3 +226,12 @@ alter table tempresa
 
 alter table tempresa
 	add emp_menu text;
+
+
+alter table tdatosproducto
+	add dprod_modcontab int;
+
+alter table fusay.tdatosproducto
+	add constraint tdatosproductoModcontablefk
+		foreign key (dprod_modcontab) references fusay.titemconfig;
+
