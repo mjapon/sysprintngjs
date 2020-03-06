@@ -14,10 +14,10 @@ class TBlogDao(BaseDao):
 
     def listar(self):
         sql = """select blg_id, blg_fecha, blg_autor, blg_titulo, 
-        blg_img, blg_fechacrea, blg_contenido from tblog order by blg_fechacrea desc"""
+        blg_img, blg_fechacrea from tblog order by blg_fechacrea desc"""
 
         tupla_desc = ('blg_id', 'blg_fecha', 'blg_autor', 'blg_titulo',
-        'blg_img', 'blg_fechacrea', 'blg_contenido')
+        'blg_img', 'blg_fechacrea')
 
         return self.all(sql, tupla_desc)
 
@@ -29,3 +29,5 @@ class TBlogDao(BaseDao):
                       'blg_img', 'blg_fechacrea', 'blg_contenido')
 
         return self.first(sql, tupla_desc)
+
+
