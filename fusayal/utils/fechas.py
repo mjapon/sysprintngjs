@@ -38,11 +38,11 @@ def getFechaLetras(fecha):
 def getDiaFechaLetras1(fecha):
     diasemana = get_str_dia_largo(get_dia_de_la_semana(fecha))
     dia = parse_fecha(fecha,' %d de  ')
-    mes = get_str_mes_corto(fecha.month-1)
+    mes = get_str_mes_largo(fecha.month-1)
     anio = parse_fecha(fecha,' del %Y ')
     return diasemana+dia+mes+anio
 
-def parse_fecha( fecha, formato ):
+def parse_fecha( fecha, formato=ctes.APP_FMT_FECHA ):
     '''Retorna una cadena dada la fecha y el formato especificado'''
     if fecha is not None:
         return fecha.strftime( formato )

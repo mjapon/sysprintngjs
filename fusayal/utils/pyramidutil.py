@@ -177,10 +177,10 @@ class TokenView(PyramidView):
         self.request.dbsession.execute("SET search_path TO {0}".format(emp_esquema))
 
     def conf_dbsession(self):
-        if 'auth_token' not in self.request.headers:
+        if 'x-authtoken' not in self.request.headers:
             raise UnauthorizedExc("No autenticado")
 
-        auth_token = self.request.headers['auth_token']
+        auth_token = self.request.headers['x-authtoken']
 
         # TODO: Codigo para verificar si token ya ha expirado
 
@@ -190,6 +190,9 @@ class TokenView(PyramidView):
         self.emp_codigo = datostoken['emp_codigo']
         self.emp_esquema = datostoken['emp_esquema']
         self.user_id = datostoken['us_id']
+        self.sec_id = datostoken['sec_id']
+
+        print "Seccion en el token es:"+ str(self.sec_id)
 
         self.change_dbschema(self.emp_esquema)
 
@@ -218,6 +221,9 @@ class TokenView(PyramidView):
 
     def get_emp_esquema(self):
         return self.emp_esquema
+
+    def get_sec_id(self):
+        return self.sec_id
 
 
 

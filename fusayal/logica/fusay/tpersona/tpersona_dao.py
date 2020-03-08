@@ -66,6 +66,9 @@ class TPersonaDao(BaseDao):
         sql = "{0} where per_ciruc = '{1}'".format(self.BASE_SQL, cadenas.strip(per_ciruc))
         return self.first(sql, tupla_desc=self.BASE_TUPLA_DESC)
 
+    def get_entity_byid(self, per_id):
+        return self.dbsession.query(TPersona).filter(TPersona.per_id == per_id).first()
+
     def buscar_porcodigo(self, per_id):
         sql = "{0} where per_id = {1}".format(self.BASE_SQL, per_id)
         return self.first(sql, self.BASE_TUPLA_DESC)
@@ -84,15 +87,54 @@ class TPersonaDao(BaseDao):
         cuenta = self.first_col(sql, 'cuenta')
         return cuenta > 0
 
-    def crear(self, form):
+    def actualizar(self, per_id, form):
+
+        tpersona = self.get_entity_byid(per_id)
+        if tpersona is not None:
+            if not cadenas.es_nonulo_novacio(form['per_ciruc']):
+                raise ErrorValidacionExc('Ingrese el número de cédula, ruc o pasaporte')
+
+            if not cadenas.es_nonulo_novacio(form['per_nombres']):
+                raise ErrorValidacionExc('Ingrese los nombres')
+
+            current_email = cadenas.strip(tpersona.per_email)
+            per_email = cadenas.strip(form['per_email'])
+            if current_email != per_email:
+                if self.existe_email(per_email=form['per_email']):
+                    raise ErrorValidacionExc(
+                        'Ya existe una persona registrada con la dirección de correo, ingrese otra: {0}'.format(
+                            form['per_email']))
+
+            per_ciruc = cadenas.strip(form['per_ciruc'])
+            current_per_ciruc = cadenas.strip(tpersona.per_ciruc)
+            if per_ciruc != current_per_ciruc:
+                if self.existe_ciruc(per_ciruc=form['per_ciruc']):
+                    raise ErrorValidacionExc(
+                        'El número de ci/ruc o pasaporte {0} ya está registrado, ingrese otro'.format(
+                            form['per_ciruc']))
+                else:
+                    tpersona.per_ciruc = per_ciruc
+
+            tpersona.per_nombres = cadenas.strip_upper(form['per_nombres'])
+            tpersona.per_apellidos = cadenas.strip_upper(form['per_apellidos'])
+            tpersona.per_movil = cadenas.strip_upper(form['per_movil'])
+            tpersona.per_email = cadenas.strip(form['per_email'])
+
+            self.dbsession.add(tpersona)
+            self.dbsession.flush()
+
+    def crear(self, form, permit_ciruc_null=False):
+        if not permit_ciruc_null:
+            if not cadenas.es_nonulo_novacio(form['per_ciruc']):
+                raise ErrorValidacionExc('Ingrese el número de cédula, ruc o pasaporte')
+
         if not cadenas.es_nonulo_novacio(form['per_ciruc']):
-            raise ErrorValidacionExc('Ingrese el número de cédula, ruc o pasaporte')
+            if self.existe_ciruc(per_ciruc=form['per_ciruc']):
+                raise ErrorValidacionExc(
+                    'El número de ci/ruc o pasaporte {0} ya está registrado, ingrese otro'.format(form['per_ciruc']))
+
         if not cadenas.es_nonulo_novacio(form['per_nombres']):
             raise ErrorValidacionExc('Ingrese los nombres')
-
-        if self.existe_ciruc(per_ciruc=form['per_ciruc']):
-            raise ErrorValidacionExc(
-                'El número de ci/ruc o pasaporte {0} ya está registrado, ingrese otro'.format(form['per_ciruc']))
 
         if self.existe_email(per_email=form['per_email']):
             raise ErrorValidacionExc(
@@ -110,11 +152,12 @@ class TPersonaDao(BaseDao):
         tpersona.per_email = cadenas.strip(form['per_email'])
         tpersona.per_fecreg = datetime.now()
         # tpersona.per_tipo = form['per_tipo']
-        tpersona.per_tipo = 1
+        tpersona.per_tipo = form['per_tipo']
         # tpersona.per_lugnac = form['per_lugnac']
         tpersona.per_lugnac = 0
         # tpersona.per_nota = cadenas.strip(form['per_nota'])
         tpersona.per_nota = ''
         self.dbsession.add(tpersona)
         self.dbsession.flush()
+
         return tpersona.per_id

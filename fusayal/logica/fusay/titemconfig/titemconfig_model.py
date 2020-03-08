@@ -26,6 +26,7 @@ class TItemConfig(Declarative, JsonAlchemy):
     ic_nota = Column(Text)
     catic_id = Column(Integer, default=1, nullable=False)
     clsic_id = Column(Integer)
-
+    ic_grabaiva= Column(Boolean, default=False)
+    ic_grabaimpserv= Column(Boolean, default=False)
     ic_fechacreacion = Column(TIMESTAMP, nullable=False, default=current_date)
     ic_usercrea = Column(Integer)

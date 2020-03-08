@@ -7,6 +7,7 @@ import logging
 
 from cornice.resource import resource
 from fusayal.logica.smartsys.SSEmpresa.ssempresa_model import SSEmpresa
+from fusayal.logica.tseccion.tseccion_dao import TSeccionDao
 from fusayal.logica.users.users_dao import TUsersDao
 from fusayal.logica.utils.generatokenutil import GeneraTokenUtil
 from fusayal.utils.pyramidutil import DbComunView

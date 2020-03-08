@@ -8,6 +8,7 @@ import logging
 from fusayal.logica.dao.base import BaseDao
 from fusayal.logica.fusay.tgrid.tgrid_dao import TGridDao
 from fusayal.logica.fusay.titemconfig.titemconfig_model import TItemConfig
+from fusayal.logica.params.param_dao import ParamsDao
 
 log = logging.getLogger(__name__)
 
@@ -18,6 +19,13 @@ class TItemConfigDao(BaseDao):
         tgrid_dao = TGridDao(self.dbsession)
         data = tgrid_dao.run_grid(grid_nombre='productos', where="1=1", order='ic_nombre')
         return data
+
+    def get_prods_for_tickets(self):
+        params_dao = ParamsDao(self.dbsession)
+        arts_tickets = params_dao.get_param_value('artsTickets')
+        sql = "select ic_id, ic_nombre, ic_code from titemconfig where ic_id in ({0})".format(arts_tickets)
+        tupla_desc = ('ic_id', 'ic_nombre', 'ic_code')
+        return self.all(sql, tupla_desc)
 
     def get_form(self):
         formic = {
