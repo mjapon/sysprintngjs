@@ -34,17 +34,17 @@ class TTicketDao(BaseDao):
         data = tgrid_dao.run_grid(grid_nombre='tickets', tk_dia=diadb, sec_id=sec_id)
         return data
 
-    def get_next_ticket(self, dia):
+    def get_next_ticket(self, dia, sec_id):
 
         sql = """
         select coalesce(max(tk_nro),0) as maxticket 
-        from ttickets a where a.tk_estado=1 and a.tk_dia = '{0}' """.format(dia)
+        from ttickets a where a.tk_estado=1 and a.tk_dia = '{0}' and a.sec_id={1} """.format(dia, sec_id)
 
         maxticket = self.first_col(sql, 'maxticket')
         return maxticket + 1
 
-    def get_form(self, dia):
-        tk_nro = self.get_next_ticket(fechas.format_cadena_db(dia))
+    def get_form(self, dia, sec_id):
+        tk_nro = self.get_next_ticket(fechas.format_cadena_db(dia), sec_id)
 
         dia_str = fechas.getDiaFechaLetras1(fechas.parse_cadena(dia))
 
@@ -70,7 +70,7 @@ class TTicketDao(BaseDao):
 
         per_id = form_persona['per_id']
         if per_id is None or per_id == 0:
-            per_id = persona_dao.crear(form_persona)
+            per_id = persona_dao.crear(form_persona, permit_ciruc_null=True)
         else:
             persona_dao.actualizar(per_id, form_persona)
 

@@ -36,7 +36,7 @@ def getFechaLetras(fecha):
     return dia+mes+anio
 
 def getDiaFechaLetras1(fecha):
-    diasemana = get_str_dia_largo(get_dia_de_la_semana(fecha))
+    diasemana = get_str_dia_largo(get_dia_de_la_semana(fecha)-1)
     dia = parse_fecha(fecha,' %d de  ')
     mes = get_str_mes_largo(fecha.month-1)
     anio = parse_fecha(fecha,' del %Y ')

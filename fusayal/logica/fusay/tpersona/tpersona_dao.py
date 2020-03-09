@@ -128,22 +128,28 @@ class TPersonaDao(BaseDao):
             if not cadenas.es_nonulo_novacio(form['per_ciruc']):
                 raise ErrorValidacionExc('Ingrese el número de cédula, ruc o pasaporte')
 
-        if not cadenas.es_nonulo_novacio(form['per_ciruc']):
+        per_ciruc = cadenas.strip_upper(form['per_ciruc'])
+        if cadenas.es_nonulo_novacio(form['per_ciruc']):
             if self.existe_ciruc(per_ciruc=form['per_ciruc']):
                 raise ErrorValidacionExc(
                     'El número de ci/ruc o pasaporte {0} ya está registrado, ingrese otro'.format(form['per_ciruc']))
+        else:
+            per_ciruc = None
 
         if not cadenas.es_nonulo_novacio(form['per_nombres']):
             raise ErrorValidacionExc('Ingrese los nombres')
 
-        if self.existe_email(per_email=form['per_email']):
-            raise ErrorValidacionExc(
+        if cadenas.es_nonulo_novacio(form['per_email']):
+            if self.existe_email(per_email=form['per_email']):
+                raise ErrorValidacionExc(
                 'Ya existe una persona registrada con la dirección de correo: {0}'.format(form['per_email']))
+        else:
+            form['per_email'] = None
 
         tpersona = TPersona()
         tpersona.per_nombres = cadenas.strip_upper(form['per_nombres'])
         tpersona.per_apellidos = cadenas.strip_upper(form['per_apellidos'])
-        tpersona.per_ciruc = cadenas.strip_upper(form['per_ciruc'])
+        tpersona.per_ciruc = per_ciruc
         # tpersona.per_direccion = cadenas.strip_upper(form['per_direccion'])
         tpersona.per_direccion = ''
         # tpersona.per_telf = cadenas.strip_upper(form['per_telf'])

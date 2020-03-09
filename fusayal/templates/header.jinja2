@@ -1,0 +1,112 @@
+<header class="headfusay">
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light headnav  p-0">
+        <a class="navbar-brand p-0" href="/"><img src="static/assets/logoFusay.png" alt="Fusay"></a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse text-center" id="navigation">
+            <ul class="navbar-nav mx-auto mr-auto letras">
+                <li class="nav-item">
+                  <a class="nav-link text-capitalize active colorfusay"  [fragment]="'sec_quiensomos'">¿Quiénes somos?</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link text-capitalize active colorfusay" [fragment]="'sec_servicios'">Servicios</a>
+                </li>
+                <!--
+                <li class="nav-item">
+                    <a class="nav-link text-capitalize  active colorfusay"  href="#sec_ubicacion">Ubicación</a>
+                </li>
+                -->
+                <li class="nav-item">
+                  <a class="nav-link text-capitalize  active colorfusay" routerLink="eventos">Eventos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-capitalize  active colorfusay" routerLink="blogs">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-capitalize  active colorfusay" href="#modalContacto" data-toggle="modal" data-target="#modalContacto">Contacto</a>
+                </li>
+                <!--
+                <li class="nav-item">
+                    <span class="nav-link colorfusay  active"> <i class="fa fa-whatsapp"></i> (+593) 99 024 4830 </span>
+                </li>
+                -->
+                </ul>
+              <ul class="navbar-nav">
+
+              <li class="nav-item ">
+                <div class="form-inline my-2 my-lg-0">
+                  <button class="btn btn-outline-success my-2 my-sm-0 letras" > Ingresar </button>
+                </div>
+              </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+</header>
+
+<div class="modal fade" id="modalContacto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel"> <i class="fa fa-phone"></i> Comuníquese con nosotros</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <p class="textofusay">Estamos ubicados en Saraguro - Loja - Ecuador, 200 Mts vía al Barrio Ilincho</p>
+              <ul class="list-unstyled">
+                  <li class="mb-3"><a class="textofusay" href="tel:+07-3030-181"><i class="fa fa-phone"></i>Telf: 07-3030-181 </a></li>
+                  <li class="mb-3"><a class="textofusay" href="tel:+593-0990244830"> <i class="fa fa-whatsapp"></i> Celular: 0990244830  Saraguro</a></li>
+                  <li class="mb-3"><a class="textofusay" href="tel:+593-0998975316"> <i class="fa fa-whatsapp"></i> Celular: 0998975316   Cuenca</a></li>
+                  <li class="mb-3"><a class="textofusay" href="mailto:fusayvinue@hotmail.com"> <i class="fa fa-envelope"></i> fusayvinue@hotmail.com </a></li>
+              </ul>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Ingresar</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="submitLogin()" [formGroup]="loginForm">
+          <div class="form-group">
+            <label> <span class="required">*</span> Empresa: </label>
+            <input type="text" class="form-control auxusername" formControlName="empresa">
+          </div>
+          <div class="form-group">
+            <label> <span class="required">*</span> Usuario: </label>
+            <input type="text" class="form-control auxusername" formControlName="username">
+          </div>
+          <div class="form-group">
+            <label> <span class="required">*</span> Clave: </label>
+            <input type="password" class="form-control" formControlName="password">
+          </div>
+          <div class="text-center">
+            <input type="submit" class="btn btn-outline-primary" [disabled]="loginForm.invalid" value="Ingresar">
+            <span class="espacio"></span>
+            <input type="reset" class="btn btn-outline-secondary auxBtnCerrar" (click)="cancelarLogin()" value="Cerrar">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

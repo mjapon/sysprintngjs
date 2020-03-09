@@ -1,0 +1,257 @@
+{% extends "base.jinja2" %}
+{% block header %}
+    {% include "header.jinja2" %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="lineaverde">
+            a
+        </div>
+        <div id="fusayCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#fusayCarousel" class="active" data-slide-to="0"></li>
+                <li data-target="#fusayCarousel" data-slide-to="1"></li>
+                <li data-target="#fusayCarousel" data-slide-to="2"></li>
+                <li data-target="#fusayCarousel" data-slide-to="3"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                {% for item in banners %}
+                    <div class="carousel-item">
+                        <img src="static/assets/banners/{{ item.img }}" class="d-block img-fluid w-100" alt="...">
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+            <a class="carousel-control-prev" href="#fusayCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Anterior</span>
+            </a>
+            <a class="carousel-control-next" href="#fusayCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Siguiente</span>
+            </a>
+        </div>
+        <div class="lineaverde">
+            a
+        </div>
+    </div>
+    <br>
+    <section class="pb-0 overflow-hidden "
+             id="sec_quiensomos">
+        <div class="container">
+            <div class="col-lg-12 text-center">
+                <p class="subtitle colorfusay tituloFusay">¿Quiénes Somos?</p>
+                <hr>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-5 text-center text-md-left mb-4 mb-md-0">
+                    <img src="static/assets/quienessomos.jpg" class="img-fluid" alt="Fusay">
+                </div>
+                <div class="col-lg-6 col-md-7 text-center text-md-left">
+                    <p class="mb-4 text-justify ">
+                        Somos una entidad de derecho privado, constituida el 22 de Septiembre del 2004,
+                        mediante Acuerdo Ministerial No 1447, con el objetivo de impulsar, estimular e inter-relacionar
+                        el desarollo de la salud preventiva con la atención integrada de salud, mediante acciones de
+                        intervención como:
+                        promoción, prevención, recuperación y rehabilitación con medicinas naturales, ancestrales y
+                        convencionales,
+                        para el desarrollo de los pueblos indígenas y campesinos.
+                    </p>
+                </div>
+            </div>
+            <br>
+            <div class="card-deck">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title font-italic font-weight-bold ">MISIÓN</h5>
+                        <p class="card-text font-italic ">
+                            Propiciar una convivencia intercultural en la dinámica de las relaciones que desarrolla
+                            la Fundación Salud y Vida Nueva hacia la construcción del buen vivir
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5 class="card-title font-italic font-weight-bold">VISIÓN</h5>
+                        <p class="card-text font-italic ">
+                            Canalizar proyectos interdisciplinario para fomentar el desarrollo integral, intercultural
+                            para el pueblo Saraguro
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- servicios -->
+    <section class="section pb-0" id="sec_servicios">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p class="subtitle colorfusay tituloFusay">Servicios</p>
+                    <hr>
+                </div>
+                {% for item in servicios %}
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <div class="text-center position-relative px-4 py-5 rounded-lg shadow">
+                        <img src="static/assets/servicios/{{ item.img }}" class="img-fluid rounded"
+                             alt="feature-image" (click)="showDetallesProd(item)">
+                        <h5 class="pt-5 pb-3 text-capitalize card-title font-italic">{{ item.nombre }}</h5>
+                        <p class="mb-4 ">{{ item.shortDet }}.</p>
+                        <a class="btn btn-outline-success" (click)="showDetallesProd(item)">Leer mas</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- video -->
+    <section class="section pb-0 bg-cover" id="sec_video">
+        <div class="container">
+            <div class="col-lg-12 text-center">
+                <p class="subtitle colorfusay tituloFusay">Documental Ranti Ranti</p>
+                <hr>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-md-7 pr-lg-5 mb-md-0 mb-5">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/D0o_TA2aEjE?start=611"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="col-md-5 px-4">
+                    <p class="mb-4  text-justify">Les invitamos a observar
+                        el documental que el programa de televisión ecuatoriano Ranti Ranti realizó sobre la identidad
+                        del pueblo saraguro, y en el que se menciona el trabajo que nuestra Fundación lleva a cabo a
+                        favor del pueblo saraguro</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- video -->
+
+    <section class="section pb-0">
+        <div class="container">
+            <div class="col-lg-12 text-center">
+                <p class="subtitle colorfusay tituloFusay">Nuestra Directiva (periodo 2017-2021)</p>
+                <hr>
+            </div>
+            <div class="row">
+                {% for item in directiva %}
+                <div class="col-md-3">
+                    <div class="text-center position-relative px-4 py-5 rounded-lg shadow">
+                        <img src="static/assets/personas/{{ item.img }}" width="120px" height="150px"
+                             class="rounded-circle"/>
+                        <p class="mb-4 ">{{ item.nombre }}</p>
+                        <h5 class="pt-5 pb-3 text-capitalize card-title font-italic">{{ item.shortDet }}</h5>
+                        <a class="btn btn-outline-success" (click)="showDetallesDirectiva(item)">Leer mas</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="sec_ubicacion">
+        <div class="container">
+            <div class="col-lg-12 text-center">
+                <p class="subtitle colorfusay tituloFusay">Ubicación - Saraguro</p>
+                <hr>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <p class=" text-center">
+                        Nos encontramos ubicados al sur del Ecuador, provincia de Loja, Canton Saraguro, a 200 Mts Via
+                        al Barrio Ilincho.
+                        <br>
+                        <b>Horarios de atención:</b>
+                        <br>
+                        Lunes - Viernes: 8h00 - 17h00
+                        <br>
+                        Fines de Semana: 8h00 - 15h00
+                        <br><b><i>Previa Cita</i></b>, para mayor informacion llamar al Teléfono: 0990244830
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1990.9103982281174!2d-79.24299889349261!3d-3.628368721578344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91cca9a23f78f6c9%3A0xbaaf8738951a23bb!2sFundaci%C3%B3n%20Salud%20y%20Vida%20Nueva!5e0!3m2!1ses-419!2sec!4v1567824834224!5m2!1ses-419!2sec"
+                                width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="container">
+            <div class="col-lg-12 text-center">
+                <p class="subtitle colorfusay tituloFusay">Ubicación - Cuenca</p>
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p class=" text-center">
+                        También atendemos en la ciudad de Cuenca, Sector Baguanchi, junto al centro de convenciones
+                        <br>
+                        <b>Horarios de atención:</b>
+                        Lunes - Viernes: 8h00 - 17h00
+                        <br>
+                        Fines de Semana: 8h00 - 15h00
+                        <br>
+                        <b><i>Previa Cita</i></b>, para mayor informacion llamar al Teléfono: 0998975316
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2548.153132186626!2d-78.95164674435235!3d-2.917780313237281!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91cd199f257023b1%3A0xe2fc4b1027ea2176!2sCasa%20del%20Wiki%20Saraguro!5e0!3m2!1ses-419!2sec!4v1566742444343!5m2!1ses-419!2sec"
+                                width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="modalDetalleProd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> tituloDetProd </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3 text-center">
+                            <img src="static/assets/servicios/serviciosel.img" class="img-fluid rounded"
+                                 alt="feature-image" *ngIf="serviciosel.nombre">
+                        </div>
+                        <div class="col-md-9">
+                            <div [innerHTML]="detalleDetProd" class="text-justify">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {% include "footer.jinja2" %}
+{% endblock %}

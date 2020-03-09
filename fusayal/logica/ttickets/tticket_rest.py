@@ -26,7 +26,7 @@ class TTicketRest(TokenView):
         if 'form' == accion:
             persona_dao = TPersonaDao(self.dbsession)
             tk_dia = fechas.parse_fecha(datetime.now())
-            form = ticket_dao.get_form(tk_dia)
+            form = ticket_dao.get_form(tk_dia, self.get_sec_id())
             formcli = persona_dao.getform()
             return {'status': 200, 'form': form, 'formcli': formcli}
 
