@@ -595,13 +595,21 @@ footer .copyright {
 }
 
 
+
 .espacio{
   padding: 0px 5px;
 }
 
-.letras {
+.letrasCab {
+  font-size: 18px !important;
+  color: #212529 !important;
+  font-family: inherit;
+}
+
+
+.letrasNegras {
   font-size: 18px;
-  color: #212529;
+  color: #212529 !important;
   font-family: inherit;
 }
 
@@ -616,6 +624,12 @@ footer .copyright {
 .headnav{
   background-color: #fff !important;
   background: #fff !important;
+}
+
+
+
+hr.white {
+  border-top: 1px solid white;
 }
 
 
@@ -650,7 +664,5 @@ footer .copyright {
 }
 
 .textwhite{
-  color: white;
+  color: white !important;
 }
-
-

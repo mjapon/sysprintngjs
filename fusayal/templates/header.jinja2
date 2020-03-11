@@ -1,6 +1,6 @@
 <header class="headfusay">
 <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light headnav  p-0">
+    <nav class="navbar navbar-expand-lg navbar-light headnav p-0">
         <a class="navbar-brand p-0" href="/"><img src="static/assets/logoFusay.png" alt="Fusay"></a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,12 +8,12 @@
         </button>
 
         <div class="collapse navbar-collapse text-center" id="navigation">
-            <ul class="navbar-nav mx-auto mr-auto letras">
+            <ul class="navbar-nav mx-auto mr-auto letrasCab">
                 <li class="nav-item">
-                  <a class="nav-link text-capitalize active colorfusay"  [fragment]="'sec_quiensomos'">¿Quiénes somos?</a>
+                  <a class="nav-link text-capitalize active colorfusay" [routerLink]="['home']" [fragment]="'sec_quiensomos'">¿Quiénes somos?</a>
                 </li>
                 <li class="nav-item dropdown">
-                  <a class="nav-link text-capitalize active colorfusay" [fragment]="'sec_servicios'">Servicios</a>
+                  <a class="nav-link text-capitalize active colorfusay" [routerLink]="['home']" [fragment]="'sec_servicios'">Servicios</a>
                 </li>
                 <!--
                 <li class="nav-item">
@@ -39,7 +39,7 @@
 
               <li class="nav-item ">
                 <div class="form-inline my-2 my-lg-0">
-                  <button class="btn btn-outline-success my-2 my-sm-0 letras" > Ingresar </button>
+                  <button class="btn btn-outline-success my-2 my-sm-0 letrasNegras"> Ingresar </button>
                 </div>
               </li>
             </ul>
@@ -110,3 +110,25 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="modalSeccion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Elegir Sección</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card" style="width: 100%">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" *ngFor="let item of secciones">item.sec_nombre</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
