@@ -1,0 +1,6 @@
+INSERT INTO public.tjobdoc (tjd_id, tjob_id, tjd_ruta, tjd_fechacrea, tjd_usercrea, tjd_tipo) VALUES (1, 0, '/Users/mjapon/PycharmProjects/fusay/fa/saveddocs//ObligacionCancelada.pdf', '2019-07-11 19:32:02.424383', 2, 0);
+INSERT INTO public.tjobdoc (tjd_id, tjob_id, tjd_ruta, tjd_fechacrea, tjd_usercrea, tjd_tipo) VALUES (2, 3, '/Users/mjapon/PycharmProjects/fusay/fa/saveddocs//ObligacionCancelada.pdf', '2019-07-11 23:03:59.266624', 2, 0);
+INSERT INTO public.tjobdoc (tjd_id, tjob_id, tjd_ruta, tjd_fechacrea, tjd_usercrea, tjd_tipo) VALUES (0, 5, '/Users/mjapon/PycharmProjects/fusay/fa/saveddocs//job_5.pdf', '2019-07-16 21:36:00.316000', 0, 0);
+INSERT INTO public.tjobdoc (tjd_id, tjob_id, tjd_ruta, tjd_fechacrea, tjd_usercrea, tjd_tipo) VALUES (3, 6, '/Users/mjapon/PycharmProjects/fusay/fa/saveddocs/job_6.pdf', '2019-07-16 22:08:31.450000', 0, 0);
+INSERT INTO public.tjobdoc (tjd_id, tjob_id, tjd_ruta, tjd_fechacrea, tjd_usercrea, tjd_tipo) VALUES (4, 7, '/Users/mjapon/PycharmProjects/fusay/fa/saveddocs//CV_MJ.pdf', '2019-07-16 22:10:42.052356', 2, 0);
+INSERT INTO public.tjobdoc (tjd_id, tjob_id, tjd_ruta, tjd_fechacrea, tjd_usercrea, tjd_tipo) VALUES (5, 8, '/Users/mjapon/PycharmProjects/fusay/fa/saveddocs//OrdenPagoRTV.pdf', '2019-07-20 23:02:10.513745', 2, 0);

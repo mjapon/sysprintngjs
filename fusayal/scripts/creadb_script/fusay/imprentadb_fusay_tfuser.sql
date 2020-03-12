@@ -1,0 +1,9 @@
+INSERT INTO fusay.tfuser (us_id, us_cuenta, us_clave, per_id, us_fechacrea, us_estado) VALUES (1, '1104450877', '1104450877', 24, null, 0);
+INSERT INTO fusay.tfuser (us_id, us_cuenta, us_clave, per_id, us_fechacrea, us_estado) VALUES (2, '1104788561', '1104788561', 12, null, 0);
+INSERT INTO fusay.tfuser (us_id, us_cuenta, us_clave, per_id, us_fechacrea, us_estado) VALUES (3, '1103612683', '1103612683', 10, null, 0);
+INSERT INTO fusay.tfuser (us_id, us_cuenta, us_clave, per_id, us_fechacrea, us_estado) VALUES (4, '1103987101', '1103987101', 8, null, 0);
+INSERT INTO fusay.tfuser (us_id, us_cuenta, us_clave, per_id, us_fechacrea, us_estado) VALUES (5, '1105215493', '1105215493', 11, null, 0);
+INSERT INTO fusay.tfuser (us_id, us_cuenta, us_clave, per_id, us_fechacrea, us_estado) VALUES (6, '0104262985', '0104262985', 2, null, 0);
+INSERT INTO fusay.tfuser (us_id, us_cuenta, us_clave, per_id, us_fechacrea, us_estado) VALUES (7, '1101797395', '1101797395', 5, null, 0);
+INSERT INTO fusay.tfuser (us_id, us_cuenta, us_clave, per_id, us_fechacrea, us_estado) VALUES (8, '1105161770', '1105161770', 6, null, 0);
+INSERT INTO fusay.tfuser (us_id, us_cuenta, us_clave, per_id, us_fechacrea, us_estado) VALUES (9, '1104203656', '1104203656', 9, null, 0);

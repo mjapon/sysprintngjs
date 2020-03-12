@@ -1,0 +1,5 @@
+INSERT INTO public.tjobreprint (jobrp_id, job_id, jobrp_secini, jobrp_secfin, jobrp_obs, user_crea, jobrp_fechacrea) VALUES (1, 3, 1, 20, 'PRUEBA', 2, '2019-07-11 23:07:21.470403');
+INSERT INTO public.tjobreprint (jobrp_id, job_id, jobrp_secini, jobrp_secfin, jobrp_obs, user_crea, jobrp_fechacrea) VALUES (2, 4, 10, 20, 'KJHGHJ', 2, '2019-07-11 23:27:53.261645');
+INSERT INTO public.tjobreprint (jobrp_id, job_id, jobrp_secini, jobrp_secfin, jobrp_obs, user_crea, jobrp_fechacrea) VALUES (3, 7, 1, 12, 'PRUEBA', 2, '2019-07-16 22:10:58.580967');
+INSERT INTO public.tjobreprint (jobrp_id, job_id, jobrp_secini, jobrp_secfin, jobrp_obs, user_crea, jobrp_fechacrea) VALUES (4, 5, 3, 23, 'Error u omisión de impresión de información tributaria en los documentos autorizados', 2, '2019-08-16 23:44:20.663784');
+INSERT INTO public.tjobreprint (jobrp_id, job_id, jobrp_secini, jobrp_secfin, jobrp_obs, user_crea, jobrp_fechacrea) VALUES (5, 10, 3, 434, 'Error en la impresión parcial o total del trabajo realizado', 2, '2019-08-16 23:44:55.912842');

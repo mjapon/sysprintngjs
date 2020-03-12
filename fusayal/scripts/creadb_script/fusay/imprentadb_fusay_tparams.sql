@@ -1,0 +1,3 @@
+INSERT INTO fusay.tparams (tprm_id, tprm_abrev, tprm_nombre, tprm_val, tprm_fechacrea) VALUES (1, 'pathSaveJobs', 'pathSaveJobs', '/opt/josgenerados/fusay', '2019-07-12 00:21:04.423000');
+INSERT INTO fusay.tparams (tprm_id, tprm_abrev, tprm_nombre, tprm_val, tprm_fechacrea) VALUES (2, 'porciva', 'porciva', '0.12', '2020-02-15 12:57:28.000000');
+INSERT INTO fusay.tparams (tprm_id, tprm_abrev, tprm_nombre, tprm_val, tprm_fechacrea) VALUES (3, 'artsTickets', 'artsTickets', '1,2,3,4', '2020-03-06 20:26:39.000000');

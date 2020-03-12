@@ -1,0 +1,2 @@
+INSERT INTO public.timprentas (timp_id, timp_code, timp_esquema, timp_nombrecomercial) VALUES (1, 'emp01', 'public', 'EMPRESA 01');
+INSERT INTO public.timprentas (timp_id, timp_code, timp_esquema, timp_nombrecomercial) VALUES (2, 'emp02', 'emp01', 'EMPRESA 02');

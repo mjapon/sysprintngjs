@@ -1,0 +1,1 @@
+INSERT INTO fusay.tuser (us_id, us_name, us_pass, us_datecreated, us_status, us_statusclave, us_nomapel, us_superuser) VALUES (1, 'admin', 'admin', '2019-07-21 14:13:54.215000', 0, 0, 'ADMIN', 1);
