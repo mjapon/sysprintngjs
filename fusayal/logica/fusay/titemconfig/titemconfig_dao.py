@@ -8,6 +8,8 @@ import logging
 from fusayal.logica.dao.base import BaseDao
 from fusayal.logica.fusay.tgrid.tgrid_dao import TGridDao
 from fusayal.logica.fusay.titemconfig.titemconfig_model import TItemConfig
+from fusayal.logica.fusay.titemconfig_meta.titemconfigmeta_model import TItemConfigMeta
+from fusayal.logica.fusay.titemconfig_precios.titemconfigprecios_model import TItemConfigPrecios
 from fusayal.logica.params.param_dao import ParamsDao
 
 log = logging.getLogger(__name__)
@@ -29,45 +31,60 @@ class TItemConfigDao(BaseDao):
 
     def get_form(self):
         formic = {
+            'ic_id': 0,
             'ic_nombre': '',
             'ic_code': '',
             'tipic_id': 1,
             'ic_nota': '',
-            'catic_id': ''
+            'catic_id': '',
+            'ic_fechacrea': '',
+            'ic_grabaiva': True,
+            'ic_grabaimpserv': False,
+            'icpre_preciocompra': 0.0,
+            'icpre_precioventa': 0.0,
+            'icm_existencias': 0,
+            'icm_proveedor': -2,
+            'icm_modcontab': 0,
+            'icm_fechacaducidad': ''
         }
 
-        formdatosprod = {
-            'dprod_grabaiva': True,
-            'dprod_grabaimpserv': False,
-            'dprod_preciocompra': 0.0,
-            'dprod_precioventa': 0.0,
-            'dprod_existencias': 0,
-            'dprod_proveedor': -2,
-            'dprod_modcontab': 0
-        }
+        return formic
 
-        return {
-            'formic': formic,
-            'formdatosprod': formdatosprod
-        }
-
-    def crear(self, form):
+    def crear(self, form, user_crea, sec_id):
         """
-        Para registrar un producto se requiere:
-        1. Regitrar en titemconfig
-
+        Crea un nuevo articulo
+        :param form:
+        :param user_crea:
+        :param sec_id:
         :return:
         """
 
-        datositemconfig = form['formic']
-        datosprod = form['formdatosprod']
-
         itemconfig = TItemConfig()
+        itemconfig.ic_nombre = form['ic_nombre']
+        itemconfig.ic_code = form['ic_code']
+        itemconfig.tipic_id = form['tipic_id']
+        itemconfig.ic_nota = form['ic_nota']
+        itemconfig.catic_id = form['catic_id']
+        itemconfig.ic_usercrea = user_crea
+        itemconfig.ic_grabaiva = form['ic_grabaiva']
 
+        self.dbsession.add(itemconfig)
+        self.dbsession.flush()
+        ic_id = itemconfig.ic_id
 
+        titemconfigmeta = TItemConfigMeta()
+        titemconfigmeta.ic_id = ic_id
+        titemconfigmeta.sec_id = sec_id
+        titemconfigmeta.icm_existencias = form['icm_existencias']
+        titemconfigmeta.icm_proveedor = form['icm_proveedor']
+        titemconfigmeta.icm_modcontab = form['icm_modcontab']
 
+        self.dbsession.add(titemconfigmeta)
 
+        titemconfigprecios = TItemConfigPrecios()
+        titemconfigprecios.ic_id = ic_id
+        titemconfigprecios.icpre_preciocompra = form['icpre_preciocompra']
+        titemconfigprecios.icpre_precioventa = form['icpre_precioventa']
+        titemconfigprecios.sec_id = sec_id
 
-
-
-
+        self.dbsession.add(titemconfigprecios)

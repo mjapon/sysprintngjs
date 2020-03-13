@@ -33,26 +33,25 @@ class TFuserRest(DbComunView):
 
             empresa = empresaDao.buscar_por_codigo(emp_codigo=emp_codigo)
             if empresa is None:
-                return {'status':404,
-                        'msg':'Empresa no registrada'}
+                return {'status': 404,
+                        'msg': 'Empresa no registrada'}
             else:
                 emp_esquema = empresa['emp_esquema']
                 self.change_dbschema(emp_esquema)
                 autenticado = fuserdao.autenticar(us_cuenta=cadenas.strip(form['username']),
-                                              us_clave=cadenas.strip(form['password']))
-
+                                                  us_clave=cadenas.strip(form['password']))
                 secciones = TSeccionDao(self.dbsession).listar()
                 sec_id = secciones[0]['sec_id']
 
             if autenticado:
                 user = fuserdao.get_user(us_cuenta=cadenas.strip(form['username']))
                 genera_token_util = GeneraTokenUtil()
-                token = genera_token_util.gen_token(us_id=user['us_id'],emp_codigo=empresa['emp_codigo'],
+                token = genera_token_util.gen_token(us_id=user['us_id'], emp_codigo=empresa['emp_codigo'],
                                                     emp_esquema=empresa['emp_esquema'], sec_id=sec_id)
                 return {'autenticado': autenticado,
                         'userinfo': user,
                         'seccion': secciones[0],
-                        'token':token,
-                        'menu':empresa['emp_menu']}
+                        'token': token,
+                        'menu': empresa['emp_menu']}
             else:
                 return {'autenticado': autenticado}

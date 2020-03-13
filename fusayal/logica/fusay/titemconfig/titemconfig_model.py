@@ -28,5 +28,5 @@ class TItemConfig(Declarative, JsonAlchemy):
     clsic_id = Column(Integer)
     ic_grabaiva= Column(Boolean, default=False)
     ic_grabaimpserv= Column(Boolean, default=False)
-    ic_fechacreacion = Column(TIMESTAMP, nullable=False, default=current_date)
+    ic_fechacrea = Column(TIMESTAMP, nullable=False, default=current_date)
     ic_usercrea = Column(Integer)

@@ -87,6 +87,37 @@ class TPersonaDao(BaseDao):
         cuenta = self.first_col(sql, 'cuenta')
         return cuenta > 0
 
+    def listar_por_tipo(self, per_tipo):
+        sql = """
+        select  per_id,        
+                per_ciruc,     
+                per_nombres,   
+                per_apellidos, 
+                per_direccion,
+                per_telf,      
+                per_movil,     
+                per_email,     
+                per_fecreg,    
+                per_tipo,      
+                per_lugnac,    
+                per_nota from tpersona where per_tipo = {0} order by per_nombres
+        """.format(per_tipo)
+
+        tupla_desc = ('per_id',
+                      'per_ciruc',
+                      'per_nombres',
+                      'per_apellidos',
+                      'per_direccion',
+                      'per_telf',
+                      'per_movil',
+                      'per_email',
+                      'per_fecreg',
+                      'per_tipo',
+                      'per_lugnac',
+                      'per_nota')
+
+        return self.all(sql, tupla_desc)
+
     def actualizar(self, per_id, form):
 
         tpersona = self.get_entity_byid(per_id)
@@ -142,7 +173,7 @@ class TPersonaDao(BaseDao):
         if cadenas.es_nonulo_novacio(form['per_email']):
             if self.existe_email(per_email=form['per_email']):
                 raise ErrorValidacionExc(
-                'Ya existe una persona registrada con la dirección de correo: {0}'.format(form['per_email']))
+                    'Ya existe una persona registrada con la dirección de correo: {0}'.format(form['per_email']))
         else:
             form['per_email'] = None
 

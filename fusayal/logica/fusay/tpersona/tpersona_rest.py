@@ -36,6 +36,11 @@ class TPersonaRest(FusayPublicView):
                 return {'status': 200, 'persona': res}
             else:
                 return {'status': 404}
+        elif 'buscatipo' == accion:
+            tpersonadao = TPersonaDao(self.dbsession)
+            per_tipo = self.get_request_param('per_tipo')
+            res = tpersonadao.listar_por_tipo(per_tipo)
+            return {'status': 200, 'items': res}
 
     def post(self):
         # per_id = self.get_request_matchdict('per_id')
