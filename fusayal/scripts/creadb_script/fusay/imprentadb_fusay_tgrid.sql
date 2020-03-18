@@ -11,8 +11,8 @@ INSERT INTO fusay.tgrid (grid_id, grid_nombre, grid_basesql, grid_columnas, grid
        dp.icm_existencias,
        dp.icm_fechacaducidad
        from titemconfig ic
-join titemconfig_meta dp on dp.ic_id = ic.ic_id
-           join titemconfig_precios pr on pr.ic_id = ic.ic_id
+join titemconfig_datosprod dp on dp.ic_id = ic.ic_id
+           join titemconfig_stock pr on pr.ic_id = ic.ic_id
 join ttipoitemconfig t on ic.tipic_id = t.tipic_id
 where ic.ic_estado = 1 and {where} order by {order}', '[
     {"label":"Código Barra", "field":"ic_code"},

@@ -20,7 +20,8 @@ class TItemConfigRest(TokenView):
         accion = self.get_request_param('accion')
         titemconfig_dao = TItemConfigDao(self.dbsession)
         if 'listar' == accion:
-            data = titemconfig_dao.listar()
+            filtro = self.get_request_param('filtro')
+            data = titemconfig_dao.listar(filtro)
             return {'status': 200, 'data': data}
         elif 'formcrea' == accion:
             form = titemconfig_dao.get_form()
@@ -31,8 +32,7 @@ class TItemConfigRest(TokenView):
             return {'status': 404, 'msg': 'accion desconocida'}
 
     def post(self):
-        ic_id = self.get_request_matchdict('ic_id')
         titemconfig_dao = TItemConfigDao(self.dbsession)
         form = self.get_json_body()
-        res = titemconfig_dao.crear(form, self.get_user_id(), self.get_sec_id())
-        return {'status': 200, 'msg': 'Artículo/Servicio creado exitosamente'}
+        ic_id = titemconfig_dao.crear(form, self.get_user_id())
+        return {'status': 200, 'msg': 'Registrado exitosamente', 'ic_id': ic_id}
