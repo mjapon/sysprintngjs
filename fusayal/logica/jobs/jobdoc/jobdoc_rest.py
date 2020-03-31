@@ -6,7 +6,7 @@ Fecha de creacion 7/21/19
 import logging
 
 from fusayal.logica.jobs.jobdoc.jobdoc_dao import TJobDocDao
-from fusayal.logica.params.param_dao import ParamsDao
+from fusayal.logica.params.param_dao import TParamsDao
 from fusayal.logica.plantillas.plantilla_dao import TPlantillasDao
 from fusayal.utils.pyramidutil import DbComunView
 from cornice.resource import resource
@@ -45,7 +45,7 @@ class TJobDocRest(DbComunView):
         elif acc == 'pathSaveDoc':
             emp_esquema = self.request.params['emp_esquema']
             self.change_dbschema(emp_esquema)
-            tparamdao = ParamsDao(self.dbsession)
+            tparamdao = TParamsDao(self.dbsession)
             path = tparamdao.get_param_value("pathSaveJobs")
             return path
         elif acc == 'pathDocSaved':

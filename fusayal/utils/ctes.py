@@ -15,6 +15,9 @@ APP_FMT_FECHA_HORA = APP_FMT_FECHA + ' ' + APP_FMT_HORA
 APP_FMT_FECHA_DB = "%Y-%m-%d"
 MONEDA = "DOLAR"
 MOTIVO_NC = u"DEVOLUCIÓN"
+IVA = 0.12
+NDECIMALESPRECIOS_VIEW = 4
+NDECIMALESPRECIOS_DB = 6
 
 
 def GET_APP_DOMINIO(request):
@@ -32,7 +35,7 @@ def GET_APP_DOMINIO(request):
 
 
 def GET_MODO_LOGOUT_ISYPLUS2(request):
-    app_withnginx = 0#Indica si la aplicacion esta siendo servida por nginx en ese caso la url de la app es /v2
+    app_withnginx = 0  # Indica si la aplicacion esta siendo servida por nginx en ese caso la url de la app es /v2
 
     settings = {}
     try:
@@ -49,15 +52,15 @@ def GET_MODO_LOGOUT_ISYPLUS2(request):
     return 2 if app_withnginx == 1 else 1
 
 
-#MODO_LOGOUT_ISYPLUS2 = 1#1-DESARROLLO 2-PRODUCCION
+# MODO_LOGOUT_ISYPLUS2 = 1#1-DESARROLLO 2-PRODUCCION
 MODO_LOGOUT_DESARROLLO = 1
 MODO_LOGOUT_PRODUCCION = 2
 APP_CONTABLE_URL = 'v2'
-#APP_DOMINIO = 'localhost'
-#APP_DOMINIO = '192.168.0.12'
-#APP_DOMINIO = 'www.isyplus.com'
+# APP_DOMINIO = 'localhost'
+# APP_DOMINIO = '192.168.0.12'
+# APP_DOMINIO = 'www.isyplus.com'
 
-#MODULOS DE REPORTES
-MODULOS_REPORTES_DICT = {1:'CONTABILIDAD',
-                         2:'REFERENTES',
-                         3:'MODULO'}
+# MODULOS DE REPORTES
+MODULOS_REPORTES_DICT = {1: 'CONTABILIDAD',
+                         2: 'REFERENTES',
+                         3: 'MODULO'}

@@ -28,3 +28,5 @@ class TItemConfig(Declarative, JsonAlchemy):
     clsic_id = Column(Integer)
     ic_fechacrea = Column(TIMESTAMP, nullable=False, default=current_date)
     ic_usercrea = Column(Integer)
+    ic_useractualiza = Column(Integer)
+    ic_fechaactualiza = Column(TIMESTAMP)

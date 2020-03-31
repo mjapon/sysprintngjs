@@ -9,7 +9,7 @@ from pyramid.view import view_config
 from fusayal.logica.excepciones.validacion import ErrorValidacionExc
 from fusayal.logica.imprentas.imprentas_dao import ImprentasDao
 from fusayal.logica.jobs.jobdoc.jobdoc_dao import TJobDocDao
-from fusayal.logica.params.param_dao import ParamsDao
+from fusayal.logica.params.param_dao import TParamsDao
 from fusayal.logica.plantillas.plantilla_dao import TPlantillasDao
 from fusayal.logica.users.users_dao import TUsersDao
 from fusayal.utils.archivos import CargaArchivosUtil
@@ -139,7 +139,7 @@ def upload_file(request):
                     emp_esquema = request.session['emp_esquema']
                     request.dbsession.execute("SET search_path TO {0}".format(emp_esquema))
 
-                paramsdao = ParamsDao(request.dbsession)
+                paramsdao = TParamsDao(request.dbsession)
                 path_save_jobs = paramsdao.get_ruta_savejobs()
                 ruta = "{0}{1}{2}".format(path_save_jobs, os.path.sep, nombreArchivo)
 

@@ -11,7 +11,7 @@ import os
 from fusayal.logica.auditorias.taudit_dao import TAuditDao
 from fusayal.logica.dao.base import BaseDao
 from fusayal.logica.jobs.jobdoc.jobdoc_model import TJobDoc
-from fusayal.logica.params.param_dao import ParamsDao
+from fusayal.logica.params.param_dao import TParamsDao
 from fusayal.logica.utils import enums
 
 log = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ class TJobDocDao(BaseDao):
 
     def crear(self, job_id, nombre_archivo, user_crea, tipocarga=0):
 
-        paramsdao = ParamsDao(self.dbsession)
+        paramsdao = TParamsDao(self.dbsession)
         path_save_jobs = paramsdao.get_ruta_savejobs()
 
         if self.existe(job_id):
