@@ -234,3 +234,14 @@ class TItemConfigDao(BaseDao):
                       'tipic_nombre', 'icdp_proveedor', 'proveedor')
 
         return self.first(sql, tupla_desc)
+
+    def anular(self, ic_id, useranula):
+        titemconfig = self.dbsession.query(TItemConfig).filter(TItemConfig.ic_id == ic_id).first()
+        if titemconfig is not None:
+            titemconfig.ic_estado = 2
+            titemconfig.ic_useractualiza = useranula
+            titemconfig.ic_fechaactualiza = datetime.now()
+            self.dbsession.add(titemconfig)
+
+
+

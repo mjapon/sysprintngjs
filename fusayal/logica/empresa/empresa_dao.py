@@ -123,7 +123,7 @@ class TEmpresaDao(BaseDao):
                 emp_fechaautorizacion,
                 emp_esquema,          
                 emp_codigo,           
-                emp_menu from tempresa where emp_codigo = '{0}'""".format(emp_codigo)
+                emp_menu from public.tempresa where emp_codigo = '{0}'""".format(emp_codigo)
         tupla_desc = ('emp_id',
                       'emp_ruc',
                       'emp_razonsocial',
