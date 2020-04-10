@@ -38,6 +38,9 @@ class TGridDao(BaseDao):
 
         sql = grid_basesql.format(**params)
 
+        print 'Sql que se ejecuta:'
+        print sql
+
         data = self.all(sql,tupla_desc)
         return {'data':data, 'cols':cols}
 

@@ -3,8 +3,9 @@
 Fecha de creacion 2/15/20
 @autor: mjapon
 """
+import calendar
 import logging
-from datetime import datetime
+from datetime import datetime, time
 
 from fusayal.logica.dao.base import BaseDao
 from fusayal.logica.excepciones.validacion import ErrorValidacionExc
@@ -20,12 +21,12 @@ log = logging.getLogger(__name__)
 
 class TItemConfigDao(BaseDao):
 
-    def listar(self, filtro):
+    def listar(self, filtro, sec_id):
         tgrid_dao = TGridDao(self.dbsession)
         swhere = u"ic.ic_code like '{0}%' or ic.ic_nombre like '{0}%'".format(
             cadenas.strip_upper(filtro)
         )
-        data = tgrid_dao.run_grid(grid_nombre='productos', where=swhere, order='ic_nombre')
+        data = tgrid_dao.run_grid(grid_nombre='productos', where=swhere, order='ic_nombre', sec_id=sec_id)
         return data
 
     def get_prods_for_tickets(self):
@@ -59,7 +60,7 @@ class TItemConfigDao(BaseDao):
     def existe_artbynombre(self, ic_nombre):
         if (ic_nombre is not None and len(cadenas.strip(ic_nombre)) > 0):
             sql = u"select count(*) as cuenta from titemconfig where  ic_nombre = '{0}' and ic_estado=1".format(
-                cadenas.strip(str(ic_nombre)))
+                cadenas.strip(unicode(ic_nombre)))
             cuenta = self.first_col(sql, 'cuenta')
             return cuenta > 0
         return False
@@ -106,7 +107,7 @@ class TItemConfigDao(BaseDao):
 
         # Verificar si el codigo del producto ya esta registrado
         if self.existe_codbar(ic_code):
-            raise ErrorValidacionExc(u"El código '{0}' ya está registrado, favor ingrese otro")
+            raise ErrorValidacionExc(u"El código '{0}' ya está registrado, favor ingrese otro".format(ic_code))
 
         ic_nombre = cadenas.strip_upper(form['ic_nombre'])
         if self.existe_artbynombre(ic_nombre):
@@ -186,7 +187,8 @@ class TItemConfigDao(BaseDao):
 
             self.dbsession.add(titemconfig)
 
-            titemconfigdp = self.dbsession.query(TItemConfigDatosProd).filter(TItemConfigDatosProd.ic_id == ic_id).first()
+            titemconfigdp = self.dbsession.query(TItemConfigDatosProd).filter(
+                TItemConfigDatosProd.ic_id == ic_id).first()
             if titemconfigdp is not None:
                 titemconfigdp.icdp_proveedor = form['icdp_proveedor']
 
@@ -200,7 +202,7 @@ class TItemConfigDao(BaseDao):
                 titemconfigdp.icdp_preciocompra = icdp_preciocompra
                 titemconfigdp.icdp_precioventa = icdp_precioventa
                 titemconfigdp.icdp_precioventamin = icdp_precioventamin
-                #TODO: Agregar logica para registrar kardek del articulo
+                # TODO: Agregar logica para registrar kardek del articulo
                 self.dbsession.add(titemconfigdp)
 
             self.dbsession.flush()
@@ -230,18 +232,19 @@ class TItemConfigDao(BaseDao):
 
         tupla_desc = ('ic_id', 'ic_nombre', 'ic_code', 'tipic_id', 'ic_fechacrea', 'ic_nota', 'catic_id',
                       'catic_nombre', 'icdp_fechacaducidad', 'icdp_grabaiva', 'icdp_preciocompra',
-                      'icdp_preciocompra_iva', 'icdp_precioventa','icdp_precioventamin',
+                      'icdp_preciocompra_iva', 'icdp_precioventa', 'icdp_precioventamin',
                       'tipic_nombre', 'icdp_proveedor', 'proveedor')
 
         return self.first(sql, tupla_desc)
 
     def anular(self, ic_id, useranula):
         titemconfig = self.dbsession.query(TItemConfig).filter(TItemConfig.ic_id == ic_id).first()
+
+        ts = datetime.now().isoformat()
+
         if titemconfig is not None:
+            titemconfig.ic_code = titemconfig.ic_code + '_deleted_ts_' + ts
             titemconfig.ic_estado = 2
             titemconfig.ic_useractualiza = useranula
             titemconfig.ic_fechaactualiza = datetime.now()
             self.dbsession.add(titemconfig)
-
-
-

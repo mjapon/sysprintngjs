@@ -18,3 +18,8 @@ class TItemConfigStock(Declarative, JsonAlchemy):
     ic_id = Column(Integer, nullable=False)
     sec_id = Column(Integer, nullable=False, default=1)
     ice_stock = Column(Integer, nullable=False, default=0)
+
+    user_crea = Column(Integer, nullable=False)
+    fecha_crea = Column(TIMESTAMP, nullable=False)
+    user_actualiza = Column(Integer)
+    fecha_actualiza = Column(TIMESTAMP)
