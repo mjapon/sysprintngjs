@@ -70,12 +70,12 @@ class TItemConfigDao(BaseDao):
         return tparam_dao.get_next_sequence_codbar()
 
     def get_codbarnombre_articulo(self, codbar):
-        sql = u"select ic_code, ic_nombre from titemconfig where  ic_code = '{0}'".format(cadenas.strip(str(codbar)))
+        sql = u"select ic_code, ic_nombre from titemconfig where  ic_code = '{0}'".format(cadenas.strip(unicode(codbar)))
         tupla_desc = ('ic_code', 'ic_nombre')
         return self.first(sql, tupla_desc)
 
     def existe_codbar(self, codbar):
-        sql = u"select count(*) as cuenta from titemconfig where  ic_code = '{0}'".format(cadenas.strip(str(codbar)))
+        sql = u"select count(*) as cuenta from titemconfig where  ic_code = '{0}'".format(cadenas.strip(unicode(codbar)))
         cuenta = self.first_col(sql, 'cuenta')
         return cuenta > 0
 
@@ -87,9 +87,8 @@ class TItemConfigDao(BaseDao):
         :param sec_id:
         :return:
         """
-
         codbar_auto = form['codbar_auto']
-        ic_code = cadenas.strip(str(form['ic_code']))
+        ic_code = cadenas.strip(unicode(form['ic_code']))
         tparamdao = TParamsDao(self.dbsession)
         if codbar_auto:
             ic_code = tparamdao.get_next_sequence_codbar()
@@ -239,12 +238,24 @@ class TItemConfigDao(BaseDao):
 
     def anular(self, ic_id, useranula):
         titemconfig = self.dbsession.query(TItemConfig).filter(TItemConfig.ic_id == ic_id).first()
-
         ts = datetime.now().isoformat()
-
         if titemconfig is not None:
             titemconfig.ic_code = titemconfig.ic_code + '_deleted_ts_' + ts
             titemconfig.ic_estado = 2
             titemconfig.ic_useractualiza = useranula
             titemconfig.ic_fechaactualiza = datetime.now()
             self.dbsession.add(titemconfig)
+
+    def update_barcode(self, ic_id, newbarcode):
+        titemconfig = self.dbsession.query(TItemConfig).filter(TItemConfig.ic_id == ic_id).first()
+        newbarcode_strip = cadenas.strip(unicode(newbarcode))
+        if titemconfig is not None:
+            current_ic_code = titemconfig.ic_code
+            if newbarcode_strip != current_ic_code:
+                if self.existe_codbar(newbarcode_strip):
+                    raise ErrorValidacionExc(
+                        u'No se puede cambiar el código de barra, el código {0} ya esta siendo usado por otro producto o servicio'.format(
+                            newbarcode))
+                else:
+                    titemconfig.ic_code = newbarcode_strip
+                    self.dbsession.add(titemconfig)

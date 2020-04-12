@@ -51,13 +51,16 @@ class TItemConfigRest(TokenView):
         if accion is not None:
             if accion == 'del':
                 titemconfig_dao.anular(ic_id=ic_id, useranula=self.get_user_id())
-                return {'status': 200, 'msg': 'Anulado exitosamente'}
+                return {'status': 200, 'msg': u'Anulado exitósamente'}
+            elif accion == 'updatecode':
+                titemconfig_dao.update_barcode(ic_id=ic_id, newbarcode=form['new_ic_code'])
+                return {'status': 200, 'msg': u'Actualizado exitósamente'}
         else:
             if ic_id == 0:
-                msg = u'Registrado exitosamente'
+                msg = u'Registrado exitósamente'
                 result_ic_id = titemconfig_dao.crear(form, self.get_user_id())
             else:
-                msg = u'Actualizado exitosamente'
+                msg = u'Actualizado exitósamente'
                 titemconfig_dao.actualizar(form, self.get_user_id())
 
             return {'status': 200, 'msg': msg, 'ic_id': result_ic_id}
