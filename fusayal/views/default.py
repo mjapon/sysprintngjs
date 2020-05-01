@@ -102,6 +102,11 @@ def login_view(request):
     return {'msg': '', 'autenticado': 0}
 
 
+@view_config(route_name='politica_privacidad', renderer='../templates/politicaPrivacidad.jinja2')
+def politica_privacidad_view(request):
+    return {}
+
+
 @view_config(route_name='homeApp', renderer='../templates/homeApp.jinja2')
 def home_view(request):
     if 'userlogged' not in request.session:

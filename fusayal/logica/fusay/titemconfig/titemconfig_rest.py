@@ -9,7 +9,7 @@ from cornice.resource import resource
 
 from fusayal.logica.fusay.titemconfig.titemconfig_dao import TItemConfigDao
 from fusayal.logica.params.param_dao import TParamsDao
-from fusayal.utils.pyramidutil import TokenView
+from fusayal.utils.pyramidutil import TokenView, FusayPublicView
 
 log = logging.getLogger(__name__)
 
@@ -38,6 +38,10 @@ class TItemConfigRest(TokenView):
             existe = datosart is not None
             nombreart = datosart['ic_nombre'] if datosart is not None else ''
             return {'status': 200, 'existe': existe, 'nombreart': nombreart}
+        elif 'teleservicios' == accion:
+            sec_id = self.get_sec_id()
+            data = titemconfig_dao.listar_teleservicios(sec_id=sec_id)
+            return {'status': 200, 'data': data}
         else:
             return {'status': 404, 'msg': 'accion desconocida'}
 
@@ -73,3 +77,17 @@ class TItemConfigRest(TokenView):
             return {'status': 200, 'datosprod': res}
         else:
             return {'status': 404}
+
+
+@resource(collection_path='/api/public/titemconfig', path='/api/public/titemconfig/{ic_id}', cors_origins=('*',))
+class PublicItemConfigRest(FusayPublicView):
+
+    def collection_get(self):
+        accion = self.get_request_param('accion')
+        titemconfig_dao = TItemConfigDao(self.dbsession)
+        if 'teleservicios' == accion:
+            sec_id = 1 
+            data = titemconfig_dao.listar_teleservicios()
+            return {'status': 200, 'data': data}
+        else:
+            return {'status': 404, 'msg': 'accion desconocida'}

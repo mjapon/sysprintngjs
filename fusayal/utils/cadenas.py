@@ -5,6 +5,7 @@ Created on '29/07/15'
 """
 import logging
 import re
+import math
 
 log = logging.getLogger(__name__)
 
@@ -20,7 +21,6 @@ def quitarCarEspe(cad):#permite solo caracteres alfanumericos y espacios
         if (not letra.isalnum()) and letra != " ":
             cad = cad.replace(letra,'')
     return cad
-
 
 def es_nonulo_novacio(cadena):
     return cadena is not None and len(unicode(cadena).strip()) > 0

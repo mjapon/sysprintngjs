@@ -46,7 +46,7 @@ class TTicketDao(BaseDao):
     def get_form(self, dia, sec_id):
         tk_nro = self.get_next_ticket(fechas.format_cadena_db(dia), sec_id)
 
-        dia_str = fechas.getDiaFechaLetras1(fechas.parse_cadena(dia))
+        dia_str = fechas.get_fecha_letras_largo(fechas.parse_cadena(dia))
 
         return {
             'tk_id': 0,

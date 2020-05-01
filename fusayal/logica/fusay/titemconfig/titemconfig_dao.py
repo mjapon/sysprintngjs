@@ -29,6 +29,16 @@ class TItemConfigDao(BaseDao):
         data = tgrid_dao.run_grid(grid_nombre='productos', where=swhere, order='ic_nombre', sec_id=sec_id)
         return data
 
+    def listar_teleservicios(self):
+        sql = """
+        select ic.ic_id, ic.ic_nombre, sm.med_id, per.per_nombres ||' '|| per.per_apellidos as medico from titemconfig ic 
+        join tserviciomedico sm on ic.ic_id = sm.serv_id 
+        join tpersona per on per.per_id = sm.med_id 
+        """
+        tupla_desc = ('ic_id', 'ic_nombre', 'med_id', 'medico')
+
+        return self.all(sql, tupla_desc)
+
     def get_prods_for_tickets(self):
         params_dao = TParamsDao(self.dbsession)
         arts_tickets = params_dao.get_param_value('artsTickets')
@@ -70,12 +80,14 @@ class TItemConfigDao(BaseDao):
         return tparam_dao.get_next_sequence_codbar()
 
     def get_codbarnombre_articulo(self, codbar):
-        sql = u"select ic_code, ic_nombre from titemconfig where  ic_code = '{0}'".format(cadenas.strip(unicode(codbar)))
+        sql = u"select ic_code, ic_nombre from titemconfig where  ic_code = '{0}'".format(
+            cadenas.strip(unicode(codbar)))
         tupla_desc = ('ic_code', 'ic_nombre')
         return self.first(sql, tupla_desc)
 
     def existe_codbar(self, codbar):
-        sql = u"select count(*) as cuenta from titemconfig where  ic_code = '{0}'".format(cadenas.strip(unicode(codbar)))
+        sql = u"select count(*) as cuenta from titemconfig where  ic_code = '{0}'".format(
+            cadenas.strip(unicode(codbar)))
         cuenta = self.first_col(sql, 'cuenta')
         return cuenta > 0
 

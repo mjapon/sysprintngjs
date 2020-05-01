@@ -28,9 +28,9 @@ class TFuserRest(DbComunView):
             form = self.get_request_json_body()
             fuserdao = TFuserDao(self.dbsession)
             emp_codigo = cadenas.strip(form['empresa'])
-
             empresaDao = TEmpresaDao(self.dbsession)
 
+            self.change_dbschema('public')
             empresa = empresaDao.buscar_por_codigo(emp_codigo=emp_codigo)
             if empresa is None:
                 return {'status': 404,

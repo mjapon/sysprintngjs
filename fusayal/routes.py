@@ -10,6 +10,8 @@ def includeme(config):
     config.add_route('upload_view', '/uploadview')
     config.add_route('upload_job_view', '/uploadjobview')
     config.add_route('fusay', '/indexfusay')
+    config.add_route('politica_privacidad', '/politicaprivacidad')
+
     #config.add_route('home', '/prhome')
     #config.add_route('reportbro', '/report/run')
     #config.add_route('reporte', '/reportemj')
