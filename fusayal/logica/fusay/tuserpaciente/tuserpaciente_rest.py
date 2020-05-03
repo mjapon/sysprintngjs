@@ -17,7 +17,6 @@ log = logging.getLogger(__name__)
 class TUserPacienteRest(FusayPublicView):
 
     def post(self):
-        form = self.get_request_json_body()
 
         accion = self.get_request_param('accion')
         if accion == 'updatecita':
@@ -26,9 +25,27 @@ class TUserPacienteRest(FusayPublicView):
             obs = form['obs']
             estado = form['estado']
             userpacdao = TUserPacienteDao(self.dbsession)
-            userpacdao.cambiar_estado_cita(cita_id=cita_id,estado=estado,observacion=obs)
+            userpacdao.cambiar_estado_cita(cita_id=cita_id, estado=estado, observacion=obs)
             return {'status': 200, 'msg': u'Cambios registrados exitósamente'}
+        elif accion == 'autenticar':
+            userpacdao = TUserPacienteDao(self.dbsession)
+            form = self.get_json_body()
+            result = userpacdao.autenticar(form)
+            email = form['email']
+            datosuser = userpacdao.get_datos_cuenta(email)
+            return {'status': 200, 'autenticado': result, 'datosuser': datosuser}
+        elif accion == 'updateFromSocial':
+            userpacdao = TUserPacienteDao(self.dbsession)
+            form = self.get_request_json_body()
+            userpacdao.crea_actualiza_cuenta(form)
+            return {'status': 200, 'msg': 'Registrado/Actualizado exitosamente'}
+        elif accion == 'creacuenta':
+            userpacdao = TUserPacienteDao(self.dbsession)
+            form = self.get_request_json_body()
+            userpacdao.crear_cuenta(form)
+            return {'status': 200, 'msg': 'Registrada exitosamente'}
         else:
+            form = self.get_request_json_body()
             userpacdao = TUserPacienteDao(self.dbsession)
             userpacdao.crear(form)
             return {'status': 200, 'msg': u'Registrado existosamente'}
@@ -54,5 +71,16 @@ class TUserPacienteRest(FusayPublicView):
             userpacdao = TUserPacienteDao(self.dbsession)
             citas = userpacdao.listar_citas(med_id=med_id, fecha_desde=fecha)
             return {'status': 200, 'citas': citas}
+        elif accion == 'getdatauser':
+            email = self.get_request_param('email')
+            userpacdao = TUserPacienteDao(self.dbsession)
+            datosuser = userpacdao.get_datos_cuenta(email)
+            existe = True if datosuser is not None else False
+            return {'status': 200, 'datosuser': datosuser, 'existe': existe}
+        elif accion == 'citaspaciente':
+            email = self.get_request_param('email')
+            userpacdao = TUserPacienteDao(self.dbsession)
+            citaspac = userpacdao.listar_citas_paciente(up_email=email)
+            return {'status': 200, 'citaspac': citaspac}
         else:
             return {'status': 404}
