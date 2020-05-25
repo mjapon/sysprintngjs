@@ -6,7 +6,7 @@ Fecha de creacion 10/26/19
 import logging
 
 
-from sqlalchemy import Column, Integer, String, DateTime, Text
+from sqlalchemy import Column, Integer, String, DateTime, Text, Date
 
 from fusayal.models.conf import Declarative
 from fusayal.utils.jsonutil import JsonAlchemy
@@ -29,3 +29,7 @@ class TPersona(Declarative, JsonAlchemy):
     per_tipo = Column(Integer, nullable=False, default=1) #1:cliente, 2:personal, 3:proveedor
     per_lugnac = Column(Integer)
     per_nota = Column(Text)
+    per_fechanac = Column(Date)
+    per_genero = Column(Integer)
+    per_estadocivil = Column(Integer)
+    per_lugresidencia = Column(Integer)

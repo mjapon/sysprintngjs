@@ -9,7 +9,7 @@ from datetime import datetime
 from fusayal.logica.dao.base import BaseDao
 from fusayal.logica.excepciones.validacion import ErrorValidacionExc
 from fusayal.logica.fusay.tpersona.tpersona_model import TPersona
-from fusayal.utils import cadenas
+from fusayal.utils import cadenas, fechas
 
 log = logging.getLogger(__name__)
 
@@ -194,6 +194,25 @@ class TPersonaDao(BaseDao):
         tpersona.per_lugnac = 0
         # tpersona.per_nota = cadenas.strip(form['per_nota'])
         tpersona.per_nota = ''
+
+        # Columnas agregadas:
+        if 'per_fechanac' in form:
+            per_fechanac_txt = form['per_fechanac']
+            per_fechanac = fechas.parse_cadena(per_fechanac_txt)
+            tpersona.per_fechanac = per_fechanac
+
+        if 'per_genero' in form:
+            per_genero = form['per_genero']
+            tpersona.per_genero = per_genero
+
+        if 'per_estadocivil' in form:
+            per_estadocivil = form['per_estadocivil']
+            tpersona.per_estadocivil = per_estadocivil
+
+        if 'per_lugresidencia' in form:
+            per_lugresidencia = form['per_lugresidencia']
+            tpersona.per_lugresidencia = per_lugresidencia
+
         self.dbsession.add(tpersona)
         self.dbsession.flush()
 
