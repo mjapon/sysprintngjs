@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="logAudit" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="832" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
@@ -98,7 +98,7 @@ order by aut_fechaautorizacion]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="150" splitType="Stretch">
+		<band height="175" splitType="Stretch">
 			<staticText>
 				<reportElement style="Title" x="1" y="0" width="799" height="50" uuid="bc1ce1da-8232-46ea-be55-cec4abb986dd"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -178,6 +178,15 @@ order by aut_fechaautorizacion]]>
 				</textElement>
 				<text><![CDATA[LOG TRANSACCIONAL]]></text>
 			</staticText>
+			<textField pattern="dd/MM/yyyy hh:mm a">
+				<reportElement x="20" y="142" width="778" height="20" uuid="7f04d71b-b47a-4e11-af00-da7a1de735c3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Estado del documento: "+ $F{estado}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -516,11 +525,11 @@ order by aut_fechaautorizacion]]>
 				<text><![CDATA[Total de transacciones:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="223" y="2" width="198" height="20" uuid="7e09844b-3a4b-46f4-a0ff-f2da9ced8e3c"/>
+				<reportElement x="223" y="2" width="317" height="20" uuid="7e09844b-3a4b-46f4-a0ff-f2da9ced8e3c"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT} + " (trabajos realizados)"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

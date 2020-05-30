@@ -6,6 +6,7 @@ Fecha de creacion 3/25/19
 import copy
 import logging
 
+from fusayal import logica
 from fusayal.logica.auditorias.taudit_dao import TAuditDao
 from fusayal.logica.autorizacion.autorizacion_model import TAutorizacion
 from fusayal.logica.dao.base import BaseDao
@@ -333,7 +334,7 @@ class TAutorizacionDao(BaseDao):
                     col = row['col']
                     valorant = row['valorant']
                     valordesp = row['valordesp']
-                    tauditdao.crea_accion_update(enums.TBL_AUTORIZACIONES, col, user_edit, valorant, valordesp,
+                    tauditdao.crea_accion_update(logica.utils.enums.TBL_AUTORIZACIONES, col, user_edit, valorant, valordesp,
                                                  tautorizacion.aut_id)
 
     def crear(self, form, user_crea):
@@ -440,6 +441,6 @@ class TAutorizacionDao(BaseDao):
         self.dbsession.flush()
 
         tautditdao = TAuditDao(self.dbsession)
-        tautditdao.crea_accion_insert(enums.TBL_AUTORIZACIONES, user_crea, tautorizacion.aut_id)
+        tautditdao.crea_accion_insert(logica.utils.enums.TBL_AUTORIZACIONES, user_crea, tautorizacion.aut_id)
 
         return tautorizacion.aut_id
