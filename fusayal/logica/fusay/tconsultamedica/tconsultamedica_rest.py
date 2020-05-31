@@ -6,6 +6,7 @@ Fecha de creacion 5/24/20
 import logging
 from cornice.resource import resource
 
+from fusayal.logica.excepciones.validacion import ErrorValidacionExc
 from fusayal.logica.fusay.tconsultamedica.tconsultamedica_dao import TConsultaMedicaDao
 from fusayal.utils.pyramidutil import TokenView
 
@@ -26,3 +27,13 @@ class TConsultaMedicaRest(TokenView):
             tconsultam_dao = TConsultaMedicaDao(self.dbsession)
             cie10data = tconsultam_dao.get_cie10data()
             return {'status': 200, 'cie10data': cie10data}
+
+    def collection_post(self):
+        accion = self.get_request_param('accion')
+        if 'registra' == accion:
+            tconsultam_dao = TConsultaMedicaDao(self.dbsession)
+            formdata = self.get_request_json_body()
+            msg = tconsultam_dao.registrar(form=formdata, usercrea=self.get_user_id())
+            return {'status': 200, 'msg': msg}
+        else:
+            raise ErrorValidacionExc(u'Ninguna acción especificada')
