@@ -15,7 +15,7 @@ log = logging.getLogger(__name__)
 
 
 class TPersonaDao(BaseDao):
-    BASE_SQL = """
+    BASE_SQL = u"""
     select per_id,
                per_ciruc,
                per_nombres,
@@ -26,7 +26,11 @@ class TPersonaDao(BaseDao):
                per_email,
                per_tipo,
                per_lugnac,
-               per_nota from tpersona
+               per_nota,
+               per_fechanac,
+               per_genero,
+               per_estadocivil,
+               per_lugresidencia from tpersona
     """
     BASE_TUPLA_DESC = ('per_id',
                        'per_ciruc',
@@ -38,7 +42,11 @@ class TPersonaDao(BaseDao):
                        'per_email',
                        'per_tipo',
                        'per_lugnac',
-                       'per_nota')
+                       'per_nota',
+                       'per_fechanac',
+                       'per_genero',
+                       'per_estadocivil',
+                       'per_lugresidencia')
 
     def getform(self):
         return {
@@ -61,6 +69,64 @@ class TPersonaDao(BaseDao):
         }]
 
         return tipos
+
+    def get_datos_completos(self, per_ciruc):
+        """
+        Retorna los datos completos de una persona
+        :param per_ciruc:
+        :return: per_id,
+            per_ciruc,
+            per_nombres,
+            per_apellidos,
+            per_direccion,
+            per_telf,
+            per_movil,
+            per_email,
+            per_fecreg,
+            per_tipo,
+            per_lugnac,
+            per_nota,
+            per_fechanac,
+            per_genero,
+            per_estadocivil,
+            per_lugresidencia
+        """
+        sql = u"""select
+            per_id,
+            per_ciruc,
+            per_nombres,
+            per_apellidos,
+            per_direccion,
+            per_telf,
+            per_movil,
+            per_email,
+            per_fecreg,
+            per_tipo,
+            per_lugnac,
+            per_nota,
+            per_fechanac,
+            per_genero,
+            per_estadocivil,
+            per_lugresidencia from tpersona where per_ciruc = '{0}' 
+        """.format(cadenas.strip(per_ciruc))
+
+        tupla_desc = ('per_id',
+                      'per_ciruc',
+                      'per_nombres',
+                      'per_apellidos',
+                      'per_direccion',
+                      'per_telf',
+                      'per_movil',
+                      'per_email',
+                      'per_fecreg',
+                      'per_tipo',
+                      'per_lugnac',
+                      'per_nota',
+                      'per_fechanac',
+                      'per_genero',
+                      'per_estadocivil',
+                      'per_lugresidencia')
+        return self.first(sql, tupla_desc)
 
     def buscar_porciruc(self, per_ciruc):
         sql = "{0} where per_ciruc = '{1}'".format(self.BASE_SQL, cadenas.strip(per_ciruc))

@@ -18,15 +18,23 @@ class TConsultaMedicaRest(TokenView):
 
     def collection_get(self):
         accion = self.get_request_param('accion')
+        tconsultam_dao = TConsultaMedicaDao(self.dbsession)
         if accion == 'form':
-            tconsultam_dao = TConsultaMedicaDao(self.dbsession)
             form = tconsultam_dao.get_form()
             return {'status': 200, 'form': form}
 
         elif accion == 'cie10data':
-            tconsultam_dao = TConsultaMedicaDao(self.dbsession)
             cie10data = tconsultam_dao.get_cie10data()
             return {'status': 200, 'cie10data': cie10data}
+
+        elif accion == 'listaatenciones':
+            ciruc = self.get_request_param('ciruc')
+            items = tconsultam_dao.get_historia_porpaciente(per_ciruc=ciruc)
+            return {'status': 200, 'items': items}
+        elif accion == 'findhistbycod':
+            codhistoria = self.get_request_param('codhistoria')
+            datoshistoria = tconsultam_dao.get_datos_historia(cosm_id=codhistoria)
+            return {'status': 200, 'datoshistoria': datoshistoria}
 
     def collection_post(self):
         accion = self.get_request_param('accion')

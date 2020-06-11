@@ -20,3 +20,4 @@ class TLugar(Declarative, JsonAlchemy):
     lug_id = Column(Integer, primary_key=True, nullable=False)
     lug_nombre = Column(String(80), nullable=False)
     lug_parent = Column(Integer)
+    lug_status = Column(Integer) #1-activo, 2-inactivo
