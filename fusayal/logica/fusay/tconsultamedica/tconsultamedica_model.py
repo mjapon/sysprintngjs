@@ -31,6 +31,7 @@ class TConsultaMedica(Declarative, JsonAlchemy):
     cosm_recomendaciones = Column(Text)
     cosm_diagnostico = Column(Integer)
     user_crea = Column(Integer)
+    cosm_diagnosticoal = Column(Text)
 
 
 class TConsultaMedicaValores(Declarative, JsonAlchemy):

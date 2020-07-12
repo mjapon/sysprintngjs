@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="recetareport" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1ecfce13-0e2c-43bf-b1a7-dae4c3595e10">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="pcod_consulta" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select cosm_id, cosm_receta, cosm_indicsreceta from fusay.tconsultamedica
+where cosm_id =  $P{pcod_consulta} ]]>
+	</queryString>
+	<field name="cosm_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="cosm_receta" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_receta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="cosm_indicsreceta" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_indicsreceta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="499" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="50" width="370" height="430" uuid="2dc0f5dc-a172-4614-812a-f65c8a814445"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cosm_receta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="50" width="390" height="430" uuid="375e4c4f-eb01-41e4-96c3-e018e03839e3"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cosm_indicsreceta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="120" y="0" width="110" height="30" uuid="e349daec-9a54-4a30-a1bc-d81da2b0ae92"/>
+				<textElement>
+					<font fontName="Arial" size="24"/>
+				</textElement>
+				<text><![CDATA[RECETA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="0" width="200" height="30" uuid="2b7f08a2-d723-4071-8792-dbc0e5dd21c8"/>
+				<textElement>
+					<font fontName="Arial" size="24"/>
+				</textElement>
+				<text><![CDATA[INDICACIONES]]></text>
+			</staticText>
+			<line>
+				<reportElement x="379" y="-1" width="1" height="500" uuid="927d410b-639a-4339-a32e-22781b9fe66f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

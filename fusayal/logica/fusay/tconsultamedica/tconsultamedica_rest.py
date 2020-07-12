@@ -30,7 +30,9 @@ class TConsultaMedicaRest(TokenView):
         elif accion == 'listaatenciones':
             ciruc = self.get_request_param('ciruc')
             items = tconsultam_dao.get_historia_porpaciente(per_ciruc=ciruc)
-            return {'status': 200, 'items': items}
+            antecedespers = tconsultam_dao.get_antecedentes_personales(per_ciruc=ciruc)
+            return {'status': 200, 'items': items, 'antpers': antecedespers}
+
         elif accion == 'findhistbycod':
             codhistoria = self.get_request_param('codhistoria')
             datoshistoria = tconsultam_dao.get_datos_historia(cosm_id=codhistoria)
@@ -41,7 +43,7 @@ class TConsultaMedicaRest(TokenView):
         if 'registra' == accion:
             tconsultam_dao = TConsultaMedicaDao(self.dbsession)
             formdata = self.get_request_json_body()
-            msg = tconsultam_dao.registrar(form=formdata, usercrea=self.get_user_id())
-            return {'status': 200, 'msg': msg}
+            msg, cosm_id = tconsultam_dao.registrar(form=formdata, usercrea=self.get_user_id())
+            return {'status': 200, 'msg': msg, 'ccm':cosm_id}
         else:
             raise ErrorValidacionExc(u'Ninguna acción especificada')

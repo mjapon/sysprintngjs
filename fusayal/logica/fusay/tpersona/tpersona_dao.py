@@ -144,7 +144,7 @@ class TPersonaDao(BaseDao):
         return self.first(sql, tupla_desc=self.BASE_TUPLA_DESC)
 
     def existe_ciruc(self, per_ciruc):
-        sql = "select count(*) as cuenta from tpersona t where t.per_ciruc = '{0}'".format(per_ciruc)
+        sql = u"select count(*) as cuenta from tpersona t where t.per_ciruc = '{0}'".format(per_ciruc)
         cuenta = self.first_col(sql, 'cuenta')
         return cuenta > 0
 
@@ -217,6 +217,37 @@ class TPersonaDao(BaseDao):
             tpersona.per_movil = cadenas.strip_upper(form['per_movil'])
             tpersona.per_email = cadenas.strip(form['per_email'])
 
+            # Columnas agregadas:
+            if 'per_fechanacp' in form:
+                per_fechanac_txt = form['per_fechanacp']
+                if cadenas.es_nonulo_novacio(per_fechanac_txt):
+                    per_fechanac = fechas.parse_cadena(per_fechanac_txt)
+                    tpersona.per_fechanac = per_fechanac
+
+            if 'per_genero' in form:
+                per_genero = form['per_genero']
+                tpersona.per_genero = per_genero
+
+            if 'per_estadocivil' in form:
+                if type(form['per_estadocivil']) is dict:
+                    per_estadocivil = form['per_estadocivil']['lval_id']
+                else:
+                    per_estadocivil = form['per_estadocivil']
+                tpersona.per_estadocivil = per_estadocivil
+
+            if 'per_lugresidencia' in form:
+                if type(form['per_lugresidencia']) is dict:
+                    per_lugresidencia = form['per_lugresidencia']['lug_id']
+                else:
+                    per_lugresidencia = form['per_lugresidencia']
+
+                if per_lugresidencia != 0:
+                    tpersona.per_lugresidencia = per_lugresidencia
+
+            if 'per_telf' in form:
+                per_telf = form['per_telf']
+                tpersona.per_telf = cadenas.strip(per_telf)
+
             self.dbsession.add(tpersona)
             self.dbsession.flush()
 
@@ -264,8 +295,9 @@ class TPersonaDao(BaseDao):
         # Columnas agregadas:
         if 'per_fechanac' in form:
             per_fechanac_txt = form['per_fechanac']
-            per_fechanac = fechas.parse_cadena(per_fechanac_txt)
-            tpersona.per_fechanac = per_fechanac
+            if cadenas.es_nonulo_novacio(per_fechanac_txt):
+                per_fechanac = fechas.parse_cadena(per_fechanac_txt)
+                tpersona.per_fechanac = per_fechanac
 
         if 'per_genero' in form:
             per_genero = form['per_genero']
@@ -277,7 +309,12 @@ class TPersonaDao(BaseDao):
 
         if 'per_lugresidencia' in form:
             per_lugresidencia = form['per_lugresidencia']
-            tpersona.per_lugresidencia = per_lugresidencia
+            if per_lugresidencia != 0:
+                tpersona.per_lugresidencia = per_lugresidencia
+
+        if 'per_telf' in form:
+            per_telf = form['per_telf']
+            tpersona.per_telf = cadenas.strip(per_telf)
 
         self.dbsession.add(tpersona)
         self.dbsession.flush()

@@ -47,4 +47,12 @@ class TPersonaRest(FusayPublicView):
         tpersonadao = TPersonaDao(self.dbsession)
         form = self.get_json_body()
         per_id_gen = tpersonadao.crear(form=form)
-        return {'status': 200, 'msg': 'Registrado exitosamente'}
+        return {'status': 200, 'msg': u'Registrado exitosamente', 'per_id': per_id_gen}
+
+    def put(self):
+        per_id = self.get_request_matchdict('per_id')
+        tpersonadao = TPersonaDao(self.dbsession)
+        form = self.get_json_body()
+        res = tpersonadao.actualizar(per_id=per_id,form=form)
+        return {'status':200, 'msg': u'Actualizado exitosamente'}
+

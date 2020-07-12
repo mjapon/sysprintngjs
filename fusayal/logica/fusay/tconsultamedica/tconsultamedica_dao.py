@@ -7,9 +7,10 @@ import logging
 from datetime import datetime
 
 from fusayal.logica.dao.base import BaseDao
+from fusayal.logica.excepciones.validacion import ErrorValidacionExc
 from fusayal.logica.fusay.tconsultamedica.tconsultamedica_model import TConsultaMedica, TConsultaMedicaValores
 from fusayal.logica.fusay.tpersona.tpersona_dao import TPersonaDao
-from fusayal.utils import fechas, ctes
+from fusayal.utils import fechas, ctes, cadenas
 
 log = logging.getLogger(__name__)
 
@@ -55,7 +56,9 @@ class TConsultaMedicaDao(BaseDao):
             'cosm_indicsreceta': '',
             'cosm_recomendaciones': '',
             'user_crea': '',
-            'cosm_diagnostico':None        }
+            'cosm_diagnostico':None,
+            'cosm_diagnosticoal': ''
+        }
 
         return {
             'paciente': form_paciente,
@@ -64,6 +67,15 @@ class TConsultaMedicaDao(BaseDao):
             'examsfisicos': form_examsfisicos,
             'revxsistemas': form_revxsistemas
         }
+
+    def get_antecedentes_personales(self, per_ciruc):
+
+        ult_atencion_cod = self.get_ultima_atencion_paciente(per_ciruc)
+        form_antecedentes = []
+        if ult_atencion_cod is not None:
+            form_antecedentes = self.get_valores_adc_citamedica(1, ult_atencion_cod )
+
+        return form_antecedentes
 
     def get_historia_porpaciente(self, per_ciruc):
         """
@@ -76,7 +88,7 @@ class TConsultaMedicaDao(BaseDao):
                 paciente.per_nombres||' '||paciente.per_apellidos as paciente, historia.cosm_motivo 
                 from tconsultamedica historia
                 join tpersona paciente on historia.pac_id = paciente.per_id and 
-                paciente.per_ciruc = '{0}'""".format(per_ciruc)
+                paciente.per_ciruc = '{0}' order by historia.cosm_fechacrea desc """.format(per_ciruc)
         tupla_desc = ('cosm_id', 'cosm_fechacrea', 'per_ciruc', 'paciente', 'cosm_motivo')
 
         historias = self.all(sql, tupla_desc)
@@ -108,6 +120,8 @@ class TConsultaMedicaDao(BaseDao):
                historia.cosm_receta,
                historia.cosm_indicsreceta,
                historia.cosm_recomendaciones,
+               historia.cosm_diagnostico,
+               historia.cosm_diagnosticoal,
                historia.user_crea,
                paciente.per_id,
                     paciente.per_ciruc,
@@ -124,8 +138,11 @@ class TConsultaMedicaDao(BaseDao):
                     paciente.per_fechanac,
                     paciente.per_genero,
                     paciente.per_estadocivil,
-                    paciente.per_lugresidencia from tconsultamedica historia
+                    paciente.per_lugresidencia,
+                    cie.cie_valor ciediagnostico, 
+                    cie.cie_key ciekey from tconsultamedica historia
         join tpersona paciente on historia.pac_id = paciente.per_id
+        left join tcie10 cie on  historia.cosm_diagnostico = cie.cie_id 
         where historia.cosm_id = {0}
         """.format(cosm_id)
 
@@ -140,6 +157,8 @@ class TConsultaMedicaDao(BaseDao):
                       'cosm_receta',
                       'cosm_indicsreceta',
                       'cosm_recomendaciones',
+                      'cosm_diagnostico',
+                      'cosm_diagnosticoal',
                       'user_crea',
                       'per_id',
                       'per_ciruc',
@@ -156,7 +175,9 @@ class TConsultaMedicaDao(BaseDao):
                       'per_fechanac',
                       'per_genero',
                       'per_estadocivil',
-                      'per_lugresidencia')
+                      'per_lugresidencia',
+                      'ciediagnostico',
+                      'ciekey')
 
         datos_cita_medica = self.first(sql, tupla_desc)
 
@@ -189,25 +210,39 @@ class TConsultaMedicaDao(BaseDao):
         :return:
         """
         sql = u"""        
-        select cmtv_id, cmtv_cat, cmtv_nombre, cmtv_valor, '' as valorreg, cmtv_tinput from tconsultam_tiposval
-            where cmtv_cat = {0} order by cmtv_id          
+        select cmtv_id, cmtv_cat, cmtv_nombre, cmtv_valor, '' as valorreg, cmtv_tinput, cmtv_unidad from tconsultam_tiposval
+            where cmtv_cat = {0} order by cmtv_orden
         """.format(catc_id)
 
-        tupla_desc = ('cmtv_id', 'cmtv_cat', 'cmtv_nombre', 'cmtv_valor', 'valorreg', 'cmtv_tinput')
+        tupla_desc = ('cmtv_id', 'cmtv_cat', 'cmtv_nombre', 'cmtv_valor', 'valorreg', 'cmtv_tinput', 'cmtv_unidad')
 
         return self.all(sql, tupla_desc)
+
+    def get_ultima_atencion_paciente(self, per_ciruc):
+        sql = u"""select historia.cosm_id, historia.cosm_fechacrea, paciente.per_ciruc, 
+                        paciente.per_nombres||' '||paciente.per_apellidos as paciente, historia.cosm_motivo 
+                        from tconsultamedica historia
+                        join tpersona paciente on historia.pac_id = paciente.per_id and 
+                        paciente.per_ciruc = '{0}' order by historia.cosm_id desc""".format(per_ciruc)
+        tupla_desc = ('cosm_id', 'cosm_fechacrea', 'per_ciruc', 'paciente', 'cosm_motivo')
+
+        respuesta = self.all(sql, tupla_desc)
+        if respuesta is not None and len(respuesta)>0:
+            return respuesta[0]['cosm_id']
+
+        return None
 
     def get_valores_adc_citamedica(self, catc_id, cosm_id):
 
         sql = u"""
         select cmtval.cmtv_id, cmtval.cmtv_cat, cmtval.cmtv_nombre, cmtval.cmtv_valor, 
-               cmtval.cmtv_tinput, cval.valcm_valor
+               cmtval.cmtv_tinput, coalesce(cval.valcm_valor,'') as valorreg 
             from tconsultam_tiposval cmtval
-            join tconsultam_valores cval on cmtval.cmtv_id = cval.valcm_tipo
+            left join tconsultam_valores cval on cmtval.cmtv_id = cval.valcm_tipo
                         where cmtv_cat = {0} and cval.cosm_id = {1} order by cmtval.cmtv_orden;
         """.format(catc_id, cosm_id)
 
-        tupla_desc = ('cmtv_id', 'cmtv_cat', 'cmtv_nombre', 'cmtv_valor', 'cmtv_tinput', 'valcm_valor')
+        tupla_desc = ('cmtv_id', 'cmtv_cat', 'cmtv_nombre', 'cmtv_valor', 'cmtv_tinput', 'valorreg')
         return self.all(sql, tupla_desc)
 
     def get_cie10data(self):
@@ -243,6 +278,11 @@ class TConsultaMedicaDao(BaseDao):
         # 2 registro de la cita medica
         datosconsulta = form['datosconsulta']
 
+        #Verificar que se ingrese el motivo de la consulta
+        if not cadenas.es_nonulo_novacio(datosconsulta['cosm_motivo']):
+            raise ErrorValidacionExc(u"Debe ingresar el motivo de la consulta")
+
+
         tconsultamedica = TConsultaMedica()
         tconsultamedica.pac_id = per_id
         tconsultamedica.med_id = 0  # TODO: Se debe registrar tambien el codigo del medico al que se le va asignar la cita medica
@@ -256,7 +296,13 @@ class TConsultaMedicaDao(BaseDao):
         tconsultamedica.cosm_receta = datosconsulta['cosm_receta']
         tconsultamedica.cosm_indicsreceta = datosconsulta['cosm_indicsreceta']
         tconsultamedica.cosm_recomendaciones = datosconsulta['cosm_recomendaciones']
-        tconsultamedica.cosm_diagnostico = datosconsulta['cosm_diagnostico']
+
+        if type(datosconsulta['cosm_diagnostico']) is dict:
+            tconsultamedica.cosm_diagnostico = datosconsulta['cosm_diagnostico']['cie_id']
+        else:
+            tconsultamedica.cosm_diagnostico = datosconsulta['cosm_diagnostico']
+
+        tconsultamedica.cosm_diagnosticoal = datosconsulta['cosm_diagnosticoal']
         tconsultamedica.user_crea = usercrea
         self.dbsession.add(tconsultamedica)
         self.dbsession.flush()
@@ -267,11 +313,28 @@ class TConsultaMedicaDao(BaseDao):
         antecedentes = form['antecedentes']
         examsfisicos = form['examsfisicos']
         revxsistemas = form['revxsistemas']
-        diagnostico = form['diagnostico']
+        #diagnostico = form['diagnostico']
 
         self.registra_datosadc_consmedica(cosm_id, antecedentes)
         self.registra_datosadc_consmedica(cosm_id, examsfisicos)
         self.registra_datosadc_consmedica(cosm_id, revxsistemas)
-        self.registra_datosadc_consmedica(cosm_id, diagnostico)
+        #self.registra_datosadc_consmedica(cosm_id, diagnostico)
 
-        return u"Registrado exitósamente"
+        return u"Registrado exitósamente", cosm_id
+
+    def buscar_categoria_valor(self, valor, categoria):
+        """
+        Busca la categoria de un valor
+        :param valor:
+        :param categoria:
+        :return:
+        """
+        #CAtegoria 1,2: Presion (Presion Sistolica/Presion Diastóica)
+        sql = "select "
+
+
+
+
+
+
+
