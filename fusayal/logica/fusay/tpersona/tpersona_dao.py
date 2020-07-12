@@ -299,18 +299,25 @@ class TPersonaDao(BaseDao):
                 per_fechanac = fechas.parse_cadena(per_fechanac_txt)
                 tpersona.per_fechanac = per_fechanac
 
-        if 'per_genero' in form:
-            per_genero = form['per_genero']
-            tpersona.per_genero = per_genero
-
         if 'per_estadocivil' in form:
-            per_estadocivil = form['per_estadocivil']
+            if type(form['per_estadocivil']) is dict:
+                per_estadocivil = form['per_estadocivil']['lval_id']
+            else:
+                per_estadocivil = form['per_estadocivil']
             tpersona.per_estadocivil = per_estadocivil
 
         if 'per_lugresidencia' in form:
-            per_lugresidencia = form['per_lugresidencia']
+            if type(form['per_lugresidencia']) is dict:
+                per_lugresidencia = form['per_lugresidencia']['lug_id']
+            else:
+                per_lugresidencia = form['per_lugresidencia']
+
             if per_lugresidencia != 0:
                 tpersona.per_lugresidencia = per_lugresidencia
+
+        if 'per_genero' in form:
+            per_genero = form['per_genero']
+            tpersona.per_genero = per_genero
 
         if 'per_telf' in form:
             per_telf = form['per_telf']
