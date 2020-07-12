@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ticket" pageWidth="311" pageHeight="310" columnWidth="271" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="3" uuid="42e33fcd-e05d-4206-8ff3-a815626de7a0">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<subDataset name="Dataset1" uuid="de0bb541-7b69-4d90-8b05-418eebc7e06a">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<parameter name="ticketid" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[2]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+          tk.tk_id,
+          TO_CHAR(tk.tk_dia :: DATE, 'dd/mm/yyyy') as tk_fecreg,
+          tk.tk_nro,
+          cli.per_nombres||' '||cli.per_apellidos as cli_nombres,
+          cli.per_ciruc as cli_ci,
+          cli.per_direccion as cli_dir,
+          cli.per_telf as cli_telf,
+          tk.tk_costo as tk_monto,
+          tk.tk_observacion as tk_obs,
+          cli.per_id as cli_id,
+          coalesce(ic.ic_nombre,'Atención en general') as ic_nombre
+         from fusay.ttickets tk
+         join fusay.tpersona cli ON tk.tk_perid = cli.per_id
+         left join fusay.titemconfig ic on ic.ic_id in (select unnest(string_to_array(tk.tk_servicios,',')::integer[]))
+  where
+         tk.tk_id = $P{ticketid}]]>
+	</queryString>
+	<field name="tk_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="tk_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ttickets"/>
+	</field>
+	<field name="tk_fecreg" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tk_fecreg"/>
+	</field>
+	<field name="tk_nro" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="tk_nro"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ttickets"/>
+	</field>
+	<field name="cli_nombres" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cli_nombres"/>
+	</field>
+	<field name="cli_ci" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cli_ci"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="cli_dir" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cli_dir"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="cli_telf" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cli_telf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="tk_monto" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="tk_monto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ttickets"/>
+	</field>
+	<field name="tk_obs" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tk_obs"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ttickets"/>
+	</field>
+	<field name="cli_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="cli_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="ic_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ic_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="titemconfig"/>
+	</field>
+	<background>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement x="171" y="1" width="60" height="15" uuid="0c1fddd9-1eb6-4d94-9332-468212d0cb36">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fundación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="148" y="16" width="130" height="15" uuid="f69a67d3-9c11-4ccd-95ce-f52dba3002ad">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[“Salud y Vida Nueva”]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="31" width="120" height="15" uuid="fef15b65-fc0d-4bc7-b28d-0d2485791f9e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Centro de Curación]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="1" width="100" height="50" uuid="8cb74c5c-e700-4c4d-a5a6-f1bad150015f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="18" y="1" width="60" height="20" uuid="7ff9292e-e85b-41b5-be38-f1ad0b607d79"/>
+				<text><![CDATA[Tiket Nro]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="28" y="24" width="40" height="20" uuid="40df803f-2ede-4d02-b5d2-abb026008ba0">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tk_nro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="63" width="49" height="16" uuid="26a7f600-de74-43f7-9b74-b2ac72a96c23">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="79" width="49" height="16" uuid="338e80a0-4929-4f3c-b8e6-46991775de66">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="99" width="265" height="20" uuid="67e9d21f-21a6-4c8f-bf2c-f0141c11e08f"/>
+				<text><![CDATA[Servicios que requiere el paciente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="50" y="63" width="217" height="16" uuid="90e8e1d2-b4c5-410e-a727-99be60d18ea3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cli_nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="79" width="121" height="16" uuid="b6a84592-8992-4d37-896f-99a96d5c0824">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tk_fecreg}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+		<band height="20">
+			<rectangle>
+				<reportElement x="2" y="0" width="16" height="16" uuid="8e2125b8-938f-484f-bd7d-c0138805e507"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="6" y="2" width="11" height="12" uuid="7b699ca8-4c1a-4872-9f2a-ffff0cdf8643"/>
+				<text><![CDATA[x]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="20" y="0" width="246" height="16" uuid="76e5f150-77a4-42dc-a483-aacfce73763b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ic_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="80" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="5" y="9" width="60" height="16" uuid="23ba8f18-ae43-4f8a-8170-00e186eb0b8e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<text><![CDATA[Codigo P.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="16" width="60" height="20" uuid="0e6c709c-c7c7-4de2-8efe-a1c241b7383f"/>
+				<text><![CDATA[Valor:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="6" y="26" width="71" height="33" uuid="3e8432bb-b413-454f-a34f-747f0ff5e8cd"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="184" y="16" width="81" height="40" uuid="6ccb2510-9f9f-4cc5-89bc-85cef2965113"/>
+			</rectangle>
+			<textField>
+				<reportElement x="184" y="26" width="70" height="20" uuid="77721dac-16dc-407a-877f-134585f9cc61"/>
+				<textFieldExpression><![CDATA[$F{tk_monto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="6" y="30" width="70" height="20" uuid="f5460f78-714a-4a3b-b735-20b0a5cc1f3f"/>
+				<textFieldExpression><![CDATA[$F{cli_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="83" y="67" width="101" height="13" uuid="83b5b78a-072d-426b-ac5a-df73f85e965b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[www.fusay.org]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
