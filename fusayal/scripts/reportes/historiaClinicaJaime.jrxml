@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="historiaClinicaJaime" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="446eb0c4-1aea-4156-8a3c-7fc051a4236c">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="406"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="580"/>
+	<parameter name="codhist" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select historia.cosm_id,
+               historia.med_id,
+               historia.cosm_fechacrea,
+               historia.cosm_motivo,
+               historia.cosm_enfermactual,
+               historia.cosm_hallazgoexamfis,
+               historia.cosm_exmscompl,
+               historia.cosm_tratamiento,
+               historia.cosm_receta,
+               historia.cosm_indicsreceta,
+               historia.cosm_recomendaciones,
+               historia.cosm_diagnostico,
+               historia.cosm_diagnosticoal,
+               historia.user_crea,
+               paciente.per_id,
+                    paciente.per_ciruc,
+                    paciente.per_nombres,
+                    paciente.per_apellidos,
+                    paciente.per_nombres|| ' ' || coalesce(paciente.per_apellidos,'') as nomapel,
+                    paciente.per_direccion,
+                    paciente.per_telf,
+                    paciente.per_movil,
+                    paciente.per_email,
+                    paciente.per_fecreg,
+                    paciente.per_tipo,
+                    paciente.per_lugnac,
+                    paciente.per_nota,
+                    paciente.per_fechanac,
+                    paciente.per_genero,
+                    genlval.lval_nombre as genero,
+                    paciente.per_estadocivil,
+                    estclval.lval_nombre as estadocivil,
+                    paciente.per_lugresidencia,
+                    cie.cie_valor ciediagnostico,
+                    cie.cie_key ciekey,
+                cmtval.cmtv_id, cmtval.cmtv_cat, cmcats.catcm_valor categoria, cmtval.cmtv_nombre, cmtval.cmtv_valor,
+               cmtval.cmtv_tinput, coalesce(cval.valcm_valor,'') as valorreg
+            from fusay.tconsultam_tiposval cmtval
+                join fusay.tconsultam_cats cmcats on cmtval.cmtv_cat = cmcats.catcm_id
+            left join fusay.tconsultam_valores cval on cmtval.cmtv_id = cval.valcm_tipo
+            join fusay.tconsultamedica historia on cval.cosm_id = historia.cosm_id
+            join fusay.tpersona paciente on historia.pac_id = paciente.per_id
+                left join fusay.tlistavalores genlval on paciente.per_genero = genlval.lval_id and genlval.lval_cat=1
+                left join fusay.tlistavalores estclval on paciente.per_estadocivil = estclval.lval_id and estclval.lval_cat=2
+        left join fusay.tcie10 cie on  historia.cosm_diagnostico = cie.cie_id
+                        where cval.cosm_id = $P{codhist}  order by cmtv_cat, cmtval.cmtv_orden]]>
+	</queryString>
+	<field name="cosm_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="med_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="med_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="cosm_fechacrea" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_fechacrea"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="cosm_motivo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_motivo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="cosm_enfermactual" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_enfermactual"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="cosm_hallazgoexamfis" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_hallazgoexamfis"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="cosm_exmscompl" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_exmscompl"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="cosm_tratamiento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_tratamiento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="cosm_receta" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_receta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="cosm_indicsreceta" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_indicsreceta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="cosm_recomendaciones" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_recomendaciones"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="cosm_diagnostico" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_diagnostico"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="cosm_diagnosticoal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cosm_diagnosticoal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="user_crea" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="user_crea"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultamedica"/>
+	</field>
+	<field name="per_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="per_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="per_ciruc" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="per_ciruc"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="per_nombres" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="per_nombres"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="per_apellidos" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="per_apellidos"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="nomapel" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nomapel"/>
+	</field>
+	<field name="per_direccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="per_direccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="per_telf" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="per_telf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="per_movil" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="per_movil"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="per_email" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="per_email"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="per_fecreg" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="per_fecreg"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="per_tipo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="per_tipo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="per_lugnac" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="per_lugnac"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="per_nota" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="per_nota"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="per_fechanac" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="per_fechanac"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="per_genero" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="per_genero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="genero" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="genero"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tlistavalores"/>
+	</field>
+	<field name="per_estadocivil" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="per_estadocivil"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="estadocivil" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="estadocivil"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tlistavalores"/>
+	</field>
+	<field name="per_lugresidencia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="per_lugresidencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tpersona"/>
+	</field>
+	<field name="ciediagnostico" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ciediagnostico"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tcie10"/>
+	</field>
+	<field name="ciekey" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ciekey"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tcie10"/>
+	</field>
+	<field name="cmtv_id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="cmtv_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultam_tiposval"/>
+	</field>
+	<field name="cmtv_cat" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="cmtv_cat"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultam_tiposval"/>
+	</field>
+	<field name="categoria" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="categoria"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultam_cats"/>
+	</field>
+	<field name="cmtv_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cmtv_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultam_tiposval"/>
+	</field>
+	<field name="cmtv_valor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cmtv_valor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultam_tiposval"/>
+	</field>
+	<field name="cmtv_tinput" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="cmtv_tinput"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tconsultam_tiposval"/>
+	</field>
+	<field name="valorreg" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="valorreg"/>
+	</field>
+	<group name="categoria" minHeightToStartNewPage="20">
+		<groupExpression><![CDATA[$F{categoria}]]></groupExpression>
+		<groupHeader>
+			<band height="27">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<textField>
+					<reportElement x="10" y="0" width="270" height="20" uuid="a5abb25a-f93c-44b2-b241-19076a54133e">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement>
+						<font size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{categoria}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="344" splitType="Stretch">
+			<staticText>
+				<reportElement x="150" y="2" width="250" height="20" uuid="1321e601-8581-4557-8629-cd2a084caf21">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vital Medical Center]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="22" width="250" height="20" uuid="24f5248c-012d-4dd6-8b55-54c8489e1068">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Medicina Integrativa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="42" width="250" height="20" uuid="9d4a9efa-1e11-4813-a414-4b8bc1ab7039">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Dr. Jaime Japon G.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="62" width="510" height="20" uuid="0fbc507e-3a7a-43e4-a2de-2f068ab61448">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Medicina Integrativa (Acupuntura, Terapia Neural, Sueroterapia, Homeopatia)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="84" width="250" height="20" uuid="2d9321fd-d39d-46ba-8d00-71a1be542f09">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HISTORIA CLÍNICA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="135" width="150" height="20" uuid="1fbe2657-e12d-427f-aaca-791f0ddf3300"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Datos de Filiación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="160" width="60" height="16" uuid="eb8d1a51-0c13-449c-8e00-2377ca19b464">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="160" width="110" height="16" uuid="cf371249-4132-43f2-899c-67a6e5edb9ac">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Cédula o Pasaporte:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="180" width="60" height="16" uuid="1eaabea8-4b2b-4f09-82a8-c5a2f69c55cd">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Edad:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="180" width="60" height="16" uuid="02ae55a6-2ce9-4c0d-badf-208733e32eac">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Género:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="180" width="60" height="16" uuid="d6b046ea-b1d7-4d6b-9bb7-d1567a17a868">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Estado Civil:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="200" width="120" height="16" uuid="d8b6a5dd-7d81-4c82-b85c-f8c9637b1fba">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Fecha de nacimiento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="200" width="120" height="16" uuid="9d618558-63d3-4a40-84d9-e01316341969">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Lugar de Residencia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="220" width="120" height="16" uuid="d8e60a41-bbb7-4318-af6a-6f937147d381">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Correo Electrónico:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="220" width="120" height="16" uuid="605f96de-b977-47c2-9a69-3fc85c2f054d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Teléfono:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="240" width="70" height="16" uuid="987673ff-1f23-4f42-9e5f-8cd3f2072989">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Celular:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="270" width="150" height="20" uuid="64a8f5f5-6681-471b-a080-1acf5e471fce"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Motivo de consulta:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="310" width="150" height="20" uuid="80ef3fce-72f8-4b8d-88e2-37d3c22075e3"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Enfermedad Actual:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="71" y="160" width="249" height="16" uuid="12919366-3ca6-467d-b094-c99f43f434f6">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomapel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="240" width="160" height="16" uuid="c9fd939c-2ad6-40a1-b25f-7ffdedd9a311">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{per_movil}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="445" y="160" width="100" height="16" uuid="2c3cc393-9a08-40ae-9e1a-85c9e6b688e6">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{per_ciruc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="232" y="180" width="88" height="16" uuid="b05886b9-01a1-4a70-934c-f6a0fb022ead">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{genero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="180" width="146" height="16" uuid="f24d1cea-2b93-43ea-99a2-12b091f2dff1">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estadocivil}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="130" y="200" width="88" height="16" uuid="88412b38-0928-4291-9535-23f730c1b475">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{per_fechanac}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="220" width="189" height="16" uuid="ccde4503-6639-455d-b18b-115627da0d42">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{per_email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="270" width="380" height="30" uuid="797e3254-276c-4ece-a201-9b3d35bc705c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{cosm_motivo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="172" y="310" width="380" height="30" uuid="fb4d4927-2265-4450-93cc-6b9db4bc7ca3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{cosm_enfermactual}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="110" width="95" height="16" uuid="579b84f2-5d70-44b0-be16-d0039a172f87">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de registro:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="107" y="110" width="122" height="16" uuid="1fd2accb-9980-484b-aaed-621e20e63552">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cosm_fechacrea}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="1" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="10" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="10" y="4" width="180" height="20" uuid="61f2fcd4-421c-4fa9-93b0-eb25659c34ab">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="de4401a1-ab57-41e1-89b7-aac110d43325"/>
+				</reportElement>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cmtv_valor}+':']]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="191" y="4" width="345" height="20" uuid="711b9035-3263-4c84-926e-1bf102233c08">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="11575736-5a71-4d1e-97b7-32e8a7436872"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valorreg}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="1" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="1" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="226" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="10" y="10" width="180" height="20" uuid="a2ecdf26-57f0-4fa3-a12e-629e35743966"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Exámenes Complementarios:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="190" y="10" width="374" height="30" uuid="4c38d233-cb52-4029-960d-f1f6f976a558">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{cosm_exmscompl}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="60" width="180" height="20" uuid="cf9324aa-3660-43a6-a046-bcb6b3355640">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Diagnóstico:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="190" y="60" width="370" height="20" uuid="ede7af10-de4a-43d3-a696-31e3ae683800">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{ciediagnostico}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="95" width="180" height="20" uuid="d24cd60b-8ec1-438a-b869-b17f1233ab8c">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tratamiento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="160" width="180" height="20" uuid="4d294f1a-d70a-41bf-aea6-3c590ad51b5d">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recomendaciones:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="190" y="95" width="370" height="54" uuid="ddba0cc3-6c83-43c4-85be-c55020f55a44">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{cosm_tratamiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="190" y="160" width="370" height="54" uuid="13a2edf5-3e08-43cd-b264-b117405e1ad4">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{cosm_recomendaciones}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
