@@ -38,6 +38,17 @@ class TConsultaMedicaRest(TokenView):
             datoshistoria = tconsultam_dao.get_datos_historia(cosm_id=codhistoria)
             return {'status': 200, 'datoshistoria': datoshistoria}
 
+        elif accion == 'galertexfis':
+            valor = self.get_request_param('valor')
+            categ = self.get_request_param('categ')
+            #1-tension arterial
+            #3-indice de masa corporal
+            result, color = tconsultam_dao.buscar_categoria_valor(valor,int(categ))
+            return {'status': 200, 'result': result, 'color': color}
+
+
+
+
     def collection_post(self):
         accion = self.get_request_param('accion')
         if 'registra' == accion:

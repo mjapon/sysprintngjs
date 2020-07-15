@@ -332,11 +332,33 @@ class TConsultaMedicaDao(BaseDao):
         :return:
         """
         #CAtegoria 1,2: Presion (Presion Sistolica/Presion Diastóica)
-        sql = "select "
+        result = ""
+        color = ""
+        if categoria == 1:
+            valorespresion = valor.split("/")
+            if len(valorespresion) == 2:
+                sistolica = float(valorespresion[0])
+                diastolica = float(valorespresion[1])
+                sql = u"""select cmcv_nombrecat, cmcv_color from tconsultam_clasificaval where 
+                            cmcv_cat =1 and 
+                            ( {0} between cmcv_min and cmcv_max ) and
+                            ( {1} between cmcv_minb and cmcv_maxb ) """.format(sistolica, diastolica)
+                tupla_desc = ('cmcv_nombrecat', 'cmcv_color')
+                resa = self.all(sql, tupla_desc)
 
+                if len(resa) > 0:
+                    result = resa[0]['cmcv_nombrecat']
+                    color = resa[0]['cmcv_color']
 
+        if categoria == 3:
+            if len(cadenas.strip(valor)) > 0:
+                valimc = float(valor)
+                sql = u"""select cmcv_nombrecat, cmcv_color from tconsultam_clasificaval where 
+                                            cmcv_cat =3 and {0} between cmcv_min and cmcv_max """.format(valimc)
+                tupla_desc = ('cmcv_nombrecat', 'cmcv_color')
+                resa = self.all(sql, tupla_desc)
+                if len(resa) > 0:
+                    result = resa[0]['cmcv_nombrecat']
+                    color = resa[0]['cmcv_color']
 
-
-
-
-
+        return result, color
