@@ -1,1 +1,0 @@
-INSERT INTO public.tparams (tprm_id, tprm_abrev, tprm_nombre, tprm_val, tprm_fechacrea) VALUES (1, 'pathSaveJobs', 'pathSaveJobs', '/Users/mjapon/PycharmProjects/fusay/fa/saveddocs/', '2019-07-12 00:21:04.423000');

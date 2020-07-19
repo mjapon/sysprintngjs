@@ -1,1 +1,0 @@
-INSERT INTO fusay.tpersonaevents (pev_id, per_id, ev_id, pev_fecreg) VALUES (1, 24, 2, '2020-02-08 21:16:28.533988');

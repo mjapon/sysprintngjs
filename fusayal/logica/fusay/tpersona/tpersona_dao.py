@@ -30,7 +30,8 @@ class TPersonaDao(BaseDao):
                per_fechanac,
                per_genero,
                per_estadocivil,
-               per_lugresidencia from tpersona
+               per_lugresidencia, 
+               per_ocupacion from tpersona
     """
     BASE_TUPLA_DESC = ('per_id',
                        'per_ciruc',
@@ -46,7 +47,8 @@ class TPersonaDao(BaseDao):
                        'per_fechanac',
                        'per_genero',
                        'per_estadocivil',
-                       'per_lugresidencia')
+                       'per_lugresidencia',
+                       'per_ocupacion')
 
     def getform(self):
         return {
@@ -125,12 +127,16 @@ class TPersonaDao(BaseDao):
                       'per_fechanac',
                       'per_genero',
                       'per_estadocivil',
-                      'per_lugresidencia')
+                      'per_lugresidencia',
+                      'per_ocupacion')
         return self.first(sql, tupla_desc)
 
     def buscar_porciruc(self, per_ciruc):
         sql = "{0} where per_ciruc = '{1}'".format(self.BASE_SQL, cadenas.strip(per_ciruc))
-        return self.first(sql, tupla_desc=self.BASE_TUPLA_DESC)
+        result = self.first(sql, tupla_desc=self.BASE_TUPLA_DESC)
+        edad = fechas.get_edad_anios(fechas.parse_cadena(result['per_fechanac']))
+        result['per_edad'] = edad
+        return result
 
     def get_entity_byid(self, per_id):
         return self.dbsession.query(TPersona).filter(TPersona.per_id == per_id).first()
@@ -216,10 +222,18 @@ class TPersonaDao(BaseDao):
             tpersona.per_apellidos = cadenas.strip_upper(form['per_apellidos'])
             tpersona.per_movil = cadenas.strip_upper(form['per_movil'])
             tpersona.per_email = cadenas.strip(form['per_email'])
+            if 'per_direccion' in form:
+                tpersona.per_direccion = cadenas.strip(form['per_direccion'])
 
             # Columnas agregadas:
             if 'per_fechanacp' in form:
                 per_fechanac_txt = form['per_fechanacp']
+                if cadenas.es_nonulo_novacio(per_fechanac_txt):
+                    per_fechanac = fechas.parse_cadena(per_fechanac_txt)
+                    tpersona.per_fechanac = per_fechanac
+
+            if 'per_fechanac' in form:
+                per_fechanac_txt = form['per_fechanac']
                 if cadenas.es_nonulo_novacio(per_fechanac_txt):
                     per_fechanac = fechas.parse_cadena(per_fechanac_txt)
                     tpersona.per_fechanac = per_fechanac
@@ -247,6 +261,13 @@ class TPersonaDao(BaseDao):
             if 'per_telf' in form:
                 per_telf = form['per_telf']
                 tpersona.per_telf = cadenas.strip(per_telf)
+
+            if 'per_ocupacion' in form:
+                if type(form['per_ocupacion']) is dict:
+                    per_ocupacion = form['per_ocupacion']['lval_id']
+                else:
+                    per_ocupacion = form['per_ocupacion']
+                tpersona.per_ocupacion = per_ocupacion
 
             self.dbsession.add(tpersona)
             self.dbsession.flush()
@@ -279,7 +300,9 @@ class TPersonaDao(BaseDao):
         tpersona.per_apellidos = cadenas.strip_upper(form['per_apellidos'])
         tpersona.per_ciruc = per_ciruc
         # tpersona.per_direccion = cadenas.strip_upper(form['per_direccion'])
-        tpersona.per_direccion = ''
+        if 'per_direccion' in form:
+            tpersona.per_direccion = cadenas.strip(form['per_direccion'])
+
         # tpersona.per_telf = cadenas.strip_upper(form['per_telf'])
         tpersona.per_telf = ''
         tpersona.per_movil = cadenas.strip_upper(form['per_movil'])
@@ -322,6 +345,13 @@ class TPersonaDao(BaseDao):
         if 'per_telf' in form:
             per_telf = form['per_telf']
             tpersona.per_telf = cadenas.strip(per_telf)
+
+        if 'per_ocupacion' in form:
+            if type(form['per_ocupacion']) is dict:
+                per_ocupacion = form['per_ocupacion']['lval_id']
+            else:
+                per_ocupacion = form['per_ocupacion']
+            tpersona.per_ocupacion = per_ocupacion
 
         self.dbsession.add(tpersona)
         self.dbsession.flush()

@@ -46,9 +46,6 @@ class TConsultaMedicaRest(TokenView):
             result, color = tconsultam_dao.buscar_categoria_valor(valor,int(categ))
             return {'status': 200, 'result': result, 'color': color}
 
-
-
-
     def collection_post(self):
         accion = self.get_request_param('accion')
         if 'registra' == accion:

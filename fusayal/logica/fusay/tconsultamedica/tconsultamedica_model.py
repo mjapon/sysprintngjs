@@ -5,7 +5,7 @@ Fecha de creacion 5/23/20
 """
 import logging
 
-from sqlalchemy import Column, Integer, DateTime, Text
+from sqlalchemy import Column, Integer, DateTime, Text, Date
 
 from fusayal.models.conf import Declarative
 from fusayal.utils.jsonutil import JsonAlchemy
@@ -32,6 +32,8 @@ class TConsultaMedica(Declarative, JsonAlchemy):
     cosm_diagnostico = Column(Integer)
     user_crea = Column(Integer)
     cosm_diagnosticoal = Column(Text)
+    cosm_fechaproxcita = Column(Date)
+
 
 
 class TConsultaMedicaValores(Declarative, JsonAlchemy):

@@ -33,3 +33,4 @@ class TPersona(Declarative, JsonAlchemy):
     per_genero = Column(Integer)
     per_estadocivil = Column(Integer)
     per_lugresidencia = Column(Integer)
+    per_ocupacion = Column(Integer)

@@ -1,6 +1,0 @@
-INSERT INTO public.tuser (us_id, us_name, us_pass, us_datecreated, us_status, us_statusclave, us_nomapel, us_superuser) VALUES (10, 'anaj', '121212', '2019-03-23 21:53:38.006645', 0, 0, 'ANA LUCIA JAPON GUALAN', 0);
-INSERT INTO public.tuser (us_id, us_name, us_pass, us_datecreated, us_status, us_statusclave, us_nomapel, us_superuser) VALUES (8, 'dianaj', '1234', '2019-03-23 21:24:27.983586', 0, 0, 'DIANA NARCISA JAPON GUALAN', 0);
-INSERT INTO public.tuser (us_id, us_name, us_pass, us_datecreated, us_status, us_statusclave, us_nomapel, us_superuser) VALUES (11, 'marthaj', '1234', '2019-03-24 06:59:10.822311', 0, 0, 'MARTHA MELIDA JAPON GUALAN', 0);
-INSERT INTO public.tuser (us_id, us_name, us_pass, us_datecreated, us_status, us_statusclave, us_nomapel, us_superuser) VALUES (13, 'ajapon', '1234', '2019-03-25 04:17:28.581293', 0, 0, 'ANGEL JAPON', 0);
-INSERT INTO public.tuser (us_id, us_name, us_pass, us_datecreated, us_status, us_statusclave, us_nomapel, us_superuser) VALUES (12, 'jjapon', '1234', '2019-03-25 04:17:04.188681', 0, 0, 'JAIME WILFRIDO JAPON', 0);
-INSERT INTO public.tuser (us_id, us_name, us_pass, us_datecreated, us_status, us_statusclave, us_nomapel, us_superuser) VALUES (2, 'mjapon', 'mjapon', '2019-03-20 01:06:42.598000', 0, 1, 'MANUEL EFRAIN JAPON GUALAN', 1);

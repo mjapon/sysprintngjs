@@ -10,6 +10,7 @@ zope.sqlalchemy
 waitress
 cornice
 psycopg2
+psycopg2-binary
 simplejson
 cornice
 pyramid_beaker

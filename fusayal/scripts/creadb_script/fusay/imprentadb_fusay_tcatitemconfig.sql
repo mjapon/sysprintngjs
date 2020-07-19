@@ -1,1 +1,0 @@
-INSERT INTO fusay.tcatitemconfig (catic_id, catic_nombre, catic_estado) VALUES (1, 'NINGUNO', 1);

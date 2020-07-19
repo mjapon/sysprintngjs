@@ -39,6 +39,8 @@ class TConsultaMedicaDao(BaseDao):
             'per_genero': None,
             'per_estadocivil': 1,
             'per_lugresidencia': None,
+            'per_ocupacion':None,
+            'per_edad': 0
         }
 
         form_datosconsulta = {
@@ -57,7 +59,8 @@ class TConsultaMedicaDao(BaseDao):
             'cosm_recomendaciones': '',
             'user_crea': '',
             'cosm_diagnostico':None,
-            'cosm_diagnosticoal': ''
+            'cosm_diagnosticoal': '',
+            'cosm_fechaproxcita': ''
         }
 
         return {
@@ -85,11 +88,12 @@ class TConsultaMedicaDao(BaseDao):
         """
 
         sql = u"""select historia.cosm_id, historia.cosm_fechacrea, paciente.per_ciruc, 
-                paciente.per_nombres||' '||paciente.per_apellidos as paciente, historia.cosm_motivo 
+                paciente.per_nombres||' '||paciente.per_apellidos as paciente, historia.cosm_motivo,
+                historia.cosm_fechaproxcita 
                 from tconsultamedica historia
                 join tpersona paciente on historia.pac_id = paciente.per_id and 
                 paciente.per_ciruc = '{0}' order by historia.cosm_fechacrea desc """.format(per_ciruc)
-        tupla_desc = ('cosm_id', 'cosm_fechacrea', 'per_ciruc', 'paciente', 'cosm_motivo')
+        tupla_desc = ('cosm_id', 'cosm_fechacrea', 'per_ciruc', 'paciente', 'cosm_motivo', 'cosm_fechaproxcita')
 
         historias = self.all(sql, tupla_desc)
         historias_fecha = []
@@ -123,6 +127,7 @@ class TConsultaMedicaDao(BaseDao):
                historia.cosm_diagnostico,
                historia.cosm_diagnosticoal,
                historia.user_crea,
+               historia.cosm_fechaproxcita,
                paciente.per_id,
                     paciente.per_ciruc,
                     paciente.per_nombres,
@@ -140,10 +145,13 @@ class TConsultaMedicaDao(BaseDao):
                     paciente.per_genero,
                     paciente.per_estadocivil,
                     paciente.per_lugresidencia,
+                    paciente.per_ocupacion,
+                    coalesce(lv.lval_nombre, '') as ocupacion,
                     cie.cie_valor ciediagnostico, 
                     cie.cie_key ciekey from tconsultamedica historia
         join tpersona paciente on historia.pac_id = paciente.per_id
-        left join tcie10 cie on  historia.cosm_diagnostico = cie.cie_id 
+        left join tcie10 cie on  historia.cosm_diagnostico = cie.cie_id
+        left join tlistavalores lv on paciente.per_ocupacion = lv.lval_id
         where historia.cosm_id = {0}
         """.format(cosm_id)
 
@@ -161,6 +169,7 @@ class TConsultaMedicaDao(BaseDao):
                       'cosm_diagnostico',
                       'cosm_diagnosticoal',
                       'user_crea',
+                      'cosm_fechaproxcita',
                       'per_id',
                       'per_ciruc',
                       'per_nombres',
@@ -178,6 +187,8 @@ class TConsultaMedicaDao(BaseDao):
                       'per_genero',
                       'per_estadocivil',
                       'per_lugresidencia',
+                      'per_ocupacion',
+                      'ocupacion',
                       'ciediagnostico',
                       'ciekey')
 
@@ -305,6 +316,13 @@ class TConsultaMedicaDao(BaseDao):
             tconsultamedica.cosm_diagnostico = datosconsulta['cosm_diagnostico']
 
         tconsultamedica.cosm_diagnosticoal = datosconsulta['cosm_diagnosticoal']
+
+        if 'cosm_fechaproxcita' in datosconsulta:
+            cosm_fechaproxcita = datosconsulta['cosm_fechaproxcita']
+            if cadenas.es_nonulo_novacio(cosm_fechaproxcita):
+                cosm_fechaproxcita_parsed = fechas.parse_cadena(cosm_fechaproxcita)
+                tconsultamedica.cosm_fechaproxcita = cosm_fechaproxcita_parsed
+
         tconsultamedica.user_crea = usercrea
         self.dbsession.add(tconsultamedica)
         self.dbsession.flush()

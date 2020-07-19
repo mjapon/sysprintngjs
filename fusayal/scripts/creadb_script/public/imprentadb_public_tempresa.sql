@@ -1,1 +1,0 @@
-INSERT INTO public.tempresa (emp_id, emp_ruc, emp_razonsocial, emp_nombrecomercial, emp_nroautorizacion, emp_fechaautorizacion, emp_esquema, emp_codigo, emp_menu) VALUES (1, '1104450877001', 'MANUEL JAPON', 'MANUEL JAPON ED 1', '12121', '2019-07-08', 'fusay', 'fusay', null);

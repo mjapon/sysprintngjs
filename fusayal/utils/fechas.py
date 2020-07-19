@@ -6,6 +6,7 @@ Created on '01/12/2014'
 import calendar
 import logging
 import datetime
+from datetime import date
 
 from math import fabs
 
@@ -256,7 +257,9 @@ def isvalid(date_text):
         valid = False
     return valid
 
-
-
-
-
+def get_edad_anios(fecha_nacimiento):
+    edad = 0
+    if fecha_nacimiento is not None:
+        hoy = date.today()
+        edad = hoy.year - fecha_nacimiento.year - ((hoy.month, hoy.day) < (fecha_nacimiento.month, fecha_nacimiento.day))
+    return edad
