@@ -134,8 +134,13 @@ class TPersonaDao(BaseDao):
     def buscar_porciruc(self, per_ciruc):
         sql = "{0} where per_ciruc = '{1}'".format(self.BASE_SQL, cadenas.strip(per_ciruc))
         result = self.first(sql, tupla_desc=self.BASE_TUPLA_DESC)
-        edad = fechas.get_edad_anios(fechas.parse_cadena(result['per_fechanac']))
-        result['per_edad'] = edad
+        try:
+            if result is not None and cadenas.es_nonulo_novacio(result['per_fechanac']):
+                edad = fechas.get_edad_anios(fechas.parse_cadena(result['per_fechanac']))
+                result['per_edad'] = edad
+        except:
+            pass
+
         return result
 
     def get_entity_byid(self, per_id):
@@ -148,6 +153,51 @@ class TPersonaDao(BaseDao):
     def buscar_poremail(self, per_email):
         sql = "{0} where per_email = '{1}'".format(self.BASE_SQL, cadenas.strip(per_email))
         return self.first(sql, tupla_desc=self.BASE_TUPLA_DESC)
+
+    def buscar_pornomapelci(self, filtro, solo_cedulas=True, limit=30, offsset=0):
+        basesql = u"""
+        select per_id,
+                        per_ciruc,
+                        per_genero,
+                        per_nombres||' '||coalesce(per_apellidos,'') as nomapel,
+                        per_lugresidencia,
+                        coalesce(tlugar.lug_nombre,'') as lugresidencia
+                        from tpersona
+                        left join tlugar on tpersona.per_lugresidencia = tlugar.lug_id
+        """
+        concedula = u" coalesce(per_ciruc,'')!='' and per_id>0" if solo_cedulas else ''
+
+        if cadenas.es_nonulo_novacio(filtro):
+            palabras = cadenas.strip_upper(filtro).split()
+            filtromod = []
+            for cad in palabras:
+                filtromod.append(u"%{0}%".format(cad))
+
+            nombreslike = u' '.join(filtromod)
+            filtrocedulas = u" per_ciruc like '{0}%'".format(cadenas.strip(filtro))
+
+            sql = u"""{basesql}
+                        where ((per_nombres||' '||per_apellidos like '{nombreslike}') or ({filtrocedulas})) and {concedula} order by 4 limit {limit} offset {offset}
+                    """.format(nombreslike=nombreslike,
+                               concedula=concedula,
+                               limit=limit,
+                               offset=offsset,
+                               filtrocedulas=filtrocedulas,
+                               basesql=basesql)
+
+            tupla_desc = ('per_id', 'per_ciruc', 'per_genero', 'nomapel', 'per_lugresidencia', 'lugresidencia')
+            return self.all(sql, tupla_desc)
+        else:
+            sql = u"""{basesql} where {concedula}
+             order by 4 limit {limit} offset {offset}
+            """.format(basesql=basesql, limit=limit, offset=offsset, concedula=concedula)
+
+
+        print 'sql es:'
+        print sql
+
+        tupla_desc = ('per_id', 'per_ciruc', 'per_genero', 'nomapel', 'per_lugresidencia', 'lugresidencia')
+        return self.all(sql, tupla_desc)
 
     def existe_ciruc(self, per_ciruc):
         sql = u"select count(*) as cuenta from tpersona t where t.per_ciruc = '{0}'".format(per_ciruc)
@@ -202,11 +252,14 @@ class TPersonaDao(BaseDao):
 
             current_email = cadenas.strip(tpersona.per_email)
             per_email = cadenas.strip(form['per_email'])
-            if current_email != per_email:
+            if current_email != per_email and cadenas.es_nonulo_novacio(current_email):
                 if self.existe_email(per_email=form['per_email']):
                     raise ErrorValidacionExc(
                         'Ya existe una persona registrada con la dirección de correo, ingrese otra: {0}'.format(
                             form['per_email']))
+
+            if not cadenas.es_nonulo_novacio(per_email):
+                per_email = None
 
             per_ciruc = cadenas.strip(form['per_ciruc'])
             current_per_ciruc = cadenas.strip(tpersona.per_ciruc)
@@ -221,7 +274,7 @@ class TPersonaDao(BaseDao):
             tpersona.per_nombres = cadenas.strip_upper(form['per_nombres'])
             tpersona.per_apellidos = cadenas.strip_upper(form['per_apellidos'])
             tpersona.per_movil = cadenas.strip_upper(form['per_movil'])
-            tpersona.per_email = cadenas.strip(form['per_email'])
+            tpersona.per_email = per_email
             if 'per_direccion' in form:
                 tpersona.per_direccion = cadenas.strip(form['per_direccion'])
 
@@ -232,7 +285,7 @@ class TPersonaDao(BaseDao):
                     per_fechanac = fechas.parse_cadena(per_fechanac_txt)
                     tpersona.per_fechanac = per_fechanac
 
-            if 'per_fechanac' in form:
+            elif 'per_fechanac' in form:
                 per_fechanac_txt = form['per_fechanac']
                 if cadenas.es_nonulo_novacio(per_fechanac_txt):
                     per_fechanac = fechas.parse_cadena(per_fechanac_txt)
